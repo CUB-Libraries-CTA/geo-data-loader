@@ -1,0 +1,56 @@
+body {background-color:#ebebeb;}
+#user{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.nav-tabs {
+    margin-bottom: -1px;
+}
+a {
+    color:#1876BA;
+}
+.dropdown {
+  width:120%; 
+}/*
+.btn{
+ width: 100%;
+}*/
+#myTabContent {
+    min-height: 500px;
+}
+.tabbable {
+    margin: 10px;
+    /*min-height: 300px;*/
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-tabs {
+    margin: 0
+    margin-bottom:-1px;
+}
+.tab-content {
+    overflow-y:scroll;
+    /*height: 100%; */
+    border-left: 1px solid #ccc ; 
+    border-right: 1px solid #ccc;
+    border-top:1px solid #ccc;
+    padding:10px;
+    background-color:#ffffff;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+
+    background-color:#ffffff
+}
+.next a {
+    background-color: #ecf0f1 !important;
+    color: #2d525d !important;
+}
+.pager .disabled>a, .pager .disabled>a:hover, .pager .disabled>a:focus, .pager .disabled>span {
+
+    background-color: #ecf0f1 !important;
+    color: #2d525d !important;
+}
+.pager li>a, .pager li>span {
+    background-color:#2c3e50;
+}
