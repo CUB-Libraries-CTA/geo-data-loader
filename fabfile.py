@@ -5,14 +5,15 @@ import os
 from fabric.api import *
 
 
-env.sitename = os.path.basename(os.getcwd())
-env.host = 'test.oklahomawatersurvey.org'
+#env.sitename = os.path.basename(os.getcwd())
+#env.host = 'test.oklahomawatersurvey.org'
 
 
 def mgmic():
     """
     Work on staging environment
     """
+    env.sitename ="portal"
     env.settings = 'testing'
     env.path = '/data/static/%(sitename)s' % env
     env.virtpy = '%(path)s/virtpy' % env
