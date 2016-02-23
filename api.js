@@ -52,7 +52,7 @@ function edit_user(){
 function set_password(){
     pass = $('#pass_form').serializeObject()
     if (pass.password !== pass.password2){
-        alert("Passwords where not identical")
+        alert("Passwords were not identical")
         return false;
 
     }
