@@ -1,6 +1,6 @@
 $(function() {
     //Customize by setting base_url to cybercom/api docker application
-    base_url = "http://mgmic.oscer.ou.edu/api";
+    base_url = "/api";
     //No other alterations is need to get the standard applicaiton running!
     login_url = base_url + "/api-auth/login/?next=";
     logout_url = base_url + "/api-auth/logout/?next=";
