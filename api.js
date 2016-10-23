@@ -26,7 +26,7 @@ $(function() {
 });//End of Document Ready
 
 function load_example_task(){
-    addtask_template = Handlebars.templates['tmpl-add-task']
+    addtask_template = Handlebars.templates['tmpl-add-form']
     $('#home').empty()
     $('#home').append(addtask_template({"x":0,"y":0}))
 
