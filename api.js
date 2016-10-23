@@ -118,6 +118,7 @@ function setTaskDisplay(data){
     }
 
 }
+//Cybercommons task result showResult()
 function showResult(url){
     //myModalLabel -->title
     $.getJSON(url + ".json" , function(data){
@@ -127,6 +128,83 @@ function showResult(url){
         $("#myModal").modal('show');
     });
 }
+//Cybercommons example submit add task. 
+function cybercom_submit_task(task_url,task_name,task_args,task_kwargs){
+    //"cybercomq.tasks.tasks.add"
+    //get and set task_data
+    task_data = $.getCYBERCOM_JSON_OBJECT(task_name);
+    task_data.args=task_args;
+    task_data.kwargs=task_kwargs;
+    //call add task and poll for status
+    $.postJSON(task_url,task_data,function(data){
+            cybercom_poll(data.result_url)
+    });
+}
+//Example general display status to console.log. Used in cybercom_poll!
+//Customize tomake success, fail, and pending functions. This is general status function!
+function general_status(data){
+    console.log(JSON.stringify(data.result,null, 4));
+}
+//Cybercommons polling task status
+function cybercom_poll(url){
+    $.getJSON( url , function(data) {
+            if (data.result.status=="PENDING"){
+                //cybercom_pending used to adjust html items to allow user response
+                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
+                general_status(data);
+                //Set timeout to 3 seconds
+                setTimeout(function() { cybercom_poll(url); }, 3000);
+            };
+            if (data.result.status=="SUCCESS"){
+                //cybercom_success used to adjust html items to allow user response
+                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
+                //          $('#task_result').urlize();
+                general_status(data);
+            };
+            if (data.result.status=="FAILURE"){
+                //cybercom_fail used to adjust html items to allow user response
+                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
+                general_status(data);
+            };
+       });
+}
+//Default JSON object to submit to cybercommons api task queue
+$.getCYBERCOM_JSON_OBJECT = function(task_name){
+    return {"function": task_name,"queue": "celery","args":[],"kwargs":{},"tags":[]};
+}
+//postJSON is custom call for post to cybercommons api
+$.postJSON = function(url, data, callback,fail) {
+    return jQuery.ajax({
+        'type': 'POST',
+        'url': url,
+        'contentType': 'application/json',
+        'data': JSON.stringify(data),
+        'dataType': 'json',
+        'success': callback,
+        'error':fail,
+        'beforeSend':function(xhr, settings){
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    });
+}
+//Used to serialize form object to get form data
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+}
+//add links to http and https items
 jQuery.fn.urlize = function() {
     if (this.length > 0) {
         this.each(function(i, obj){
@@ -144,22 +222,7 @@ jQuery.fn.urlize = function() {
         });
     }
 };
-$.fn.serializeObject = function()
-{
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
+//get cookie Value
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
