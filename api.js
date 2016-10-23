@@ -28,7 +28,7 @@ $(function() {
 function load_example_task(){
     addtask_template = Handlebars.templates['tmpl-add-task']
     $('#home').empty()
-    $('#home').append(addtask_template({"x":0,"y":0})
+    $('#home').append(addtask_template({"x":0,"y":0}))
 
     $('#addTask').click(function(){run_example_task();})
 }
