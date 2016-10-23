@@ -158,6 +158,7 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_resu
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data,html_result){
     console.log(JSON.stringify(data.result,null, 4));
+    $('#' + html_result).empty();
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
 //Cybercommons polling task status
