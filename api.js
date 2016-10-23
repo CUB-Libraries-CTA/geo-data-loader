@@ -168,7 +168,7 @@ function cybercom_poll(url,html_result){
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 general_status(data,html_result);
                 //Set timeout to 3 seconds
-                setTimeout(function() { cybercom_poll(url); }, 3000);
+                setTimeout(function() { cybercom_poll(url,html_result); }, 3000);
             };
             if (data.result.status=="SUCCESS"){
                 //cybercom_success used to adjust html items to allow user response
