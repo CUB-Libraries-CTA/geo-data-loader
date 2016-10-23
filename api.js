@@ -36,7 +36,7 @@ function run_example_task(){
     add_url = "http://biosurvey.ou.edu/api/queue/run/cybercomq.tasks.tasks.add/.json"
     task_name = "cybercomq.tasks.tasks.add"
     form_data=$('#addTaskForm').serializeObject()
-    cybercom_submit_task(add_url,task_name,[form_data.x,form_data.y],{})
+    cybercom_submit_task(add_url,task_name,[parseInt(form_data.x),parseInt(form_data.y)],{},"task_result")
 }
 function submit_user(){
     console.log(user_url)
@@ -143,7 +143,7 @@ function showResult(url){
     });
 }
 //Cybercommons example submit add task. 
-function cybercom_submit_task(task_url,task_name,task_args,task_kwargs){
+function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_result){
     //"cybercomq.tasks.tasks.add"
     //get and set task_data
     task_data = $.getCYBERCOM_JSON_OBJECT(task_name);
@@ -151,21 +151,22 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs){
     task_data.kwargs=task_kwargs;
     //call add task and poll for status
     $.postJSON(task_url,task_data,function(data){
-            cybercom_poll(data.result_url)
+            cybercom_poll(data.result_url,html_result)
     });
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
-function general_status(data){
+function general_status(data,html_result){
     console.log(JSON.stringify(data.result,null, 4));
+    $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
 //Cybercommons polling task status
-function cybercom_poll(url){
+function cybercom_poll(url,html_result){
     $.getJSON( url , function(data) {
             if (data.result.status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
-                general_status(data);
+                general_status(data,html_result);
                 //Set timeout to 3 seconds
                 setTimeout(function() { cybercom_poll(url); }, 3000);
             };
@@ -173,12 +174,12 @@ function cybercom_poll(url){
                 //cybercom_success used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 //          $('#task_result').urlize();
-                general_status(data);
+                general_status(data,html_result);
             };
             if (data.result.status=="FAILURE"){
                 //cybercom_fail used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
-                general_status(data);
+                general_status(data,html_result);
             };
        });
 }
