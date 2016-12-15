@@ -151,7 +151,8 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_resu
     task_data.kwargs=task_kwargs;
     //call add task and poll for status
     $.postJSON(task_url,task_data,function(data){
-            cybercom_poll(data.result_url,html_result)
+            cybercom_poll(data.result_url,html_result);
+            load_task_history(user_task_url);
     });
 }
 //Example general display status to console.log. Used in cybercom_poll!
