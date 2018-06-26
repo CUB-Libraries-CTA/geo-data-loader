@@ -33,8 +33,8 @@ function load_example_task(){
     $('#addTask').click(function(){run_example_task();})
 }
 function run_example_task(){
-    add_url = "/api/queue/run/cybercomq.tasks.tasks.add/.json"
-    task_name = "cybercomq.tasks.tasks.add"
+    add_url = "/api/queue/run/geoblacklightq.tasks.tasks.add/.json"
+    task_name = "geoblacklightq.tasks.tasks.add"
     form_data=$('#addTaskForm').serializeObject()
     cybercom_submit_task(add_url,task_name,[parseInt(form_data.x),parseInt(form_data.y)],{},"task_result")
 }
