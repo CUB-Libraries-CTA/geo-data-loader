@@ -1,6 +1,8 @@
 
   <div id="dropzone" class="center"><form action="/api/upload/" class="dropzone needsclick" id="geo-upload">
-
+      <div style="display:none">
+              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrftoken }}"/>
+     </div>
   <div class="dz-message needsclick center">
     <strong>Drop zip files here or click to upload.</strong><br />
   </div>
