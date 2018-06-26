@@ -1,4 +1,39 @@
-body {background-color:#ebebeb;}
+
+.center {
+    margin: auto;
+    width: 40%;
+    padding: 15 15 0 15px;
+}
+#dropzone {
+  border: 1px solid #606060;
+  margin:0 0 10 30;
+  width:80%;
+}
+.dropzone {
+  border: 2px dashed #606060;
+  border-radius: 10px;
+  background: white;
+  min-height: 100px;
+}
+.dropzone .dz-message {
+    font-weight: 400; }
+.dropzone .dz-message .note {
+      font-size: 0.8em;
+      font-weight: 200;
+      display: block;
+      margin-top: 1.4rem; }
+
+
+
+body {background-color:#606060;}
+
+.something {background-color: #ebebeb;}
+
+.navbar-default {
+    background-color: black;
+    border-color: transparent;
+}
+
 #user{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -6,11 +41,11 @@ body {background-color:#ebebeb;}
 .nav-tabs {
     margin-bottom: -1px;
 }
-a {
-    color:#1876BA;
+a { color:#cfb87c;}
+.something {    color:#1876BA;
 }
 .dropdown {
-  width:120%; 
+  width:120%;
 }/*
 .btn{
  width: 100%;
@@ -32,15 +67,15 @@ a {
 .tab-content {
     /*overflow-y:scroll;
     height: 100%; */
-    border-left: 1px solid #ccc ; 
+    border-left: 1px solid #ccc ;
     border-right: 1px solid #ccc;
     border-top:1px solid #ccc;
     padding:10px;
-    background-color:#ffffff;
+    background-color:#B8B8B8;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
 
-    background-color:#ffffff
+    background-color:#B8B8B8;
 }
 .next a {
     background-color: #ecf0f1 !important;

@@ -18,7 +18,7 @@ $(function() {
                     return JSON.stringify(context).replace(/"/g,'').replace(/\[/g,'').replace(/\]/g,'').replace(/,/g,', ');
                 }else{
                     return ""
-                } 
+                }
     });
     load_example_task();
     //$('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
@@ -87,7 +87,7 @@ function set_auth(base_url,login_url){
         user_template = Handlebars.templates['tmpl-user']
         $('#profile').append(user_template(data))
         $('#user_form').hide()
-        $('#view_form').show() 
+        $('#view_form').show()
         $('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
     })
     .fail(function() {
@@ -113,7 +113,7 @@ function load_task_history(url){
         temp=item.task_name.split('.')
         item['task_name']= temp[temp.length-1]
         item.timestamp = item.timestamp.substring(0,19).replace('T',' ')
-        $('#result_tbody').append(tr_template(item)) 
+        $('#result_tbody').append(tr_template(item))
     });
     });
 }
@@ -127,7 +127,7 @@ function setTaskDisplay(data){
             rec_end = data.count;
         }else{
             rec_end = data.meta.page_size*data.meta.page;
-        }   
+        }
         $('#task_count').text('Task ' + rec_start + ' - ' + rec_end  +  ' Total ' + data.count )
     }
 
@@ -142,7 +142,7 @@ function showResult(url){
         $("#myModal").modal('show');
     });
 }
-//Cybercommons example submit add task. 
+//Cybercommons example submit add task.
 function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_result){
     //"cybercomq.tasks.tasks.add"
     //get and set task_data
