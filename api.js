@@ -29,7 +29,11 @@ function load_example_task(){
     addtask_template = Handlebars.templates['tmpl-add-form']
     $('#home').empty()
     $('#home').append(addtask_template({"x":10,"y":10,"csrftoken":getCookie('csrftoken')}))
-
+    //Remove files after successfull upload
+    myDropzone =$('.dropzone')[0].dropzone
+    myDropzone.on("complete", function(file) {
+        myDropzone.removeFile(file);
+    });
     $('#addTask').click(function(){run_example_task();})
 }
 function run_example_task(){
