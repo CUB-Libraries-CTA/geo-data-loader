@@ -34,6 +34,9 @@ body {
    padding:10px;
    padding-bottom:60px;
 }
+.tab-pane{
+  padding-bottom: 50px;
+}
 .something {background-color: #ebebeb;}
 
 .navbar-default {
@@ -87,7 +90,7 @@ a:hover {
 .tabbable {
     margin: 10px;
     /*min-height: 300px;*/
-    overflow: hidden;
+    overflow: scroll;
     border-bottom: 1px solid #ccc;
 }
 
@@ -102,6 +105,7 @@ a:hover {
 .tab-content {
     /*overflow-y:scroll;
     height: 100%; */
+    margin-bottom:90px;
     border-left: 1px solid #ccc ;
     border-right: 1px solid #ccc;
     border-top:1px solid #ccc;
