@@ -7,10 +7,10 @@
 #dropzone {
   border: 1px solid #606060;
   margin:0 0 10 30;
-  width:80%;
+  width:50%;
 }
 .dropzone {
-  border: 2px dashed #606060;
+  border: 4px dashed #cfb87c;
   border-radius: 10px;
   background: white;
   min-height: 100px;
@@ -27,22 +27,52 @@
 
 
 body {background-color:#606060;}
-
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+   padding:10px;
+   padding-bottom:60px;
+}
 .something {background-color: #ebebeb;}
 
 .navbar-default {
     background-color: black;
     border-color: transparent;
 }
-
+.btn-primary {
+    color: black;
+    background-color: #cfb87c;
+    border-color: black;
+}
+.btn-primary:hover {
+    color: #cfb87c;
+    background-color: #565A5C;
+    border-color: #cfb87c;
+}
 #user{
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.active>a:hover {
+  color: white !important;
+}
+#user:hover{
+  color:#cfb87c !important;
+}
+.dropdown-menu>li>a:hover{
+  color:#cfb87c !important;
+}
 .nav-tabs {
     margin-bottom: -1px;
 }
+.navbar-header > a:hover {
+  color:#cfb87c !important;
+}
 a { color:#cfb87c;}
+a:hover {
+  color: #565A5C !important;
+}
 .something {    color:#1876BA;
 }
 .dropdown {
@@ -65,6 +95,10 @@ a { color:#cfb87c;}
     margin: 0
     margin-bottom:-1px;
 }
+.tabbable {
+  padding-bottom:80px;
+  height:100%;
+}
 .tab-content {
     /*overflow-y:scroll;
     height: 100%; */
@@ -72,12 +106,13 @@ a { color:#cfb87c;}
     border-right: 1px solid #ccc;
     border-top:1px solid #ccc;
     padding:10px;
-    background-color:#B8B8B8;
+    background-color:#b8b8b8;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
 
-    background-color:#B8B8B8;
+    background-color:#b8b8b8;
 }
+
 .next a {
     background-color: #ecf0f1 !important;
     color: #2d525d !important;
@@ -93,4 +128,19 @@ a { color:#cfb87c;}
 .img-container{
    text-align:bottom;
    margin: 0 0 0 20px;
+}
+
+.footer {
+   position:fixed;
+   bottom:0;
+   width:100%;
+   height:80px;
+   background-color: black;  /* Height of the footer */
+   color: #cfb87c;
+   overflow: hidden;
+   bottom: 0px;
+   left:0px;
+   border-top: 1px solid #cfb87c;
+   border-bottom: 1px solid #cfb87c;
+   padding:10px;
 }
