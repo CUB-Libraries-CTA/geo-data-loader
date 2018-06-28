@@ -21,13 +21,13 @@ $(function() {
                 }
     });
     load_example_task();
-    setTimeout(function(){
+    //setTimeout(function(){
       $('.dropzone')[0].dropzone.on("complete", function(file) {
           $('.dropzone')[0].dropzone.removeFile(file);
 
       });
       //your code here
-    }, 3000);
+    //}, 1000);
     //$('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
     //$('#user_form').submit(function(){var formData = JSON.parse($("#user_form").serializeArray());console.log(formData);return false;})
 });//End of Document Ready
