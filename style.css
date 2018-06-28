@@ -34,6 +34,12 @@ body {
    padding:10px;
    padding-bottom:60px;
 }
+#photo{
+  width: 200px;
+  background-color: #606060;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 #result_tbody{
   background-color: #919191;
 }
