@@ -30,7 +30,7 @@ function load_example_task(){
     $('#home').empty()
     $('#home').append(addtask_template({"x":10,"y":10,"csrftoken":getCookie('csrftoken')}))
     //Remove files after successfull upload
-    myDropzone =$('.dropzone')[0].dropzone
+    var myDropzone = $('.dropzone')[0].dropzone
     myDropzone.on("complete", function(file) {
         myDropzone.removeFile(file);
     });
