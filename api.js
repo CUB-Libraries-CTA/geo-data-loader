@@ -21,12 +21,13 @@ $(function() {
                 }
     });
     load_example_task();
-    //Remove files after successfull upload
-    var myDropzone = $('.dropzone')[0].dropzone;
-    console.log("shit",myDropzone);
-    myDropzone.on("complete", function(file) {
-        myDropzone.removeFile(file);
-    });
+    setTimeout(function(){
+      $('.dropzone')[0].dropzone.on("complete", function(file) {
+          $('.dropzone')[0].dropzone.removeFile(file);
+
+      });
+      //your code here
+    }, 3000);
     //$('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
     //$('#user_form').submit(function(){var formData = JSON.parse($("#user_form").serializeArray());console.log(formData);return false;})
 });//End of Document Ready
@@ -35,7 +36,6 @@ function load_example_task(){
     addtask_template = Handlebars.templates['tmpl-add-form']
     $('#home').empty()
     $('#home').append(addtask_template({"x":10,"y":10,"csrftoken":getCookie('csrftoken')}))
-
     $('#addTask').click(function(){run_example_task();})
 
 }
