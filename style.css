@@ -34,6 +34,9 @@ body {
    padding:10px;
    padding-bottom:60px;
 }
+#result_tbody{
+  background-color: #606060;
+}
 .tab-pane{
   padding-bottom: 50px;
 }
