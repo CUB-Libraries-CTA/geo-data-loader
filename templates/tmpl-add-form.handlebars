@@ -27,7 +27,12 @@
             this.on("success",function(file,response){
               console.log(response);
               load_task_history(user_task_url);
-            })
+              showResult(response.callback.result_url);
+            });
+            this.on("error", function(file){
+              if (!file.accepted){alert("File must be a zipfile.");}
+              this.removeFile(file);
+            });
           }
       });
 </script>
