@@ -10,6 +10,17 @@
     <strong>Drop zip files here or click to upload.</strong>
   </div>
 </form></div>
+<script>
+      $("#dropzone").dropzone({
+          maxFilesize: 10000,
+          uploadMultiple: false,
+          addRemoveLinks: true
+          acceptedFiles: ".zip"
+      });
+      $("#dropzone").dropzone.on("complete", function(file) {
+          $("#dropzone").dropzone.removeFile(file);
+      });
+</script>
 <h3> Example Add Task </h3>
 <form id="addTaskForm" class="form-stacked">
     <fieldset>
@@ -26,4 +37,4 @@
     </div>
     </fieldset>
 </form>
-<div class="col-md-4"><pre id="task_result"></pre></div>
+<div class="col-md-6"><pre id="task_result"></pre></div>
