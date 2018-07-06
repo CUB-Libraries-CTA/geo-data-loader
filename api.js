@@ -20,7 +20,8 @@ $(function() {
                     return ""
                 }
     });
-    load_example_task();
+    load_dropzone("geoblacklightq.tasks.workflow.resetSolrIndex","resetSolrIndex")
+    //load_example_task();
     //setTimeout(function(){
     //  $('.dropzone')[0].dropzone.on("complete", function(file) {
     //      $('.dropzone')[0].dropzone.removeFile(file);
@@ -31,7 +32,11 @@ $(function() {
     //$('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
     //$('#user_form').submit(function(){var formData = JSON.parse($("#user_form").serializeArray());console.log(formData);return false;})
 });//End of Document Ready
-
+function load_dropzone(task,tags){
+  dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
+  $('#home').empty()
+  $('#home').append(dropzone_tmpl({"csrftoken":getCookie('csrftoken'),"task":task,"tags":tags}))
+}
 function load_example_task(){
     addtask_template = Handlebars.templates['tmpl-add-form']
     $('#home').empty()
