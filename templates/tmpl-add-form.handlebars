@@ -1,17 +1,21 @@
 
-  <div id="dropzone" class="center"><form action="/api/upload/" class="dropzone needsclick" id="geo-upload">
-      <div style="display:none">
-              <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrftoken }}"/>
+<div id="dropzone1" class="center">
+  <form id="dropzone" action="/api/upload/" class="dropzone needsclick" >
+     <div style="display:none">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrftoken }}"/>
      </div>
      <div style="display:none">
-              <input type="hidden" name="callback" value="geoblacklightq.tasks.workflow.resetSolrIndex"/>
-     </div>
-  <div class="dz-message needsclick center">
-    <strong>Drop zip files here or click to upload.</strong>
-  </div>
-</form></div>
+            <input type="hidden" name="callback" value="geoblacklightq.tasks.workflow.resetSolrIndex"/>
+    </div>
+    <div class="dz-message needsclick center">
+      <strong>Drop zip files here or click to upload.</strong>
+    </div>
+  </form>
+</div>
 <script>
+      Dropzone.autoDiscover = false;
       $("#dropzone").dropzone({
+          url: "/api/upload/",
           maxFilesize: 10000,
           uploadMultiple: false,
           addRemoveLinks: true,
