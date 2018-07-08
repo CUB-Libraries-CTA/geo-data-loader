@@ -20,17 +20,8 @@ $(function() {
                     return ""
                 }
     });
-    load_dropzone("geoblacklightq.tasks.workflow.resetSolrIndex","resetSolrIndex")
+    load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader")
     //load_example_task();
-    //setTimeout(function(){
-    //  $('.dropzone')[0].dropzone.on("complete", function(file) {
-    //      $('.dropzone')[0].dropzone.removeFile(file);
-
-    //  });
-      //your code here
-    //}, 1000);
-    //$('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
-    //$('#user_form').submit(function(){var formData = JSON.parse($("#user_form").serializeArray());console.log(formData);return false;})
 });//End of Document Ready
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
