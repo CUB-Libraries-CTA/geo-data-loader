@@ -194,6 +194,7 @@ function general_wait(data,html_result){
 }
 //Cybercommons polling task status
 function cybercom_poll(url,html_result){
+    console.log(url,html_result);
     $.getJSON( url , function(data) {
             if (data.result.status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
