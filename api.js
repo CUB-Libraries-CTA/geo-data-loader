@@ -195,25 +195,33 @@ function children_poll(children,html_result){
 function general_wait(data,html_result){
   $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
+function check_status(data){
+  if (data.result.hasOwnProperty('status')){
+    return data.result.status
+  } else if ( data.hasOwnProperty('status') ){
+    return data.status;
+  }
+}
 //Cybercommons polling task status
 function cybercom_poll(url,html_result){
     console.log(url,html_result);
     $.getJSON( url , function(data) {
             console.log("Result: ",data);
-            if (data.result.status=="PENDING"){
+            status = check_status(data);
+            if (status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 general_wait(data,html_result);
                 //Set timeout to 3 seconds
                 setTimeout(function() { cybercom_poll(url,html_result); }, 3000);
             };
-            if (data.result.status=="SUCCESS"){
+            if (status=="SUCCESS"){
                 //cybercom_success used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 //          $('#task_result').urlize();
                 general_status(data,html_result);
             };
-            if (data.result.status=="FAILURE"){
+            if (status=="FAILURE"){
                 //cybercom_fail used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 general_wait(data,html_result);
