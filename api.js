@@ -176,18 +176,21 @@ function general_status(data,html_result){
       $('#home').append(geolibrary_tmpl({"jsonData":data.result.geoblacklightschema,"urlxmlfgdc":urlxmlfgdc}))
     }
     if (data.result.hasOwnProperty('children')){
+      console.log('childrenresult')
+      children_poll(data.result.children,url,html_result)
+    }else (data.hasOwnProperty('children')){
       console.log('children')
-      if (data.result.children.length>0){
-        console.log('children yes [[[]]]')
-        if (data.result.status=="SUCCESS"){
-          url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
-          console.log(url);
-          cybercom_poll(url,html_result);
-        }
-
-      }
+      children_poll(data.children,url,html_result)
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
+}
+function children_poll(children,url,html_result){
+  if (children.length>0){
+      console.log('children yes [[[]]]')
+      url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
+      console.log(url);
+      cybercom_poll(url,html_result);
+  }
 }
 function general_wait(data,html_result){
   $('#' + html_result).append(JSON.stringify(data.result,null, 4));
