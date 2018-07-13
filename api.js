@@ -187,7 +187,7 @@ function general_status(data,html_result){
 function children_poll(children,html_result){
   if (children.length>0){
       console.log('children yes [[[]]]')
-      url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
+      url =base_url + "/queue/task/" + children[0][0][0] + "/.json";
       console.log(url);
       cybercom_poll(url,html_result);
   }
