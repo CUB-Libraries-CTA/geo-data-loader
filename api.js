@@ -181,6 +181,7 @@ function general_status(data,html_result){
         console.log('children yes [[[]]]')
         if (data.result.status=="SUCCESS"){
           url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
+          console.log(url);
           cybercom_poll(url,html_result);
         }
 
