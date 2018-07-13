@@ -19,6 +19,14 @@
              <option value="Restricted">Restricted</option>
          </select>
        </div>
+       <div class="form-group">
+         <label for="discipline">Disciplines (Subject Categories)</label>
+         <div class="input-group discipline-group">
+           <input class="form-control discipline" id="discipline0" name="discipline0">
+           <span id="editDiscipline" class="btn input-group-addon">Edit</span>
+           <span id="deleteDiscipline" class="btn input-group-addon">X</span>
+         </div><button type="button" class="btn btn-sm" id="addDiscipline">Add Discipline</button>
+       </div>
        <div >
          <input type="text" name="dc_subject_sm"
          value="{% for item in data.dc_subject_sm %}
