@@ -174,7 +174,7 @@ function general_status(data,html_result){
       geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
       $('#home').append(geolibrary_tmpl({"jsonData":data.results.geoblacklightschema,"urlxmlfgdc":urlxmlfgdc}))
     }
-    if 'children' in data.results{
+    if ('children' in data.results){
       if (!data.results.children==[]){
         if (data.result.status=="SUCCESS"){
           url =base_url + "/queue/task/" + data.results.children[0][0][0] + "/.json";
