@@ -196,10 +196,10 @@ function general_wait(data,html_result){
   $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
 function check_status(data){
-  if (data.result.hasOwnProperty('status')){
-    return data.result.status
-  } else if ( data.hasOwnProperty('status') ){
-    return data.status;
+  if (data.hasOwnProperty('status')){
+    return data.status
+  } else if ( data.result.hasOwnProperty('status') ){
+    return data.result.status;
   }
 }
 //Cybercommons polling task status
