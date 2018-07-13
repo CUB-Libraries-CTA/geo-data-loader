@@ -176,7 +176,9 @@ function general_status(data,html_result){
       $('#home').append(geolibrary_tmpl({"jsonData":data.result.geoblacklightschema,"urlxmlfgdc":urlxmlfgdc}))
     }
     if (data.result.hasOwnProperty('children')){
-      if (!data.result.children==[]){
+      console.log('children')
+      if (data.result.children.length>0){
+        console.log('children yes [[[]]]')
         if (data.result.status=="SUCCESS"){
           url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
           cybercom_poll(url,html_result);
