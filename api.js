@@ -196,6 +196,7 @@ function general_wait(data,html_result){
 function cybercom_poll(url,html_result){
     console.log(url,html_result);
     $.getJSON( url , function(data) {
+            console.log("Result: ",data.result);
             if (data.result.status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
