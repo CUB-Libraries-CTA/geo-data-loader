@@ -178,9 +178,9 @@ function general_status(data,html_result){
     if (data.result.hasOwnProperty('children')){
       console.log('childrenresult')
       children_poll(data.result.children,url,html_result)
-    }else (data.hasOwnProperty('children')){
-      console.log('children')
-      children_poll(data.children,url,html_result)
+    } else if ( data.hasOwnProperty('children') ){
+      console.log('children');
+      children_poll(data.children,url,html_result);
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
