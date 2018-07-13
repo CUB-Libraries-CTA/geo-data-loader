@@ -180,7 +180,7 @@ function general_status(data,html_result){
       if (data.result.children.length>0){
         console.log('children yes [[[]]]')
         if (data.result.status=="SUCCESS"){
-          url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
+          url =base_url + "/queue/task/" + data.result.children[0][0][0];
           console.log(url);
           cybercom_poll(url,html_result);
         }
