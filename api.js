@@ -185,13 +185,16 @@ function general_status(data,html_result){
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
+function general_wait(data,html_result){
+  $('#' + html_result).append(JSON.stringify(data.result,null, 4));
+}
 //Cybercommons polling task status
 function cybercom_poll(url,html_result){
     $.getJSON( url , function(data) {
             if (data.result.status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
-                general_status(data,html_result);
+                general_wait(data,html_result);
                 //Set timeout to 3 seconds
                 setTimeout(function() { cybercom_poll(url,html_result); }, 3000);
             };
@@ -204,7 +207,7 @@ function cybercom_poll(url,html_result){
             if (data.result.status=="FAILURE"){
                 //cybercom_fail used to adjust html items to allow user response
                 //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
-                general_status(data,html_result);
+                general_wait(data,html_result);
             };
        });
 }
