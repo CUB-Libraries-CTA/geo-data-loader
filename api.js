@@ -139,7 +139,7 @@ function setTaskDisplay(data){
 function showResult(url){
   $('#myModalbody').empty();
   $("#myModalbody").html("Checking Workflow status");
-  cybercom_poll(url,"myModalbody");
+  cybercom_poll(url + ".json","myModalbody");
     //myModalLabel -->title
     /*$.getJSON(url + ".json" , function(data){
         json_data = JSON.stringify(data,null, 4);
@@ -180,7 +180,7 @@ function general_status(data,html_result){
       if (data.result.children.length>0){
         console.log('children yes [[[]]]')
         if (data.result.status=="SUCCESS"){
-          url =base_url + "/queue/task/" + data.result.children[0][0][0];
+          url =base_url + "/queue/task/" + data.result.children[0][0][0] + "/.json";
           console.log(url);
           cybercom_poll(url,html_result);
         }
