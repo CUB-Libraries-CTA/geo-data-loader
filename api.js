@@ -165,7 +165,7 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_resu
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data,html_result){
     console.log(JSON.stringify(data.result,null, 4));
-    if ('geoblacklightschema' in data.results){
+    if (data.results.hasOwnProperty('geoblacklightschema')){
       urlxmlfgdc=""
       if (data.results.xml.urls.length>0){
         urlxmlfgdc=data.results.xml.urls[0]
@@ -174,7 +174,7 @@ function general_status(data,html_result){
       geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
       $('#home').append(geolibrary_tmpl({"jsonData":data.results.geoblacklightschema,"urlxmlfgdc":urlxmlfgdc}))
     }
-    if ('children' in data.results){
+    if (data.results.hasOwnProperty('children')){
       if (!data.results.children==[]){
         if (data.result.status=="SUCCESS"){
           url =base_url + "/queue/task/" + data.results.children[0][0][0] + "/.json";
