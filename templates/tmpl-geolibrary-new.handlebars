@@ -15,6 +15,7 @@
       mode: 'tree',
       modes: ['code', 'form', 'text', 'tree', 'view'], // allowed modes
       onError: function (err) {
+        console.log(err)
         alert(err.toString());
       },
       onChange: function () {
