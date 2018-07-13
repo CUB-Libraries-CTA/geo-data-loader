@@ -20,7 +20,8 @@ $(function() {
                     return ""
                 }
     });
-    load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader")
+    load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader");
+    jsonData = {};
     //load_example_task();
 });//End of Document Ready
 function load_dropzone(task,tags){
@@ -171,9 +172,10 @@ function general_status(data,html_result){
       if (data.result.xml.urls.length>0){
         urlxmlfgdc=data.result.xml.urls[0]
       }
+      jsonData = data.result.geoblacklightschema;
       $('#dropzone').hide()
       geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
-      $('#home').append(geolibrary_tmpl({"jsonData":data.result.geoblacklightschema,"urlxmlfgdc":urlxmlfgdc}))
+      $('#home').append(geolibrary_tmpl({"urlxmlfgdc":urlxmlfgdc}))
     }
     if (data.result.hasOwnProperty('children')){
       console.log('childrenresult')
