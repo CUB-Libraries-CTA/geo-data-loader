@@ -3,6 +3,29 @@
     <div class="col-sm-6" >
       <!--<iframe id="frame" src="{{ urlxmlfgdc }}" width="100%" height="1000">
      </iframe>-->
+     <form id="geoblacklightform" action="" class="" >
+       <div style="display:none">
+         <input type="hidden" name="dct_references_s" value="{{ data.dct_references_s }}"/>
+       </div>
+       <div style="display:none">
+         <input type="hidden" name="uuid" value="{{ data.uuid }}"/>
+       </div>
+       <div style="display:none">
+         <input type="hidden" name="layer_id_s" value="{{ data.layer_id_s }}"/>
+       </div>
+       <div>
+         <select name="dc_rights_s" value={{ data.dc_rights_s }}>
+             <option value="Public">Public</option>
+             <option value="Restricted">Restricted</option>
+         </select>
+       </div>
+       <div >
+         <input type="text" name="dc_subject_sm"
+         value="{% for item in data.dc_subject_sm %}
+                 {{item}}{% if not loop.last %},{% endif %}
+                 {% endfor %}"/>
+       </div>
+     </form>
     </div>
     <div id="jsoneditor" class="col-sm-6" >
 
