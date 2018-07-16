@@ -195,7 +195,7 @@ function serilize_formdata(formid){
   delete data.dc_subject_sm1
   delete data.dc_creator_sm1
   $('#myModalbody').empty();
-  json_data = JSON.stringify(data,null, indent=4;
+  json_data = JSON.stringify(data,null, indent=4);
   $("#myModalbody").html(json_data);
   $("#myModalbody").urlize();
   $("#myModal").modal('show');
