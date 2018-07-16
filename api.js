@@ -176,6 +176,11 @@ function loadxmlLoad(url,textarea_id){
         var xmlText = new XMLSerializer().serializeToString(xml);
         $('#' + textarea_id).text(xmlText);
     },
+  })
+  .done(function( data ) {
+    if ( console && console.log ) {
+      console.log( "Sample of data:", data.slice( 0, 100 ) );
+    }
   });
 
 }
