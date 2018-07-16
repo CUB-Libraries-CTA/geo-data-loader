@@ -178,9 +178,9 @@ function loadxmlLoad(url,textarea_id){
     },
   })
   .done(function( data ) {
-    if ( console && console.log ) {
-      console.log( "Sample of data:", data.slice( 0, 100 ) );
-    }
+
+    var xmlText = new XMLSerializer().serializeToString(data);
+    //$('#' + textarea_id).text(xmlText);
   });
 
 }
