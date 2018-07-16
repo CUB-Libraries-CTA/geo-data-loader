@@ -194,7 +194,11 @@ function serilize_formdata(formid){
   delete data.dct_temporal_sm1
   delete data.dc_subject_sm1
   delete data.dc_creator_sm1
-  console.log(JSON.stringify(data,null, indent=4))
+  $('#myModalbody').empty();
+  json_data = JSON.stringify(data,null, indent=4;
+  $("#myModalbody").html(json_data);
+  $("#myModalbody").urlize();
+  $("#myModal").modal('show');
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
