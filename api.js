@@ -169,6 +169,9 @@ function xmlLoad(url,textarea_id){
     url: url,
     cache: false,
     dataType: "xml",
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+     alert(textStatus);
+   },
     success: function(xml) {
         var xmlText = new XMLSerializer().serializeToString(xml);
         $('#' + textarea_id).append(xmlText);
@@ -179,7 +182,7 @@ function xmlLoad(url,textarea_id){
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data,html_result){
-    console.log(JSON.stringify(data.result,null, 4));
+    //console.log(JSON.stringify(data.result,null, 4));
 
     if (data.result.hasOwnProperty('geoblacklightschema')){
       urlxmlfgdc=""
@@ -195,8 +198,9 @@ function general_status(data,html_result){
       geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
       geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
+      console.log("xmlurl: ", urlxmlfgdc);
       xmlLoad(urlxmlfgdc,"xmlfile")
-      
+
     }
     if (data.result.hasOwnProperty('children')){
       console.log('childrenresult')
