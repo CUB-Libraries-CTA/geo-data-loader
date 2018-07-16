@@ -163,7 +163,8 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_resu
     });
 }
 
-function xmlLoad(url,textarea_id){
+function loadxmlLoad(url,textarea_id){
+  console.log("here")
   $.ajax({
     type: "GET",
     url: url,
@@ -199,23 +200,23 @@ function general_status(data,html_result){
       geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
       console.log("xmlurl: ", urlxmlfgdc);
-      xmlLoad(urlxmlfgdc,"xmlfile")
+      loadxmlLoad(urlxmlfgdc,"xmlfile");
 
     }
     if (data.result.hasOwnProperty('children')){
-      console.log('childrenresult')
+      //console.log('childrenresult')
       children_poll(data.result.children,html_result)
     } else if ( data.hasOwnProperty('children') ){
-      console.log('children');
+      //console.log('children');
       children_poll(data.children,html_result);
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
 function children_poll(children,html_result){
   if (children.length>0){
-      console.log('children yes [[[]]]')
+      //console.log('children yes [[[]]]')
       url =base_url + "/queue/task/" + children[0][0][0] + "/.json";
-      console.log(url);
+      //console.log(url);
       cybercom_poll(url,html_result);
   }
 }
@@ -231,9 +232,9 @@ function check_status(data){
 }
 //Cybercommons polling task status
 function cybercom_poll(url,html_result){
-    console.log(url,html_result);
+    //console.log(url,html_result);
     $.getJSON( url , function(data) {
-            console.log("Result: ",data);
+            //console.log("Result: ",data);
             status = check_status(data);
             if (status=="PENDING"){
                 //cybercom_pending used to adjust html items to allow user response
