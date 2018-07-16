@@ -181,7 +181,8 @@ function loadxmlLoad(url,textarea_id){
 }
 
 function serilize_formdata(formid){
-  console.log(JSON.stringify($('#geoblacklight_form').serializeObject(),indent=4))
+  data=$('#geoblacklight_form').serializeObject()
+  console.log(JSON.stringify(data,indent=4))
   return false;
 
 }
