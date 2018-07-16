@@ -177,11 +177,11 @@ function loadxmlLoad(url,textarea_id){
         $('#' + textarea_id).text(xmlText);
     },
   })
-  .done(function( data ) {
 
-    var xmlText = new XMLSerializer().serializeToString(data);
-    //$('#' + textarea_id).text(xmlText);
-  });
+}
+
+function serilize_formdata(formid){
+  console.log($('#' + formid).serializeObject())
 
 }
 //Example general display status to console.log. Used in cybercom_poll!
@@ -205,6 +205,7 @@ function general_status(data,html_result){
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
       console.log("xmlurl: ", urlxmlfgdc);
       loadxmlLoad(urlxmlfgdc,"xmlfilexml");
+      $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
 
     }
     if (data.result.hasOwnProperty('children')){
