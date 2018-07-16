@@ -170,15 +170,12 @@ function loadxmlLoad(url,textarea_id){
     url: url,
     cache: false,
     dataType: "xml",
-    error: function(XMLHttpRequest, textStatus, errorThrown) {
-     alert(textStatus);
-   },
     success: function(xml) {
         console.log("success:",url,textarea_id)
         console.log(xml);
         var xmlText = new XMLSerializer().serializeToString(xml);
         $('#' + textarea_id).append(xmlText);
-    }
+    },
   });
 
 }
