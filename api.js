@@ -147,6 +147,7 @@ function showResult(url){
 }
 //Cybercommons task result showResult()
 function showChildResult(url){
+  console.log("showChildResult");
   $('#myModalbody').empty();
   $("#myModalbody").html("Checking Workflow status");
   cybercom_poll(url + ".json","myModalbody");
