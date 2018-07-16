@@ -30,24 +30,24 @@
          <input type="hidden" name="dc_type_s" value="{{ data.dc_type_s }}"/>
        </div>
 
-         <div class="form-group">
-           <label for="dc_title_s">Title</label>
-           <input type="text" name="dc_title_s"value="{{ data.dc_title_s }}"/>
+         <div class="form-group" >
+           <label for="dc_title_s" >Title</label>
+           <input type="text" class="form-control" name="dc_title_s"value="{{ data.dc_title_s }}"/>
          <div>
          <div class="form-group">
            <label for="dc_description_s">Description</label>
-           <textarea name="dc_description_s" rows="10" cols="60">{{ data.dc_description_s }}</textarea>
+           <textarea name="dc_description_s" class="form-control" rows="10" cols="60">{{ data.dc_description_s }}</textarea>
          <div>
            <div class="form-group">
              <label for="dc_rights_s">Rights</label>
-             <select name="dc_rights_s" value={{ data.dc_rights_s }}>
+             <select name="dc_rights_s" class="form-control" value={{ data.dc_rights_s }}>
                  <option value="Public">Public</option>
                  <option value="Restricted">Restricted</option>
              </select>
           </div>
           <div class="form-group">
              <label for="layer_geom_type_s">Geometry Type</label>
-             <select name="layer_geom_type_s" value={{ data.layer_geom_type_s}}>
+             <select class="form-control" name="layer_geom_type_s" value={{ data.layer_geom_type_s}}>
                  <option value="Polygon">Polygon</option>
                  <option value="Raster">Raster</option>
                  <option value="Point">Point</option>
@@ -59,7 +59,7 @@
            </div>
            <div class="form-group">
               <label for="dc_format_s">File Format</label>
-              <select name="dc_format_s" value={{ data.dc_format_s}}>
+              <select  class="form-control" name="dc_format_s" value={{ data.dc_format_s}}>
                   <option value="Shapefile">Shapefile</option>
                   <option value="GeoTiff">GeoTiff</option>
                   <option value="Scanned Map">Scanned Map</option>
@@ -68,31 +68,32 @@
             </div>
            <div class="form-group">
              <label for="dc_publisher_s">Publisher</label>
-             <input type="text" name="dc_publisher_s"value="{{ data.dc_publisher_s }}"/>
+             <input class="form-control" type="text" name="dc_publisher_s"value="{{ data.dc_publisher_s }}"/>
           </div>
 
             <div class="form-group">
                 <label for="dct_issued_s">Date Issued</label>
-                <input type="text" name="dct_issued_s"value="{{ data.dct_issued_s }}"/>
+                <input class="form-control" type="text" name="dct_issued_s"value="{{ data.dct_issued_s }}"/>
              </div>
              <div class="form-group">
                <label for="dc_creator_sm1">Creator List</label>
-               <input type="text" name="dc_creator_sm1"value="{{ data.dc_creator_sm1 }}"/>
+               <input class="form-control" type="text" name="dc_creator_sm1"value="{{ data.dc_creator_sm1 }}"/>
             </div>
             <div class="form-group">
               <label for="dc_subject_sm1">Subject List</label>
-              <input type="text" name="dc_subject_sm1"value="{{ data.dc_subject_sm1}}"/>
+              <input class="form-control" type="text" name="dc_subject_sm1"value="{{ data.dc_subject_sm1}}"/>
            </div>
            <div class="form-group">
              <label for="dct_temporal_sm1">Temporal List</label>
-             <input type="text" name="dct_temporal_sm1"value="{{ data.dct_temporal_sm1 }}"/>
+             <input class="form-control" type="text" name="dct_temporal_sm1"value="{{ data.dct_temporal_sm1 }}"/>
           </div>
           <div class="form-group">
             <label for="dct_spatial_sm1">Spatial List</label>
-            <input type="text" name="dct_spatial_sm1"value="{{ data.dct_spatial_sm1 }}"/>
+            <input class="form-control" type="text" name="dct_spatial_sm1"value="{{ data.dct_spatial_sm1 }}"/>
          </div>
      </form>
     </div>
+  </div>
     <div id="jsoneditor" class="col-sm-6" ></div>
   </div>
 </div>
