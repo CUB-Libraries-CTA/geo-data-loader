@@ -181,7 +181,8 @@ function loadxmlLoad(url,textarea_id){
 }
 
 function serilize_formdata(formid){
-  console.log($('#' + formid).serializeObject())
+  console.log($('#geoblacklightform').serializeObject())
+  return false;
 
 }
 //Example general display status to console.log. Used in cybercom_poll!
