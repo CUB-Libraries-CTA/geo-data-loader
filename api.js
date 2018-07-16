@@ -174,6 +174,8 @@ function loadxmlLoad(url,textarea_id){
      alert(textStatus);
    },
     success: function(xml) {
+        console.log("success:",url,textarea_id)
+        console.log(xml);
         var xmlText = new XMLSerializer().serializeToString(xml);
         $('#' + textarea_id).append(xmlText);
     }
