@@ -169,8 +169,7 @@ function loadxmlLoad(url,textarea_id){
     type: "GET",
     url: url,
     cache: false,
-    dataType: "xml",
-    success: function(xml) {
+    Success: function(xml) {
         console.log("success:",url,textarea_id)
         console.log(xml);
         var xmlText = new XMLSerializer().serializeToString(xml);
