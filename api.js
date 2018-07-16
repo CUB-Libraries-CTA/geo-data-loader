@@ -136,18 +136,20 @@ function setTaskDisplay(data){
     }
 
 }
-//Cybercommons task result showResult()
 function showResult(url){
+  $('#myModalbody').empty();
+  $.getJSON(url + ".json" , function(data){
+      json_data = JSON.stringify(data,null, 4);
+      $("#myModalbody").html(json_data);
+      $("#myModalbody").urlize();
+      $("#myModal").modal('show');
+  });
+}
+//Cybercommons task result showResult()
+function showChildResult(url){
   $('#myModalbody').empty();
   $("#myModalbody").html("Checking Workflow status");
   cybercom_poll(url + ".json","myModalbody");
-    //myModalLabel -->title
-    /*$.getJSON(url + ".json" , function(data){
-        json_data = JSON.stringify(data,null, 4);
-        $("#myModalbody").html(json_data);
-        $("#myModalbody").urlize();
-        $("#myModal").modal('show');
-    });*/
 }
 //Cybercommons example submit add task.
 function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_result){
@@ -181,7 +183,7 @@ function loadxmlLoad(url,textarea_id){
 }
 
 function serilize_formdata(formid){
-  data=$('#geoblacklight_form').serializeObject()
+  data=$('#geoblacklightform').serializeObject()
   console.log(JSON.stringify(data,indent=4))
   return false;
 
@@ -207,7 +209,7 @@ function general_status(data,html_result){
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
       console.log("xmlurl: ", urlxmlfgdc);
       loadxmlLoad(urlxmlfgdc,"xmlfilexml");
-      $('#getblight').click(function(){serilize_formdata("geoblacklight_form");});
+      $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
 
     }
     if (data.result.hasOwnProperty('children')){
