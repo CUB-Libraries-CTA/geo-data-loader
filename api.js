@@ -162,6 +162,20 @@ function cybercom_submit_task(task_url,task_name,task_args,task_kwargs,html_resu
             load_task_history(user_task_url);
     });
 }
+
+function xmlLoad(url,textarea_id){
+  $.ajax({
+    type: "GET",
+    url: url,
+    cache: false,
+    dataType: "xml",
+    success: function(xml) {
+        var xmlText = new XMLSerializer().serializeToString(xml);
+        $('#' + textarea_id).append(xmlText);
+    }
+  });
+
+}
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data,html_result){
@@ -180,8 +194,9 @@ function general_status(data,html_result){
       geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join('|')
       geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
       geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
-
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
+      xmlLoad(urlxmlfgdc,"xmlfile")
+      
     }
     if (data.result.hasOwnProperty('children')){
       console.log('childrenresult')
