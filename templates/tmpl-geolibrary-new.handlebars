@@ -1,8 +1,6 @@
 <div class="">
   <div class="row">
-    <div class="col-sm-6" >
-      <!--<iframe id="frame" src="{{ urlxmlfgdc }}" width="100%" height="1000">
-     </iframe>-->
+    <div class="col-sm-6">
      <form id="geoblacklightform" action="" class="" >
        <div style="display:none">
          <input type="hidden" name="dct_references_s" value="{{ data.dct_references_s }}"/>
@@ -11,33 +9,91 @@
          <input type="hidden" name="uuid" value="{{ data.uuid }}"/>
        </div>
        <div style="display:none">
+         <input type="hidden" name="dc_identifier_s" value="{{ data.dc_identifier_s }}"/>
+       </div>
+       <div style="display:none">
          <input type="hidden" name="layer_id_s" value="{{ data.layer_id_s }}"/>
        </div>
-       <div>
-         <select name="dc_rights_s" value={{ data.dc_rights_s }}>
-             <option value="Public">Public</option>
-             <option value="Restricted">Restricted</option>
-         </select>
+       <div style="display:none">
+         <input type="hidden" name="dc_language_s" value="{{ data.dc_language_s }}"/>
        </div>
-       <div class="form-group">
-         <label for="discipline">Disciplines (Subject Categories)</label>
-         <div class="input-group discipline-group">
-           <input class="form-control discipline" id="discipline0" name="discipline0">
-           <span id="editDiscipline" class="btn input-group-addon">Edit</span>
-           <span id="deleteDiscipline" class="btn input-group-addon">X</span>
-         </div><button type="button" class="btn btn-sm" id="addDiscipline">Add Discipline</button>
+       <div style="display:none">
+         <input type="hidden" name="dct_provenance_s" value="{{ data.dct_provenance_s }}"/>
        </div>
-       <div >
-         <input type="text" name="dc_subject_sm"
-         value="{% for item in data.dc_subject_sm %}
-                 {{item}}{% if not loop.last %},{% endif %}
-                 {% endfor %}"/>
+       <div style="display:none">
+         <input type="hidden" name="dct_type_s" value="{{ data.dct_type_s }}"/>
        </div>
+       <div style="display:none">
+         <input type="hidden" name="layer_slug_s" value="{{ data.layer_slug_s }}"/>
+       </div>
+       <div style="display:none">
+         <input type="hidden" name="dc_type_s" value="{{ data.dc_type_s }}"/>
+       </div>
+
+         <div class="form-group">
+           <label for="dc_title_s">Title</label>
+           <input type="text" name="dc_title_s"value="{{ data.dc_title_s }}"/>
+         <div>
+         <div class="form-group">
+           <label for="dc_description_s">Description</label>
+           <textarea name="dc_description_s" rows="10" cols="60">{{ data.dc_description_s }}</textarea>
+         <div>
+           <div class="form-group">
+             <label for="dc_rights_s">Rights</label>
+             <select name="dc_rights_s" value={{ data.dc_rights_s }}>
+                 <option value="Public">Public</option>
+                 <option value="Restricted">Restricted</option>
+             </select>
+          </div>
+          <div class="form-group">
+             <label for="layer_geom_type_s">Geometry Type</label>
+             <select name="layer_geom_type_s" value={{ data.layer_geom_type_s}}>
+                 <option value="Polygon">Polygon</option>
+                 <option value="Raster">Raster</option>
+                 <option value="Point">Point</option>
+                 <option value="Line">Line</option>
+                 <option value="Image">Image</option>
+                 <option value="Mixed">Mixed</option>
+                 <option value="Paper Map">Paper Map</option>
+             </select>
+           </div>
+           <div class="form-group">
+              <label for="dc_format_s">File Format</label>
+              <select name="dc_format_s" value={{ data.dc_format_s}}>
+                  <option value="Shapefile">Shapefile</option>
+                  <option value="GeoTiff">GeoTiff</option>
+                  <option value="Scanned Map">Scanned Map</option>
+                  <option value="File">File</option>
+              </select>
+            </div>
+           <div class="form-group">
+             <label for="dc_publisher_s">Publisher</label>
+             <input type="text" name="dc_publisher_s"value="{{ data.dc_publisher_s }}"/>
+          </div>
+
+            <div class="form-group">
+                <label for="dct_issued_s">Date Issued</label>
+                <input type="text" name="dct_issued_s"value="{{ data.dct_issued_s }}"/>
+             </div>
+             <div class="form-group">
+               <label for="dc_creator_sm1">Creator List</label>
+               <input type="text" name="dc_creator_sm1"value="{{ data.dc_creator_sm1 }}"/>
+            </div>
+            <div class="form-group">
+              <label for="dc_subject_sm1">Subject List</label>
+              <input type="text" name="dc_subject_sm1"value="{{ data.dc_subject_sm1}}"/>
+           </div>
+           <div class="form-group">
+             <label for="dct_temporal_sm1">Temporal List</label>
+             <input type="text" name="dct_temporal_sm1"value="{{ data.dct_temporal_sm1 }}"/>
+          </div>
+          <div class="form-group">
+            <label for="dct_spatial_sm1">Spatial List</label>
+            <input type="text" name="dct_spatial_sm1"value="{{ data.dct_spatial_sm1 }}"/>
+         </div>
      </form>
     </div>
-    <div id="jsoneditor" class="col-sm-6" >
-
-    </div>
+    <div id="jsoneditor" class="col-sm-6" ></div>
   </div>
 </div>
 <script>

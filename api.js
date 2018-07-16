@@ -175,7 +175,13 @@ function general_status(data,html_result){
       jsonData = data.result.geoblacklightschema;
       $('#dropzone').hide()
       geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
-      $('#home').append(geolibrary_tmpl({"urlxmlfgdc":urlxmlfgdc}))
+      geoschema = data.result.geoblacklightschema
+      geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join('|')
+      geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join('|')
+      geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
+      geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
+
+      $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
     }
     if (data.result.hasOwnProperty('children')){
       console.log('childrenresult')
