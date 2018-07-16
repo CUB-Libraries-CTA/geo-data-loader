@@ -181,7 +181,7 @@ function loadxmlLoad(url,textarea_id){
 }
 
 function serilize_formdata(formid){
-  console.log($('#geoblacklightform').serializeObject())
+  console.log(JSON.stringigy($('#geoblacklight_form').serializeObject(),indent=4))
   return false;
 
 }
@@ -206,7 +206,7 @@ function general_status(data,html_result){
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
       console.log("xmlurl: ", urlxmlfgdc);
       loadxmlLoad(urlxmlfgdc,"xmlfilexml");
-      $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
+      $('#getblight').click(function(){serilize_formdata("geoblacklight_form");});
 
     }
     if (data.result.hasOwnProperty('children')){
