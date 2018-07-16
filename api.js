@@ -169,7 +169,8 @@ function loadxmlLoad(url,textarea_id){
     type: "GET",
     url: url,
     cache: false,
-    Success: function(xml) {
+    dataType: "xml",
+    success: function(xml) {
         console.log("success:",url,textarea_id)
         console.log(xml);
         var xmlText = new XMLSerializer().serializeToString(xml);
@@ -198,7 +199,7 @@ function general_status(data,html_result){
       geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
       $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
       console.log("xmlurl: ", urlxmlfgdc);
-      loadxmlLoad(urlxmlfgdc,"xmlfile");
+      loadxmlLoad(urlxmlfgdc,"xmlfilexml");
 
     }
     if (data.result.hasOwnProperty('children')){
