@@ -7,6 +7,7 @@ $(function() {
     user_task_url = base_url + "/queue/usertasks/.json?page_size=10";
     user_url = base_url + "/user/?format=json";
     prevlink=null;nextlink=null;
+    geoschema={};
     set_auth(base_url,login_url);
     $("#aprofile").click(function(){activaTab('profile')})
     $("#alogout").click(function(){window.location = logout_url.concat(document.URL);})
@@ -185,9 +186,15 @@ function loadxmlLoad(url,textarea_id){
 
 function serilize_formdata(formid){
   data=$('#geoblacklightform').serializeObject()
-  console.log(JSON.stringify(data,indent=4))
-  return false;
-
+  data.dc_creator_sm = data.dc_creator_sm1.split('|')
+  data.dc_subject_sm = data.dc_subject_sm1.split('|')
+  data.dct_temporal_sm = data.dct_temporal_sm1.split('|')
+  data.dct_spatial_sm =data.dct_spatial_sm1.split('|')
+  delete data.dct_spatial_sm1
+  delete data.dct_temporal_sm1
+  delete data.dc_subject_sm1
+  delete data.dc_creator_sm1
+  console.log(JSON.stringify(data,null, indent=4))
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
