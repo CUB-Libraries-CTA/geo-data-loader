@@ -177,7 +177,10 @@ function loadxmlLoad(url,textarea_id){
     success: function(xml) {
         console.log("success:",url,textarea_id)
         console.log(xml);
-        var xmlText = new XMLSerializer().serializeToString(xml);
+        before='<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output omit-xml-declaration="yes" indent="yes"/>'
+        after = '</xsl:stylesheet>'
+        var xmlText = new XMLSerializer().serializeToString(before + xml + after);
+
         $('#' + textarea_id).text(xmlText);
     },
   })
@@ -212,17 +215,21 @@ function general_status(data,html_result){
       }
       jsonData = data.result.geoblacklightschema;
       $('#dropzone').hide()
-      geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
-      geoschema = data.result.geoblacklightschema
-      geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join('|')
-      geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join('|')
-      geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
-      geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
-      $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
-      console.log("xmlurl: ", urlxmlfgdc);
-      loadxmlLoad(urlxmlfgdc,"xmlfilexml");
-      $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
-
+      url="https://geo.colorado.edu/geoserver/rest/workspaces/geocolorado/datastores.json"
+      //$.getJSON(url,function(data){
+      //  alert(JSON.stringify(data,null,indent=4));
+        //geoserver/rest/workspaces/geocolorado/datastores/Boulder_Co_Tracts/featuretypes/Boulder_Co_Tracts.json
+        geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
+        geoschema = data.result.geoblacklightschema
+        geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join('|')
+        geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join('|')
+        geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
+        geoschema.dct_spatial_sm1 =geoschema.dct_spatial_sm.join('|')
+        $('#home').append(geolibrary_tmpl({"data":geoschema,"urlxmlfgdc":urlxmlfgdc}))
+        console.log("xmlurl: ", urlxmlfgdc);
+        loadxmlLoad(urlxmlfgdc,"xmlfilexml");
+        $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
+      //})
     }
     if (data.result.hasOwnProperty('children')){
       //console.log('childrenresult')
