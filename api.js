@@ -175,11 +175,11 @@ function loadxmlLoad(url,textarea_id){
     cache: false,
     dataType: "xml",
     success: function(xml) {
-        console.log("success:",url,textarea_id)
-        console.log(xml);
-        before='<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output omit-xml-declaration="yes" indent="yes"/>'
-        after = '</xsl:stylesheet>'
-        var xmlText = new XMLSerializer().serializeToString(before + xml + after);
+        //console.log("success:",url,textarea_id)
+        //console.log(xml);
+        //before='<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output omit-xml-declaration="yes" indent="yes"/>'
+        //after = '</xsl:stylesheet>'
+        var xmlText = new XMLSerializer().serializeToString(xml);
 
         $('#' + textarea_id).text(xmlText);
     },
