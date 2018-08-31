@@ -42,6 +42,9 @@ function load_metadata(){
 
     });
 }
+function editMetadata(catalog_id){
+    alert(catalog_id);
+}
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
   $('#home').empty()
