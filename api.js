@@ -21,10 +21,26 @@ $(function() {
                     return ""
                 }
     });
+    load_metadata();
     load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader");
     jsonData = {};
     //load_example_task();
 });//End of Document Ready
+function load_metadata(){
+    main_tmpl= Handlebars.templates['tmpl-main-geoedit'];
+    tr_template = Handlebars.templates['tmpl-main-tr'];
+    $('#dataitems').empty();
+    $('#dataitems').append(main_tmpl({}));
+    catalog_url= '/api/catalog/data/catalog/geoportal/.json';
+    $.getJSON(catalog_url,function(data){
+        $('#tablebody').empty();
+        $.each(data.results,function(idx,item){
+            console.log(item);
+            $('#tablebody').append(tr_template(item));
+        });
+
+    });
+}
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
   $('#home').empty()
