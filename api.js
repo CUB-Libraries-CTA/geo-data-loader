@@ -48,7 +48,7 @@ function editMetadata(catalog_id){
     $.getJSON(url + "/.json" , function(data){
         json_data = JSON.stringify(data,null, 4);
         $("#myModalbody").html(json_data);
-        $("#myModalbody").urlize();
+        //$("#myModalbody").urlize();
         $("#myModal").modal('show');
     });
     //alert(catalog_id);
