@@ -44,8 +44,8 @@ function load_metadata(){
 }
 function editMetadata(catalog_id){
     $('#myModalbody').empty();
-    url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
-    $.getJSON(url + ".json" , function(data){
+    url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
+    $.getJSON(url + "/.json" , function(data){
         json_data = JSON.stringify(data,null, 4);
         $("#myModalbody").html(json_data);
         $("#myModalbody").urlize();
