@@ -28,15 +28,16 @@ $(function() {
 });//End of Document Ready
 function load_metadata(){
     main_tmpl= Handlebars.templates['tmpl-main-geoedit'];
-    tr_template = Handlebars.templates['tmpl-main-tr'];
+
     $('#dataitems').empty();
     $('#dataitems').append(main_tmpl({}));
     catalog_url= '/api/catalog/data/catalog/geoportal/.json';
+    $('#tablebody').empty();
     $.getJSON(catalog_url,function(data){
-        $('#tablebody').empty();
+        tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
             console.log(item);
-            $('#tablebody').append(tr_template(item));
+            $('#tablebody').append(tr_templates(item));
         });
 
     });
