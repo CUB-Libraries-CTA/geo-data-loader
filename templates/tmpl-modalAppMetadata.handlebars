@@ -1,0 +1,19 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="myModalLabel">{{ modal_name }}</h3>
+      </div>
+      <div class="modal-body">
+        <textarea  id="myMetadataModalbody" rows="40" cols="" style="width:100%;">{{ modal_data }}</textarea>
+      </div>
+      <div class="modal-footer">
+          <div id=ModalFooter style="float:right;">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}')">Edit</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

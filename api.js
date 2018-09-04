@@ -43,9 +43,23 @@ function load_metadata(){
     });
 }
 function editMetadata(catalog_id){
-    $('#myMetadataModalbody').empty();
+    $('#modals').empty();
+    task_template = Handlebars.templates['tmpl-modalAppMetadata']
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
+        json_data = JSON.stringify(data,null, 4);
+        tmpdata = {"_id":catalog_id,"modal_data":json_data,"modal_name":data.dc_title_s}
+        $('#modals').append(task_template(tmpdata))
+        //$("#myModalbody").show()
+        //$("#myMetadataModalbody").hide()
+        //$("#myModalLabel").text("Task Result")
+        //$("#myModalbody").html(json_data);
+        //$("#myModalbody").urlize();
+        $("#myModal").modal('show');
+    });
+    //$('#myMetadataModalbody').empty();
+    //url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
+    /*$.getJSON(url + "/.json" , function(data){
         json_data = JSON.stringify(data,null, 4);
         $("#myModalbody").hide()
         $("#myMetadataModalbody").show()
@@ -53,7 +67,7 @@ function editMetadata(catalog_id){
         $("#myMetadataModalbody").append(json_data);
         //$("#myModalbody").urlize();
         $("#myModal").modal('show');
-    });
+    });*/
     //alert(catalog_id);
 }
 function reIndexAll(){
@@ -189,19 +203,27 @@ function setTaskDisplay(data){
 
 }
 function showResult(url){
-  $('#myModalbody').empty();
+
+  $('#modals').empty();
+  task_template = Handlebars.templates['tmpl-modalAppTaskResult']
   $.getJSON(url + ".json" , function(data){
       json_data = JSON.stringify(data,null, 4);
-      $("#myModalbody").show()
-      $("#myMetadataModalbody").hide()
-      $("#myModalLabel").text("Task Result")
-      $("#myModalbody").html(json_data);
+      tmpdata = {"modal_data":json_data,"modal_name":"Task Result"}
+      $('#modals').append(task_template(tmpdata))
+      //$("#myModalbody").show()
+      //$("#myMetadataModalbody").hide()
+      //$("#myModalLabel").text("Task Result")
+      //$("#myModalbody").html(json_data);
       $("#myModalbody").urlize();
       $("#myModal").modal('show');
   });
 }
 //Cybercommons task result showResult()
 function showChildResult(url){
+  $('#modals').empty();
+  task_template = Handlebars.templates['tmpl-modalAppTaskResult']
+  tmpdata = {"modal_name":"Task Result"}
+  $('#modals').append(task_template(tmpdata))
   console.log("showChildResult");
   $('#myModalbody').empty();
   $("#myModalbody").html("Checking Workflow status");
