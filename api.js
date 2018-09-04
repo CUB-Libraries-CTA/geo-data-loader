@@ -57,13 +57,21 @@ function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $.getJSON(url, function(data){
         index_data= $.map(data.results,function(n,i){
-            n.id=n._id; return n;
+            n.id=n._id;delete n._id; return n;
         });
-        json_data = JSON.stringify(index_data,null, 4);
-        $("#myModalbody").html(json_data);
+        postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
+        postdata.args=[index_data];
+        taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex';
+        //(url, data, callback,fail)
+        $.postJSON(taskurl,postdata,reIndexCallback)
+        //json_data = JSON.stringify(index_data,null, 4);
+        //$("#myModalbody").html(json_data);
         //$("#myModalbody").urlize();
-        $("#myModal").modal('show');
+        //$("#myModal").modal('show');
     });
+}
+function reIndexCallback(data,textStatus,xhr){
+    alert(textStatus,JSON.stringify(data,null,4));
 }
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
