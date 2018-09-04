@@ -342,7 +342,7 @@ $.postJSON = function(url, data, callback,fail) {
         'type': 'POST',
         'url': url,
         'contentType': 'application/json',
-        'data': data,
+        'data': JSON.stringify(data),
         'dataType': 'json',
         'success': callback,
         'error':fail,
