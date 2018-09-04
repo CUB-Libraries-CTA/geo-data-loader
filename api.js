@@ -43,13 +43,13 @@ function load_metadata(){
     });
 }
 function editMetadata(catalog_id){
-    $('#myModalbody').empty();
+    $('#myMetadataModalbody').empty();
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
         json_data = JSON.stringify(data,null, 4);
-        $("#myModalbody").html(json_data);
+        $("#myMetadataModalbody").append(json_data);
         //$("#myModalbody").urlize();
-        $("#myModal").modal('show');
+        $("#myMetadataModal").modal('show');
     });
     //alert(catalog_id);
 }
@@ -71,7 +71,7 @@ function reIndexAll(){
     });
 }
 function reIndexCallback(data,textStatus,xhr){
-    alert(textStatus,JSON.stringify(data,null,4));
+    alert(JSON.stringify(data,null,4));
 }
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
