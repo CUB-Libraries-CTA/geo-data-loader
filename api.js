@@ -49,7 +49,7 @@ function editMetadata(catalog_id){
         json_data = JSON.stringify(data,null, 4);
         $("#myModalbody").hide()
         $("#myMetadataModalbody").show()
-        $("#myModalLabel").text("Solr Index Metadata")
+        $("#myModalLabel").text(data.dc_title_s)
         $("#myMetadataModalbody").append(json_data);
         //$("#myModalbody").urlize();
         $("#myModal").modal('show');
@@ -192,6 +192,9 @@ function showResult(url){
   $('#myModalbody').empty();
   $.getJSON(url + ".json" , function(data){
       json_data = JSON.stringify(data,null, 4);
+      $("#myModalbody").show()
+      $("#myMetadataModalbody").hide()
+      $("#myModalLabel").text("Task Result")
       $("#myModalbody").html(json_data);
       $("#myModalbody").urlize();
       $("#myModal").modal('show');
