@@ -61,7 +61,7 @@ function reIndexAll(){
         });
         postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
         postdata.args=[index_data];
-        taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex';
+        taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
         //(url, data, callback,fail)
         $.postJSON(taskurl,postdata,reIndexCallback)
         //json_data = JSON.stringify(index_data,null, 4);
