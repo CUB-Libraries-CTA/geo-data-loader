@@ -47,9 +47,12 @@ function editMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
         json_data = JSON.stringify(data,null, 4);
+        $("#myModalbody").hide()
+        $("#myMetadataModalbody").show()
+        $("#myModalLabel").text("Solr Index Metadata")
         $("#myMetadataModalbody").append(json_data);
         //$("#myModalbody").urlize();
-        $("#myMetadataModal").modal('show');
+        $("#myModal").modal('show');
     });
     //alert(catalog_id);
 }
