@@ -57,7 +57,7 @@ function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $.getJSON(url, function(data){
         index_data= $.map(data.results,function(n,i){
-            n.id=n._id;delete n._id; return n;
+            n.id=n._id;delete n._id;delete n.id; return n;
         });
         postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
         postdata.args=[index_data];
