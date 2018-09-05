@@ -112,7 +112,9 @@ function reIndexAll(){
     });
 }
 function reIndexCallback(data,textStatus,xhr){
-    alert(JSON.stringify(data,null,4));
+    url = data.result_url
+    showChildResult(url)
+    //alert(JSON.stringify(data,null,4));
 }
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
