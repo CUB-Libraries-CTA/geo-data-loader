@@ -35,9 +35,9 @@ function load_metadata(){
     catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $('#tablebody').empty();
     $('#submitSearch').click(function(){run_search();})
-    $("#submitSearch").keyup(function(event){
+    $("#search").keyup(function(event){
         if(event.keyCode == 13){
-            $("#submitSearch").click();
+            run_search();
         }
     });
     $.getJSON(catalog_url,function(data){
