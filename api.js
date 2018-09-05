@@ -61,11 +61,11 @@ function saveMetadata(catalog_id){
     data._id=catalog_id;
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
-    taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
-    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
-    postdata.args=[[data]];
-    $.postJSON(taskurl,postdata,reIndexCallback)
-    //reIndexAll();
+    //taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
+    //postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
+    //postdata.args=[[data]];
+    //$.postJSON(taskurl,postdata,reIndexCallback)
+    reIndexAll();
 }
 function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
