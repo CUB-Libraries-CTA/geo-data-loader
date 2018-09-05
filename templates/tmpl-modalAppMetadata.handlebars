@@ -6,12 +6,12 @@
         <h3 class="modal-title" id="myModalLabel">{{ modal_name }}</h3>
       </div>
       <div class="modal-body">
-        <textarea  id="myMetadataModalbody" rows="40" cols="" style="width:100%;">{{ modal_data }}</textarea>
+        <textarea  id="myMetadataModalbody" rows="30" cols="" style="width:100%;padding:10px;">{{ modal_data }}</textarea>
       </div>
       <div class="modal-footer">
           <div id=ModalFooter style="float:right;">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
-              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}')">Edit</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
+              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}')">Update Index</button>
           </div>
       </div>
     </div>

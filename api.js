@@ -47,7 +47,7 @@ function editMetadata(catalog_id){
     task_template = Handlebars.templates['tmpl-modalAppMetadata']
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
-        json_data = JSON.stringify(data,null, 4);
+        json_data = JSON.stringify(objectWithKeySorted(data),null, 4);
         tmpdata = {"_id":catalog_id,"modal_data":json_data,"modal_name":data.dc_title_s}
         $('#modals').append(task_template(tmpdata))
         //$("#myModalbody").show()
@@ -378,6 +378,14 @@ $.postJSON = function(url, data, callback,fail) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
     });
+}
+
+function objectWithKeySorted(object) {
+  var result = {};
+  _.forEach(Object.keys(object).sort(), function(key) {
+    result[key] = object[key];
+  });
+  return result;
 }
 //Used to serialize form object to get form data
 $.fn.serializeObject = function()
