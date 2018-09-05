@@ -87,7 +87,9 @@ function saveMetadata(catalog_id){
         alert(err.message);
         return;
     }
-    data._id=catalog_id;
+    if (catalog_id != ''){
+        data._id=catalog_id;
+    }
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
     setTimeout('', 3000);
@@ -321,15 +323,28 @@ function serilize_formdata(formid){
   data.dc_subject_sm = data.dc_subject_sm1.split('|')
   data.dct_temporal_sm = data.dct_temporal_sm1.split('|')
   data.dct_spatial_sm =data.dct_spatial_sm1.split('|')
+  geoserver_layers = JSON.parse(data.geoserver_layers);
+  delete data.geoserver_layers
   delete data.dct_spatial_sm1
   delete data.dct_temporal_sm1
   delete data.dc_subject_sm1
   delete data.dc_creator_sm1
-  $('#myModalbody').empty();
-  json_data = JSON.stringify(data,null, indent=4);
-  $("#myModalbody").html(json_data);
-  $("#myModalbody").urlize();
+  data.dc_identifier_s = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
+  data.layer_slug_s = "cub:" + geoserver_layers.name.split(':')[1]
+  data.solr_geom = geoserver_layers.boundbox
+  zipfile = "zipfile.zip"
+  data.dct_references_s = "{\"http://schema.org/downloadUrl\":\"https://geo.colorado.edu/apps/geolibrary/datasets/" + zipfile +  "\",\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geo.colorado.edu/geoserver/geocolorado/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geo.colorado.edu/geoserver/geocolorado/wms\"}"
+  data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
+  data.layer_id_s = geoserver_layers.name.split(':')[1]
+  data.dc_type_s = "Dataset"
+  delete data.dct_type_s
+  $('#modals').empty();
+  task_template = Handlebars.templates['tmpl-modalAppMetadata']
+  json_data = JSON.stringify(objectWithKeySorted(data),null, 4);
+  tmpdata = {"modal_data":json_data,"modal_name":data.dc_title_s};
+  $('#modals').append(task_template(tmpdata));
   $("#myModal").modal('show');
+
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
