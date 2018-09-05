@@ -51,7 +51,13 @@ function load_metadata(){
 }
 function run_search(){
     $('#tablebody').empty();
-    catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ $('#search').val() +'"}}}&page_size=0';
+    search = $('#search').val();
+    if (search=="" || search=="*"){
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
+    } else{
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"}}}&page_size=0';
+    }
+
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
