@@ -113,8 +113,8 @@ function reIndexAll(){
 }
 function reIndexCallback(data,textStatus,xhr){
     url = data.result_url
-    showChildResult(url)
-    //alert(JSON.stringify(data,null,4));
+    //showChildResult(url)
+    alert("Updated Solr Index");
 }
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
