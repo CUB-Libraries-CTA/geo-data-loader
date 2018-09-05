@@ -1,0 +1,6 @@
+<label for="geoserver_layers">Select GeoServer Layer</label>
+<select name="geoserver_layers" class="form-control">
+    {{#each layers}}
+    <option value="{{ this.objct_string }}">{{ this.name }}</option>
+    {{/each}}
+</select>

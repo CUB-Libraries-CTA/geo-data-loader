@@ -112,6 +112,29 @@ function reIndexAll(){
         //$("#myModal").modal('show');
     });
 }
+function poll_layers(url){
+    $.getJSON(url,function(data){
+        status = check_status(data);
+        if (status=="PENDING"){
+            setTimeout(function() { poll_layers(url); }, 3000);
+        };
+        if (status=="SUCCESS"){
+            select_tmpl = Handlebars.templates['tmpl-geoserver-select']
+            layers=[]
+            for itm in data.results:
+                itm.objct_string = JSON.stringify(itm)
+                layers.append(itm)
+            $("#geolayers").append(select_tmpl({"layers":layers}))
+        };
+        if (status=="FAILURE"){
+            alert("Task Failure occured load Geoserver Layers. Please try again.");
+        };
+    })
+}
+function loadGeoServerMetadata(data,textStatus,xhr){
+    poll_layers(data.result_url);
+
+}
 function reIndexCallback(data,textStatus,xhr){
     url = data.result_url
     showChildResult(url);
@@ -333,6 +356,11 @@ function general_status(data,html_result){
         console.log("xmlurl: ", urlxmlfgdc);
         loadxmlLoad(urlxmlfgdc,"xmlfilexml");
         $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
+        //get geoserver data
+        postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata");
+        taskurl='/api/queue/run/geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata/';
+        //(url, data, callback,fail)
+        $.postJSON(taskurl,postdata,loadGeoServerMetadata)
       //})
     }
     if (data.result.hasOwnProperty('children')){
