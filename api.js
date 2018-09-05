@@ -90,6 +90,7 @@ function saveMetadata(catalog_id){
     data._id=catalog_id;
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
+    setTimeout('', 3000);
     reIndexAll();
     $("#myModal").modal('hide');
 }
