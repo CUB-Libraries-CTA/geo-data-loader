@@ -121,7 +121,7 @@ function poll_layers(url){
         if (status=="SUCCESS"){
             select_tmpl = Handlebars.templates['tmpl-geoserver-select']
             layers=[];
-            $.each(data.results,function(idx,itm){
+            $.each(data.result.result,function(idx,itm){
                 itm.objct_string = JSON.stringify(itm);
                 layers.push(itm);
             });
