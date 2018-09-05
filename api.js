@@ -8,6 +8,7 @@ $(function() {
     user_task_url = base_url + "/queue/usertasks/.json?page_size=10";
     user_url = base_url + "/user/?format=json";
     prevlink=null;nextlink=null;
+    zipurl="zipfile.zip"
     geoschema={};
     set_auth(base_url,login_url);
     $("#aprofile").click(function(){activaTab('profile')})
@@ -332,8 +333,7 @@ function serilize_formdata(formid){
   data.dc_identifier_s = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
   data.layer_slug_s = "cub:" + geoserver_layers.name.split(':')[1]
   data.solr_geom = geoserver_layers.boundbox
-  zipfile = "zipfile.zip"
-  data.dct_references_s = "{\"http://schema.org/downloadUrl\":\"https://geo.colorado.edu/apps/geolibrary/datasets/" + zipfile +  "\",\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geo.colorado.edu/geoserver/geocolorado/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geo.colorado.edu/geoserver/geocolorado/wms\"}"
+  data.dct_references_s = "{\"http://schema.org/downloadUrl\":\"https://geo.colorado.edu/apps/geolibrary/datasets/" + zipurl +  "\",\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geo.colorado.edu/geoserver/geocolorado/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geo.colorado.edu/geoserver/geocolorado/wms\"}"
   data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
   data.layer_id_s = geoserver_layers.name.split(':')[1]
   data.dc_type_s = "Dataset"
@@ -356,6 +356,10 @@ function general_status(data,html_result){
       if (data.result.xml.urls.length>0){
         urlxmlfgdc=data.result.xml.urls[0]
       }
+      if (data.result.hasOwnProperty('zipurl')){
+          zipurl = data.result.zipurl
+        }
+      console.log(zipurl);
       jsonData = data.result.geoblacklightschema;
       $('#dropzone').hide()
       url="https://geo.colorado.edu/geoserver/rest/workspaces/geocolorado/datastores.json"
