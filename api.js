@@ -48,28 +48,20 @@ function editMetadata(catalog_id){
     task_template = Handlebars.templates['tmpl-modalAppMetadata']
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
+        delete data._id;
         json_data = JSON.stringify(objectWithKeySorted(data),null, 4);
-        tmpdata = {"_id":catalog_id,"modal_data":json_data,"modal_name":data.dc_title_s}
-        $('#modals').append(task_template(tmpdata))
-        //$("#myModalbody").show()
-        //$("#myMetadataModalbody").hide()
-        //$("#myModalLabel").text("Task Result")
-        //$("#myModalbody").html(json_data);
-        //$("#myModalbody").urlize();
+        tmpdata = {"_id":catalog_id,"modal_data":json_data,"modal_name":data.dc_title_s};
+        $('#modals').append(task_template(tmpdata));
         $("#myModal").modal('show');
     });
-    //$('#myMetadataModalbody').empty();
-    //url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
-    /*$.getJSON(url + "/.json" , function(data){
-        json_data = JSON.stringify(data,null, 4);
-        $("#myModalbody").hide()
-        $("#myMetadataModalbody").show()
-        $("#myModalLabel").text(data.dc_title_s)
-        $("#myMetadataModalbody").append(json_data);
-        //$("#myModalbody").urlize();
-        $("#myModal").modal('show');
-    });*/
-    //alert(catalog_id);
+
+}
+function saveMetadata(catalog_id){
+    data= JSON.parse($("#myMetadataModalbody").text());
+    data._id=catalog_id
+    url = '/api/catalog/data/catalog/geoportal/.json';
+    $.postJSON(url,data);
+    reIndexAll();
 }
 function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
