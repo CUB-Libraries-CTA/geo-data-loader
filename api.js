@@ -1,4 +1,3 @@
-import _ from 'lodash';
 $(function() {
 
     //Customize by setting base_url to cybercom/api docker application
