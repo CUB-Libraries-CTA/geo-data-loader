@@ -120,11 +120,12 @@ function poll_layers(url){
         };
         if (status=="SUCCESS"){
             select_tmpl = Handlebars.templates['tmpl-geoserver-select']
-            layers=[]
-            for itm in data.results:
-                itm.objct_string = JSON.stringify(itm)
-                layers.append(itm)
-            $("#geolayers").append(select_tmpl({"layers":layers}))
+            layers=[];
+            $.each(data.results,function(idx,itm){
+                itm.objct_string = JSON.stringify(itm);
+                layers.push(itm);
+            });
+            $("#geolayers").append(select_tmpl({"layers":layers}));
         };
         if (status=="FAILURE"){
             alert("Task Failure occured load Geoserver Layers. Please try again.");
