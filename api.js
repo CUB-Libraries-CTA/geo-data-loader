@@ -81,13 +81,19 @@ function editMetadata(catalog_id){
 
 }
 function saveMetadata(catalog_id){
-    data= JSON.parse($("#myMetadataModalbody").val());
+    try {
+        data= JSON.parse($("#myMetadataModalbody").val());
+    }catch(err) {
+        alert(err.message);
+        return;
+    }
     data._id=catalog_id;
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
     reIndexAll();
     $("#myModal").modal('hide');
 }
+
 function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $.getJSON(url, function(data){
