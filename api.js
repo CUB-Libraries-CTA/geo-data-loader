@@ -35,6 +35,11 @@ function load_metadata(){
     catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $('#tablebody').empty();
     $('#submitSearch').click(function(){run_search();})
+    $("#submitSearch").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#submitSearch").click();
+        }
+    });
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
