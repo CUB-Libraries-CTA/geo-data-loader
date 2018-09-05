@@ -252,6 +252,7 @@ function showChildResult(url){
   $('#modals').append(task_template(tmpdata))
   console.log("showChildResult");
   $('#myModalbody').empty();
+  $("#myModal").modal('show');
   $("#myModalbody").html("Checking Workflow status");
   cybercom_poll(url + ".json","myModalbody");
 }
