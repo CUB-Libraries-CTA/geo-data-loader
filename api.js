@@ -1,5 +1,6 @@
+import _ from 'lodash';
 $(function() {
-    import _ from 'lodash';
+
     //Customize by setting base_url to cybercom/api docker application
     base_url = "/api";
     //No other alterations is need to get the standard applicaiton running!
