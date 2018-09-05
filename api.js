@@ -63,7 +63,7 @@ function saveMetadata(catalog_id){
     $.postJSON(url,data);
     taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
     postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
-    postdata.args=[data];
+    postdata.args=[[data]];
     $.postJSON(taskurl,postdata,reIndexCallback)
     //reIndexAll();
 }
