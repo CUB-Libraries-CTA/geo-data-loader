@@ -57,8 +57,8 @@ function editMetadata(catalog_id){
 
 }
 function saveMetadata(catalog_id){
-    data= JSON.parse($("#myMetadataModalbody").text());
-    data._id=catalog_id
+    data= JSON.parse($("#myMetadataModalbody").val());
+    data._id=catalog_id;
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
     reIndexAll();
