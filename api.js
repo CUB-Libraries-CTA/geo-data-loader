@@ -32,8 +32,21 @@ function load_metadata(){
 
     $('#dataitems').empty();
     $('#dataitems').append(main_tmpl({}));
-    catalog_url= '/api/catalog/data/catalog/geoportal/.json';
+    catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
     $('#tablebody').empty();
+    $('#submitSearch').click(function(){run_search();})
+    $.getJSON(catalog_url,function(data){
+        tr_templates = Handlebars.templates['tmpl-main-tr'];
+        $.each(data.results,function(idx,item){
+            console.log(item);
+            $('#tablebody').append(tr_templates(item));
+        });
+
+    });
+}
+function run_search(){
+    $('#tablebody').empty();
+    catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ $('#search').val() +'"}}}&page_size=0';
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
@@ -61,11 +74,8 @@ function saveMetadata(catalog_id){
     data._id=catalog_id;
     url = '/api/catalog/data/catalog/geoportal/.json';
     $.postJSON(url,data);
-    //taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
-    //postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
-    //postdata.args=[[data]];
-    //$.postJSON(taskurl,postdata,reIndexCallback)
     reIndexAll();
+    $("#myModal").modal('hide');
 }
 function reIndexAll(){
     url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
