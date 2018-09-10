@@ -83,8 +83,8 @@ function editMetadata(catalog_id){
 
 }
 function deleteMetadata(catalog_id){
-    url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
-    $.getJSON(url + '/.json', function(data){
+    url = '/api/catalog/data/catalog/geoportal/';
+    $.getJSON(url + catalog_id + '/.json', function(data){
         data.status="notindexed";
         $.postJSON(url + '/.json',data,reIndexAll);
     })
