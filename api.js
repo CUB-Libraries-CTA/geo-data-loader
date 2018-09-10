@@ -86,7 +86,7 @@ function deleteMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
     getJSON(url + '/.json', function(data){
         data.status="notindexed";
-        $.postJSON(url,data);
+        $.postJSON(url,data,reIndexAll);
     })
     //$.deleteJSON(url,{});
 }
@@ -102,14 +102,14 @@ function saveMetadata(catalog_id){
         data._id=catalog_id;
     }
     url = '/api/catalog/data/catalog/geoportal/.json';
-    $.postJSON(url,data);
-    setTimeout('', 3000);
-    reIndexAll();
+    $.postJSON(url,data,reIndexAll);
+    //setTimeout('', 3000);
+    //reIndexAll();
     $("#myModal").modal('hide');
 }
 
 function reIndexAll(){
-    url = '/api/catalog/data/catalog/geoportal/.json?page_size=0';
+    url = '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     $.getJSON(url, function(data){
         index_data= $.map(data.results,function(n,i){
             n.id=n._id;delete n._id;delete n.id; return n;
