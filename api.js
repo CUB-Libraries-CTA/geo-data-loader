@@ -33,7 +33,7 @@ function load_metadata(){
 
     $('#dataitems').empty();
     $('#dataitems').append(main_tmpl({}));
-    catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
+
     $('#tablebody').empty();
     $('#submitSearch').click(function(){run_search();})
     $("#search").keyup(function(event){
@@ -41,6 +41,7 @@ function load_metadata(){
             run_search();
         }
     });
+    catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
@@ -54,9 +55,9 @@ function run_search(){
     $('#tablebody').empty();
     search = $('#search').val();
     if (search=="" || search=="*"){
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?page_size=0';
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     } else{
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"}}}&page_size=0';
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$ne":"notindexed"}}}&page_size=0';
     }
 
     $.getJSON(catalog_url,function(data){
@@ -81,6 +82,15 @@ function editMetadata(catalog_id){
     });
 
 }
+function deleteMetadata(catalog_id){
+    url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
+    getJSON(url + '/.json', function(data){
+        data.status="notindexed";
+        $.postJSON(url,data);
+    })
+    //$.deleteJSON(url,{});
+}
+
 function saveMetadata(catalog_id){
     try {
         data= JSON.parse($("#myMetadataModalbody").val());
@@ -444,6 +454,20 @@ $.getCYBERCOM_JSON_OBJECT = function(task_name){
 $.postJSON = function(url, data, callback,fail) {
     return jQuery.ajax({
         'type': 'POST',
+        'url': url,
+        'contentType': 'application/json',
+        'data': JSON.stringify(data),
+        'dataType': 'json',
+        'success': callback,
+        'error':fail,
+        'beforeSend':function(xhr, settings){
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    });
+}
+$.deleteJSON = function(url, data, callback,fail) {
+    return jQuery.ajax({
+        'type': 'DELETE',
         'url': url,
         'contentType': 'application/json',
         'data': JSON.stringify(data),
