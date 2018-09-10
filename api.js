@@ -86,7 +86,7 @@ function deleteMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
     $.getJSON(url + '/.json', function(data){
         data.status="notindexed";
-        $.postJSON(url,data,reIndexAll);
+        $.postJSON(url + '/.json',data,reIndexAll);
     })
     //$.deleteJSON(url,{});
 }
@@ -119,6 +119,7 @@ function reIndexAll(){
         taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
         //(url, data, callback,fail)
         $.postJSON(taskurl,postdata,reIndexCallback)
+        run_search();
         //json_data = JSON.stringify(index_data,null, 4);
         //$("#myModalbody").html(json_data);
         //$("#myModalbody").urlize();
