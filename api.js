@@ -84,7 +84,7 @@ function editMetadata(catalog_id){
 }
 function deleteMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/' + catalog_id;
-    getJSON(url + '/.json', function(data){
+    $.getJSON(url + '/.json', function(data){
         data.status="notindexed";
         $.postJSON(url,data,reIndexAll);
     })
