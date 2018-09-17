@@ -140,6 +140,7 @@ function poll_layers(url){
             setTimeout(function() { poll_layers(url); }, 3000);
         };
         if (status=="SUCCESS"){
+            $("#geolayers").empty();
             select_tmpl = Handlebars.templates['tmpl-geoserver-select']
             layers=[];
             $.each(data.result.result,function(idx,itm){
@@ -348,6 +349,12 @@ function serilize_formdata(formid){
   $('#modals').append(task_template(tmpdata));
   $("#myModal").modal('show');
 
+}
+function reloadGeoserverMetadata(){
+    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata");
+    taskurl='/api/queue/run/geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata/';
+    //(url, data, callback,fail)
+    $.postJSON(taskurl,postdata,loadGeoServerMetadata)
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
