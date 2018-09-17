@@ -97,6 +97,7 @@ function setStatusMetadata(catalog_id){
         if (typeof data.status === 'undefined'){
             data.status="notindexed";
         }
+        console.log(data.status);
         $.postJSON(url + '/.json',data,reIndexAll);
     });
 }
