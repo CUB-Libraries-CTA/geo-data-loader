@@ -88,10 +88,10 @@ function editMetadata(catalog_id){
 function setStatusMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
-        if (data.status=="notindexed"){
+        if (data.status === "notindexed"){
             data.status="indexed";
         }
-        if (data.status=="indexed") {
+        if (data.status === "indexed") {
             data.status="notindexed";
         }
         if (typeof data.status === 'undefined'){
