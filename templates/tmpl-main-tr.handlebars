@@ -1,13 +1,16 @@
 <tr><td>
 <div>
     <label style="margin-right:15px">
-        Title:</label><span><em>{{dc_title_s}}</em></span><br>
+        Title:</label><span><em>{{dc_title_s}}</em></span>
+    <label style="margin-right:15px">
+        Status:</label><span><em>{{ status }}</em></span><br>
     <label style="margin-right:15px"> Description:</label><span>{{dc_description_s}}</span><br>
+
 
 </div>
 </td>
 <td>
     <button class="btn btn-primary btn-table" onclick="editMetadata('{{ _id }}')">Edit</button>
-    <button class="btn btn-primary btn-table" onclick="setStatusMetadata('{{ _id }}')">Set Status</button>
+    <button class="btn btn-primary btn-table" onclick="setStatusMetadata('{{ _id }}')">Set Status </button>
 </td>
 </tr>
