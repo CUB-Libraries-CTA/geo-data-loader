@@ -97,7 +97,7 @@ function setStatusMetadata(catalog_id){
         }
 
         console.log(data.status);
-        $.postJSON(url + '/.json',data,reIndexAll);
+        $.postJSON(url + '/.json',data);
     });
 }
 
