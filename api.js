@@ -54,10 +54,13 @@ function load_metadata(){
 function run_search(){
     $('#tablebody').empty();
     search = $('#search').val();
+    if($("#filterIII").is(':checked')==true){
+        query="eq";
+    }else{ query="ne";}
     if (search=="" || search=="*"){
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$'+ query + '":"notindexed"}}}&page_size=0';
     } else{
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$ne":"notindexed"}}}&page_size=0';
+        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$' + query + '":"notindexed"}}}&page_size=0';
     }
 
     $.getJSON(catalog_url,function(data){
@@ -82,7 +85,7 @@ function editMetadata(catalog_id){
     });
 
 }
-function deleteMetadata(catalog_id){
+function setStatusMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
         data.status="notindexed";
@@ -91,7 +94,7 @@ function deleteMetadata(catalog_id){
     //$.deleteJSON(url,{});
 }
 
-function saveMetadata(catalog_id){
+function saveMetadata(catalog_id,reindex){
     try {
         data= JSON.parse($("#myMetadataModalbody").val());
     }catch(err) {
@@ -102,9 +105,11 @@ function saveMetadata(catalog_id){
         data._id=catalog_id;
     }
     url = '/api/catalog/data/catalog/geoportal/.json';
-    $.postJSON(url,data,reIndexAll);
-    //setTimeout('', 3000);
-    //reIndexAll();
+    if(reindex){
+        $.postJSON(url,data,reIndexAll);
+    }else{
+        $.postJSON(url,data);
+    }
     $("#myModal").modal('hide');
 }
 
@@ -117,13 +122,8 @@ function reIndexAll(){
         postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
         postdata.args=[index_data];
         taskurl='/api/queue/run/geoblacklightq.tasks.workflow.resetSolrIndex/';
-        //(url, data, callback,fail)
         $.postJSON(taskurl,postdata,reIndexCallback)
         run_search();
-        //json_data = JSON.stringify(index_data,null, 4);
-        //$("#myModalbody").html(json_data);
-        //$("#myModalbody").urlize();
-        //$("#myModal").modal('show');
     });
 }
 function poll_layers(url){
@@ -153,7 +153,6 @@ function loadGeoServerMetadata(data,textStatus,xhr){
 function reIndexCallback(data,textStatus,xhr){
     url = data.result_url
     showChildResult(url);
-    //alert("Updated Solr Index");
 }
 function load_dropzone(task,tags){
   dropzone_tmpl = Handlebars.templates['tmpl-dropzone']
@@ -187,10 +186,6 @@ function submit_user(){
         $('#reset_password').click(function(){$('#pass_form').toggle(!$('#pass_form').is(':visible'));});
     })
     .fail(function(){ alert("Error Occured on User Update.")});
-    //$('#user_form').hide()
-    //$('#view_form').show()
-    //var formData = JSON.parse($("#user_form").serializeArray());
-    //console.log(formData);
     return false;
 }
 function edit_user(){
@@ -275,10 +270,6 @@ function showResult(url){
       json_data = JSON.stringify(data,null, 4);
       tmpdata = {"modal_data":json_data,"modal_name":"Task Result"}
       $('#modals').append(task_template(tmpdata))
-      //$("#myModalbody").show()
-      //$("#myMetadataModalbody").hide()
-      //$("#myModalLabel").text("Task Result")
-      //$("#myModalbody").html(json_data);
       $("#myModalbody").urlize();
       $("#myModal").modal('show');
   });
@@ -317,16 +308,10 @@ function loadxmlLoad(url,textarea_id){
     cache: false,
     dataType: "xml",
     success: function(xml) {
-        //console.log("success:",url,textarea_id)
-        //console.log(xml);
-        //before='<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output omit-xml-declaration="yes" indent="yes"/>'
-        //after = '</xsl:stylesheet>'
         var xmlText = new XMLSerializer().serializeToString(xml);
-
         $('#' + textarea_id).text(xmlText);
     },
   })
-
 }
 
 function serilize_formdata(formid){
@@ -428,21 +413,14 @@ function cybercom_poll(url,html_result){
             //console.log("Result: ",data);
             status = check_status(data);
             if (status=="PENDING"){
-                //cybercom_pending used to adjust html items to allow user response
-                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 general_wait(data,html_result);
                 //Set timeout to 3 seconds
                 setTimeout(function() { cybercom_poll(url,html_result); }, 3000);
             };
             if (status=="SUCCESS"){
-                //cybercom_success used to adjust html items to allow user response
-                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
-                //          $('#task_result').urlize();
                 general_status(data,html_result);
             };
             if (status=="FAILURE"){
-                //cybercom_fail used to adjust html items to allow user response
-                //Example: $('#task_result').empty();$('#task_result').append("<pre>" + JSON.stringify(data.result,null, 4) + "</pre>");
                 general_wait(data,html_result);
             };
        });

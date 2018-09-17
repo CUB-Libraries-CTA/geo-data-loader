@@ -11,7 +11,8 @@
       <div class="modal-footer">
           <div id=ModalFooter style="float:right;">
               <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cancel</button>
-              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}')">Update Index</button>
+              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}',false)">Save and Close</button>
+              <button class="btn btn-primary" onclick="saveMetadata('{{ _id }}',true)">Save and Index</button>
           </div>
       </div>
     </div>
