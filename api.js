@@ -47,7 +47,7 @@ function load_metadata(){
         $.each(data.results,function(idx,item){
             console.log(item);
             if(item.status==='indexed'){
-                item.reverseStatus='notindexed'; 
+                item.reverseStatus='notindexed';
             }else{
                 item.reverseStatus='indexed';
             }
@@ -73,6 +73,11 @@ function run_search(){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
             console.log(item);
+            if(item.status==='indexed'){
+                item.reverseStatus='notindexed';
+            }else{
+                item.reverseStatus='indexed';
+            }
             $('#tablebody').append(tr_templates(item));
         });
         if ($("#filterIII").is(':checked')){
