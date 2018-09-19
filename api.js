@@ -69,6 +69,11 @@ function run_search(){
             console.log(item);
             $('#tablebody').append(tr_templates(item));
         });
+        if ($("#filterIII").is(':checked')){
+            $(".delete-btn").show();
+        }else{
+            $(".delete-btn").hide();
+        }
 
     });
 }
