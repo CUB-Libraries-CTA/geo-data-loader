@@ -85,6 +85,10 @@ function editMetadata(catalog_id){
     });
 
 }
+function deleteMetadata(catalog_id){
+    url = '/api/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
+    $.deleteJSON(url,run_search);
+}
 function setStatusMetadata(catalog_id){
     url = '/api/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
@@ -97,7 +101,7 @@ function setStatusMetadata(catalog_id){
         }
 
         console.log(data.status);
-        $.postJSON(url + '/.json',data);
+        $.postJSON(url + '/.json',data,run_search);
     });
 }
 
@@ -458,13 +462,11 @@ $.postJSON = function(url, data, callback,fail) {
         }
     });
 }
-$.deleteJSON = function(url, data, callback,fail) {
+$.deleteJSON = function(url, callback,fail) {
     return jQuery.ajax({
         'type': 'DELETE',
         'url': url,
         'contentType': 'application/json',
-        'data': JSON.stringify(data),
-        'dataType': 'json',
         'success': callback,
         'error':fail,
         'beforeSend':function(xhr, settings){

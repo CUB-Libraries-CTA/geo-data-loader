@@ -19,5 +19,13 @@
 </table>
 <div id="paginate-div-bt" style="text-align:center"></div>
 <script>
-    $("#filterIII").click(function(){run_search();});
+    run_search();
+    $("#filterIII").click(function(){
+        if ($("#filterIII").is(':checked')){
+            $(".delete-btn").show();
+        }else{
+            $(".delete-btn").hide();
+        }
+
+    });
 </script>
