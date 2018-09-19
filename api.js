@@ -46,6 +46,12 @@ function load_metadata(){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
             console.log(item);
+            if(item.status==='indexed'){
+                item.reverseStatus='notindexed'; 
+            }else{
+                item.reverseStatus='indexed';
+            }
+
             $('#tablebody').append(tr_templates(item));
         });
 

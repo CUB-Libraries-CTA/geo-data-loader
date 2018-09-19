@@ -14,8 +14,7 @@
 </td>
 <td>
     <button class="btn btn-primary btn-table" onclick="editMetadata('{{ _id }}')">Edit</button>
-
-    <button class="btn btn-primary btn-table" onclick="setStatusMetadata('{{ _id }}')">Set Status </button>
+    <button class="btn btn-primary btn-table" onclick="setStatusMetadata('{{ _id }}')">Set Status {{ reverseStatus }}</button>
     <div class="delete-btn" style="display:none;">
         <button class="btn btn-primary btn-table" onclick="deleteMetadata('{{ _id }}')">Delete </button>
     </div>
