@@ -15,14 +15,16 @@ textarea {
      box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .center {
-    margin: auto;
-    width: 40%;
+    margin-left: 10%;
+    margin-right: 10%;
+    /*margin: auto;*/
+    width: 80%;
     padding: 15 15 0 15px;
 }
 #dropzone {
   border: 1px solid #606060;
   margin:0 0 10 30;
-  width:50%;
+  /*width:50%;*/
 }
 .dropzone {
   border: 4px dashed #cfb87c;
