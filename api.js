@@ -10,10 +10,10 @@ $(function() {
     prevlink=null;nextlink=null;
     zipurl="zipfile.zip"
     geoschema={};
-    //set_auth(base_url,login_url);
+    set_auth(base_url,login_url);
     $("#aprofile").click(function(){activaTab('profile')})
     $("#alogout").click(function(){window.location = logout_url.concat(document.URL);})
-    //load_task_history(user_task_url);
+    load_task_history(user_task_url);
     $('#prevlink').click(function(){load_task_history(prevlink);});
     $('#nextlink').click(function(){load_task_history(nextlink);});
     Handlebars.registerHelper('json_metatags', function(context) {
