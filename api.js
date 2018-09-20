@@ -1,7 +1,7 @@
 $(function() {
 
     //Customize by setting base_url to cybercom/api docker application
-    base_url = "/api";
+    base_url = "https://geo.colorado.edu/api";
     //No other alterations is need to get the standard applicaiton running!
     login_url = base_url + "/api-auth/login/?next=";
     logout_url = base_url + "/api-auth/logout/?next=";
@@ -10,10 +10,10 @@ $(function() {
     prevlink=null;nextlink=null;
     zipurl="zipfile.zip"
     geoschema={};
-    set_auth(base_url,login_url);
+    //set_auth(base_url,login_url);
     $("#aprofile").click(function(){activaTab('profile')})
     $("#alogout").click(function(){window.location = logout_url.concat(document.URL);})
-    load_task_history(user_task_url);
+    //load_task_history(user_task_url);
     $('#prevlink').click(function(){load_task_history(prevlink);});
     $('#nextlink').click(function(){load_task_history(nextlink);});
     Handlebars.registerHelper('json_metatags', function(context) {
@@ -41,7 +41,7 @@ function load_metadata(){
             run_search();
         }
     });
-    catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
+    catalog_url= base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
@@ -64,9 +64,9 @@ function run_search(){
         query="eq";
     }else{ query="ne";}
     if (search=="" || search=="*"){
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$'+ query + '":"notindexed"}}}&page_size=0';
+        catalog_url= base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$'+ query + '":"notindexed"}}}&page_size=0';
     } else{
-        catalog_url= '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$' + query + '":"notindexed"}}}&page_size=0';
+        catalog_url= base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$' + query + '":"notindexed"}}}&page_size=0';
     }
 
     $.getJSON(catalog_url,function(data){
@@ -91,7 +91,7 @@ function run_search(){
 function editMetadata(catalog_id){
     $('#modals').empty();
     task_template = Handlebars.templates['tmpl-modalAppMetadata']
-    url = '/api/catalog/data/catalog/geoportal/' + catalog_id ;
+    url = base_url + '/catalog/data/catalog/geoportal/' + catalog_id ;
     $.getJSON(url + "/.json" , function(data){
         delete data._id;
         json_data = JSON.stringify(objectWithKeySorted(data),null, 4);
@@ -102,11 +102,11 @@ function editMetadata(catalog_id){
 
 }
 function deleteMetadata(catalog_id){
-    url = '/api/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
+    url = base_url + '/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
     $.deleteJSON(url,run_search);
 }
 function setStatusMetadata(catalog_id){
-    url = '/api/catalog/data/catalog/geoportal/';
+    url = base_url + '/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
         if (typeof data.status === 'undefined'){
             data.status="notindexed";
@@ -118,6 +118,7 @@ function setStatusMetadata(catalog_id){
 
         console.log(data.status);
         $.postJSON(url + '/.json',data,run_search);
+        $.modalMesssage(data.dc_title_s,"Status changed to '" + data.status + "'.")
     });
 }
 
@@ -131,7 +132,7 @@ function saveMetadata(catalog_id,reindex){
     if (catalog_id != ''){
         data._id=catalog_id;
     }
-    url = '/api/catalog/data/catalog/geoportal/.json';
+    url = base_url + '/catalog/data/catalog/geoportal/.json';
     if(reindex){
         $.postJSON(url,data,reIndexAll);
     }else{
@@ -141,7 +142,7 @@ function saveMetadata(catalog_id,reindex){
 }
 
 function reIndexAll(){
-    url = '/api/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
+    url = base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     $.getJSON(url, function(data){
         index_data= $.map(data.results,function(n,i){
             n.id=n._id;delete n._id;delete n.id; delete n.status; return n;
@@ -490,7 +491,13 @@ $.deleteJSON = function(url, callback,fail) {
         }
     });
 }
-
+$.modalMesssage = function(title,message){
+    $('#modals').empty();
+    template = Handlebars.templates['tmpl-modalMessage']
+    tmpdata = {"title":title,"message":message};
+    $('#modals').append(template(tmpdata));
+    $("#myModal").modal('show');
+}
 function objectWithKeySorted(object) {
   var result = {};
   _.forEach(Object.keys(object).sort(), function(key) {
