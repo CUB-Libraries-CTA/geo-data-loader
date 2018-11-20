@@ -101,7 +101,10 @@ function editMetadata(catalog_id){
     });
 
 }
-function deleteMetadata(catalog_id){
+function deleteMetadata(catalog_id,confirmation){
+    if (!confirmation){
+
+    }
     url = base_url + '/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
     $.deleteJSON(url,run_search);
 }
@@ -372,8 +375,8 @@ function serilize_formdata(formid){
 
 }
 function reloadGeoserverMetadata(){
-    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata");
-    taskurl='/api/queue/run/geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata/';
+    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata");
+    taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
     //(url, data, callback,fail)
     $.postJSON(taskurl,postdata,loadGeoServerMetadata)
 }
@@ -408,8 +411,8 @@ function general_status(data,html_result){
         loadxmlLoad(urlxmlfgdc,"xmlfilexml");
         $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
         //get geoserver data
-        postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata");
-        taskurl='/api/queue/run/geoblacklightq.tasks.geoserver.geoserverGetWorkspaceMetadata/';
+        postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata");
+        taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
         //(url, data, callback,fail)
         $.postJSON(taskurl,postdata,loadGeoServerMetadata)
       //})
