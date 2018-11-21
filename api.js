@@ -427,12 +427,13 @@ function general_status(data,html_result){
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
-function cleanDicts(geoschema):
+function cleanDicts(geoschema){
     for (var key in geoschema) {
         if (geoschema[key].search("text") !== -1 && geoschema[key].search("{") !== -1){
             geoschema[key]=JSON.parse(geoschema[key].replace(/'/g,'"').replace(/u"/g,'"')).text
         };
     }
+}
 function children_poll(children,html_result){
   if (children.length>0){
       //console.log('children yes [[[]]]')
