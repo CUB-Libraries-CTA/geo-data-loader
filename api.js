@@ -435,6 +435,7 @@ function cleanDicts(geoschema){
             };
         }
     }
+    return geoschema;
 }
 function children_poll(children,html_result){
   if (children.length>0){
