@@ -402,6 +402,7 @@ function general_status(data,html_result){
         //geoserver/rest/workspaces/geocolorado/datastores/Boulder_Co_Tracts/featuretypes/Boulder_Co_Tracts.json
         geolibrary_tmpl = Handlebars.templates['tmpl-geolibrary-new']
         geoschema = data.result.geoblacklightschema
+        geoschema = cleanDicts(geoschema);
         geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join('|')
         geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join('|')
         geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join('|')
@@ -426,6 +427,12 @@ function general_status(data,html_result){
     }
     $('#' + html_result).append(JSON.stringify(data.result,null, 4));
 }
+function cleanDicts(geoschema):
+    for (var key in geoschema) {
+        if (geoschema[key].search("text") !== -1 && geoschema[key].search("{") !== -1){
+            geoschema[key]=JSON.parse(geoschema[key].replace(/'/g,'"').replace(/u"/g,'"')).text
+        };
+    }
 function children_poll(children,html_result){
   if (children.length>0){
       //console.log('children yes [[[]]]')
