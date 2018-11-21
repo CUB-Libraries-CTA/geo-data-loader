@@ -429,9 +429,11 @@ function general_status(data,html_result){
 }
 function cleanDicts(geoschema){
     for (var key in geoschema) {
-        if (geoschema[key].search("text") !== -1 && geoschema[key].search("{") !== -1){
-            geoschema[key]=JSON.parse(geoschema[key].replace(/'/g,'"').replace(/u"/g,'"')).text
-        };
+        if (typeof geoschema[key]=="string"){
+            if (geoschema[key].search("text") !== -1 && geoschema[key].search("{") !== -1){
+                geoschema[key]=JSON.parse(geoschema[key].replace(/'/g,'"').replace(/u"/g,'"')).text
+            };
+        }
     }
 }
 function children_poll(children,html_result){
