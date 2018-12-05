@@ -1,15 +1,15 @@
+<div class="center">
+    <h3> Add new data items to GeoLibrary</h3>
+    <ol>
+        <li>Drag and drop zip files or click Dropzone for file selection</li>
+        <li>Once file is selected the workflow process will process data</li>
+        <li>The result will be a populated form that has been crosswalked from available xml metadata</li>
+        <li> Click generate schema</li>
+        <li> Dialog box populated with geoblacklight schema.</li>
+        <li> Double check metadata save and index data</li>
+    </ol>
+</div>
 <div id="dropzone" class="center">
-    <div>
-        <h3> Add new data items to GeoLibrary</h3>
-        <ol>
-            <li>Drag and drop zip files or click Dropzone for file selection</li>
-            <li>Once file is selected the workflow process will process data</li>
-            <li>The result will be a populated form that has been crosswalked from available xml metadata</li>
-            <li> Click generate schema</li>
-            <li> Dialog box populated with geoblacklight schema.</li>
-            <li> Double check metadata save and index data</li>
-        </ol>
-    </div>
   <form id="dropzone1" action="/api/upload/" class="dropzone needsclick" >
     <div style="display:none">
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrftoken }}"/>
