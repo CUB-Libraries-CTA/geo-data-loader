@@ -472,7 +472,11 @@ function cybercom_poll(url,html_result){
                 setTimeout(function() { cybercom_poll(url,html_result); }, 3000);
             };
             if (status=="SUCCESS"){
-                general_status(data,html_result);
+                if (!("result" in data)){
+                    setTimeout(function() { cybercom_poll(url,html_result); }, 1000);
+                }else{
+                    general_status(data,html_result);
+                }
             };
             if (status=="FAILURE"){
                 general_wait(data,html_result);
