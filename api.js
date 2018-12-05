@@ -28,6 +28,10 @@ $(function() {
     jsonData = {};
     //load_example_task();
 });//End of Document Ready
+function resetDropzone(){
+    load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader");
+    jsonData = {};
+}
 function load_metadata(){
     main_tmpl= Handlebars.templates['tmpl-main-geoedit'];
 
@@ -396,6 +400,7 @@ function general_status(data,html_result){
       console.log(zipurl);
       jsonData = data.result.geoblacklightschema;
       $('#dropzone').hide()
+      $('#helptxt').hide()
       url="https://geo.colorado.edu/geoserver/rest/workspaces/geocolorado/datastores.json"
       //$.getJSON(url,function(data){
       //  alert(JSON.stringify(data,null,indent=4));
