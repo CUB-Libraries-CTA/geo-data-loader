@@ -417,10 +417,10 @@ function general_status(data,html_result){
         loadxmlLoad(urlxmlfgdc,"xmlfilexml");
         $('#getblight').click(function(){serilize_formdata("geoblacklightform");});
         //get geoserver data
-        postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata");
-        taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
+        //postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata");
+        //taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
         //(url, data, callback,fail)
-        $.postJSON(taskurl,postdata,loadGeoServerMetadata)
+        //$.postJSON(taskurl,postdata,loadGeoServerMetadata)
       //})
     }
     if (data.result.hasOwnProperty('children')){
