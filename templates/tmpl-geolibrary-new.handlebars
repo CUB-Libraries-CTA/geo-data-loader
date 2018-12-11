@@ -99,7 +99,10 @@
             <label for="dct_spatial_sm1">Spatial List</label>
             <input class="form-control" type="text" name="dct_spatial_sm1"value="{{ data.dct_spatial_sm1 }}"/>
          </div>
-
+         <div class="form-group">
+             <label for="BoundBox">Bounding Box</label>
+             <input class="form-control" type="text" name="solr_geom"value="{{ data.solr_geom }}"/>
+         </div> 
          <button class="btn btn-primary" type="button" id="getblight">Get Schema</button>
      </form>
 
