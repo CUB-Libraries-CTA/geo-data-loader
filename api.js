@@ -356,20 +356,20 @@ function serilize_formdata(formid){
   data.dc_subject_sm = data.dc_subject_sm1.split('|')
   data.dct_temporal_sm = data.dct_temporal_sm1.split('|')
   data.dct_spatial_sm =data.dct_spatial_sm1.split('|')
-  geoserver_layers = JSON.parse(data.geoserver_layers);
-  delete data.geoserver_layers
+  //geoserver_layers = JSON.parse(data.geoserver_layers);
+  //delete data.geoserver_layers
   delete data.dct_spatial_sm1
   delete data.dct_temporal_sm1
   delete data.dc_subject_sm1
   delete data.dc_creator_sm1
-  data.dc_identifier_s = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
-  data.layer_slug_s = "cub:" + geoserver_layers.name.split(':')[1]
-  data.solr_geom = geoserver_layers.boundbox
+  //data.dc_identifier_s = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
+  //data.layer_slug_s = "cub:" + geoserver_layers.name.split(':')[1]
+  //data.solr_geom = geoserver_layers.boundbox
   data.dct_references_s = "{\"http://schema.org/downloadUrl\":\"https://geo.colorado.edu/apps/geolibrary/datasets/" + zipurl +  "\",\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geo.colorado.edu/geoserver/geocolorado/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geo.colorado.edu/geoserver/geocolorado/wms\"}"
-  data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
-  data.layer_id_s = geoserver_layers.name.split(':')[1]
-  data.dc_type_s = "Dataset"
-  delete data.dct_type_s
+  //data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
+  //data.layer_id_s = geoserver_layers.name.split(':')[1]
+  //data.dc_type_s = "Dataset"
+  //delete data.dct_type_s
   $('#modals').empty();
   task_template = Handlebars.templates['tmpl-modalAppMetadata']
   json_data = JSON.stringify(objectWithKeySorted(data),null, 4);
