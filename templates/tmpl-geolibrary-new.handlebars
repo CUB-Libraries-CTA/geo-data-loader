@@ -55,7 +55,7 @@
           </div>
           <div class="form-group">
              <label for="layer_geom_type_s">Geometry Type</label>
-             <select class="form-control" name="layer_geom_type_s" value={{ data.layer_geom_type_s}}>
+             <select id="layer_geom_type_s" class="form-control" name="layer_geom_type_s" >
                  <option value="Polygon">Polygon</option>
                  <option value="Raster">Raster</option>
                  <option value="Point">Point</option>
@@ -67,7 +67,7 @@
            </div>
            <div class="form-group">
               <label for="dc_format_s">File Format</label>
-              <select  class="form-control" name="dc_format_s" value={{ data.dc_format_s}}>
+              <select id="dc_format_s" class="form-control" name="dc_format_s">
                   <option value="Shapefile">Shapefile</option>
                   <option value="GeoTiff">GeoTiff</option>
                   <option value="Scanned Map">Scanned Map</option>
@@ -108,6 +108,8 @@
 </div>
 </div>
 <script>
+ $("#layer_geom_type_s").val("{{data.layer_geom_type_s}}");
+ $("#dc_format_s").val("{{data.dc_format_s}}");
 /*
   var container = document.getElementById("jsoneditor");
   var options = {};
