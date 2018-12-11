@@ -105,12 +105,18 @@ function editMetadata(catalog_id){
     });
 
 }
-function deleteMetadata(catalog_id,confirmation){
+function deleteMetadata(catalog_id,args,confirmation){
     if (!confirmation){
 
     }
     url = base_url + '/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
     $.deleteJSON(url,run_search);
+    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.deleteGeoserverStore");
+    postdata.args=args
+    //taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
+    //(url, data, callback,fail)
+    $.postJSON(taskurl,postdata,alert("Geoserver Store Deleted"))
+
 }
 function setStatusMetadata(catalog_id){
     url = base_url + '/catalog/data/catalog/geoportal/';
@@ -368,7 +374,7 @@ function serilize_formdata(formid){
   data.dct_references_s = "{\"http://schema.org/downloadUrl\":\"https://geo.colorado.edu/apps/geolibrary/datasets/" + zipurl +  "\",\"http://www.opengis.net/def/serviceType/ogc/wfs\":\"https://geo.colorado.edu/geoserver/geocolorado/wfs\",\"http://www.opengis.net/def/serviceType/ogc/wms\":\"https://geo.colorado.edu/geoserver/geocolorado/wms\"}"
   //data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
   //data.layer_id_s = geoserver_layers.name.split(':')[1]
-  //data.dc_type_s = "Dataset"
+  data.dc_type_s = "Dataset"
   //delete data.dct_type_s
   $('#modals').empty();
   task_template = Handlebars.templates['tmpl-modalAppMetadata']
