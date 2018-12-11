@@ -111,9 +111,10 @@ function deleteMetadata(catalog_id,args,confirmation){
     }
     url = base_url + '/catalog/data/catalog/geoportal/' + catalog_id + '/.json';
     $.deleteJSON(url,run_search);
-    postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.deleteGeoserverStore");
+    postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.deleteGeoserverStore");
+
     postdata.args=args
-    //taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
+    taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.deleteGeoserverStore/';
     //(url, data, callback,fail)
     $.postJSON(taskurl,postdata,alert("Geoserver Store Deleted"))
 
