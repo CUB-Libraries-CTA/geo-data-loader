@@ -149,15 +149,22 @@ function deleteMetadata(catalog_id,args,confirmation){
 
 }
 function setStatusMetadata(catalog_id){
-    $('#modals').empty();
+    modal_template=Handlebars.templates['tmpl-modalAppTaskResult']
     task_template = Handlebars.templates['tmpl-geoserver-select']
     url = base_url + '/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
+        $('#modals').empty()
+        modal_template()
+        tmpdata = {"modal_data":{},"modal_name":"Properties: " + data.dc_title_s}
+        $('#modals').append(modal_template(tmpdata))
+        $("#myModal").modal('show');
         //generate style List
         data.styles=styles
-        $('#modals').append(task_template(data))
-        $("#myModal").modal('show');
+        $('#modalBody').empty()
+        $('#modalBody').append(task_template(data))
         /*
+        $("#modals").modal('show');
+
         sty_url= base_url + '/queue/run/geoblacklightq.tasks.geoservertasks.getstyles'
         $.postJSON(sty_url + '/.json',null,run_search);
         if (typeof data.status === 'undefined'){
