@@ -190,7 +190,7 @@ function saveProperties(catalog_id){
     $.getJSON(url, function(data){
         data.style=$("#geoserver_style").val()
         data.status=$("#geoblacklight_status").val()
-        $.postJSON(url,data);
+        $.postJSON(url,data,null,null,'PUT');
         //need to post to geoserver
         $("#myModal").modal('hide');
     });
@@ -555,7 +555,7 @@ $.getCYBERCOM_JSON_OBJECT = function(task_name){
     return {"function": task_name,"queue": "celery","args":[],"kwargs":{},"tags":[]};
 }
 //postJSON is custom call for post to cybercommons api
-$.postJSON = function(url, data, callback,fail) {
+$.postJSON = function(url, data, callback,fail,type) {
     return jQuery.ajax({
         'type': 'POST',
         'url': url,
