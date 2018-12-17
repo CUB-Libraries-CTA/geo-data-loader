@@ -155,13 +155,16 @@ function setStatusMetadata(catalog_id){
     $.getJSON(url + catalog_id + '/.json', function(data){
         $('#modals').empty()
         modal_template()
-        tmpdata = {"modal_data":{},"modal_name":"Properties: " + data.dc_title_s}
+        tmpdata = {"modal_data":{},"modal_name":"GeoLayer Properties: " + data.dc_title_s}
         $('#modals').append(modal_template(tmpdata))
         $("#myModal").modal('show');
         //generate style List
         data.styles=styles
         $('#modalBody').empty()
         $('#modalBody').append(task_template(data))
+        $('#modalFooter').empty()
+        footer_template=Handlebars.templates['tmpl-modal-footer-properties']
+        $('#modalFooter').append(footer_template(data))
         /*
         $("#modals").modal('show');
 
@@ -181,7 +184,16 @@ function setStatusMetadata(catalog_id){
         */
     });
 }
-function setLayerProperties(data,styles){
+function saveProperties(catalog_id){
+    url=base_url + '/catalog/data/catalog/geoportal/';
+    url=url + catalog_id + '/.json';
+    $.getJSON(url, function(data){
+        data.style=$("#geoserver_style").val()
+        data.status=$("#geoblacklight_status").val()
+        $.postJSON(url,data);
+        //need to post to geoserver
+        $("#myModal").modal('hide');
+    });
 
 }
 function saveMetadata(catalog_id,reindex){
