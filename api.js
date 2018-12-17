@@ -556,8 +556,11 @@ $.getCYBERCOM_JSON_OBJECT = function(task_name){
 }
 //postJSON is custom call for post to cybercommons api
 $.postJSON = function(url, data, callback,fail,type) {
+    if (variable == null){
+        type="POST"
+    }
     return jQuery.ajax({
-        'type': 'POST',
+        'type': type,
         'url': url,
         'contentType': 'application/json',
         'data': JSON.stringify(data),
