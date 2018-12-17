@@ -78,13 +78,6 @@ function load_metadata(){
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
-            console.log(item);
-            if(item.status==='indexed'){
-                item.reverseStatus='notindexed';
-            }else{
-                item.reverseStatus='indexed';
-            }
-
             $('#tablebody').append(tr_templates(item));
         });
 
@@ -101,16 +94,9 @@ function run_search(){
     } else{
         catalog_url= base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"$text":{"$search":"'+ search +'"},"status":{"$' + query + '":"notindexed"}}}&page_size=0';
     }
-
     $.getJSON(catalog_url,function(data){
         tr_templates = Handlebars.templates['tmpl-main-tr'];
         $.each(data.results,function(idx,item){
-            console.log(item);
-            if(item.status==='indexed'){
-                item.reverseStatus='notindexed';
-            }else{
-                item.reverseStatus='indexed';
-            }
             $('#tablebody').append(tr_templates(item));
         });
         if ($("#filterIII").is(':checked')){
