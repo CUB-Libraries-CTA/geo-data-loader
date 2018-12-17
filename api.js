@@ -26,8 +26,37 @@ $(function() {
     load_metadata();
     load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader");
     jsonData = {};
+    styles=[];
+    loadStyles();
     //load_example_task();
 });//End of Document Ready
+function loadStyles(){
+    //generate style List
+    sty_url= base_url + '/queue/run/geoblacklightq.tasks.geoservertasks.getstyles'
+    postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.getstyles");
+    $.postJSON(sty_url + '/.json',postdata,getStyles);
+}
+function poll_styles(url){
+    $.getJSON(url,function(data){
+        status = check_status(data);
+        if (status=="PENDING"){
+            setTimeout(function() { poll_styles(url); }, 1000);
+        };
+        if (status=="SUCCESS"){
+            if (!("result" in data)){
+                setTimeout(function() { poll_styles(url); }, 1000);
+            }else{
+                styles=data.result.result
+            }
+        };
+        if (status=="FAILURE"){
+            alert("Task Failure occured loading Geoserver styles. Please refresh page.");
+        };
+    })
+}
+function getStyles(data,textStatus,xhr){
+    poll_styles(data.result_url);
+}
 function resetDropzone(){
     load_dropzone("geoblacklightq.tasks.workflow.geoLibraryLoader","geoLibraryLoader");
     jsonData = {};
@@ -120,8 +149,17 @@ function deleteMetadata(catalog_id,args,confirmation){
 
 }
 function setStatusMetadata(catalog_id){
+    $('#modals').empty();
+    task_template = Handlebars.templates['tmpl-geoserver-select']
     url = base_url + '/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
+        //generate style List
+        data.styles=styles
+        $('#modals').append(task_template(data))
+        $("#myModal").modal('show');
+        /*
+        sty_url= base_url + '/queue/run/geoblacklightq.tasks.geoservertasks.getstyles'
+        $.postJSON(sty_url + '/.json',null,run_search);
         if (typeof data.status === 'undefined'){
             data.status="notindexed";
         }else if (data.status === "notindexed"){
@@ -133,9 +171,12 @@ function setStatusMetadata(catalog_id){
         console.log(data.status);
         $.postJSON(url + '/.json',data,run_search);
         $.modalMesssage(data.dc_title_s,"Status changed to '" + data.status + "'.")
+        */
     });
 }
+function setLayerProperties(data,styles){
 
+}
 function saveMetadata(catalog_id,reindex){
     try {
         data= JSON.parse($("#myMetadataModalbody").val());

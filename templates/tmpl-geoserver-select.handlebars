@@ -1,7 +1,20 @@
-<label for="geoserver_layers">Select GeoServer Layer</label>
-<select name="geoserver_layers" class="form-control">
-    {{#each layers}}
-    <option value="{{ this.objct_string }}">{{ this.name }}</option>
+<h3>GeoLayer Properties</h3>
+<h5>Status</h5>
+<label for="geoblacklight_status">GeoBlacklight Status</label>
+<select id="geoblacklight_status" name="geoblacklight_status" class="form-control">
+    <option value="indexed">Indexed</option>
+    <option value="notindexed">Not Indexed</option>
+</select>
+<h5>Geoserver Layer Style</h5>
+
+<label for="geoserver_style">Geoserver Default Style</label>
+<select id="geoserver_style" name="geoserver_style" class="form-control">
+    {{#each styles}}
+    <option value="{{ this.name }}">{{ this.name }}</option>
     {{/each}}
 </select>
+<script>
+$("#geoblacklight_status").val("{{status}}");
+$("#geoserver_style").val("{{style}}");
+</script>
 <a href="#" onclick="reloadGeoserverMetadata();" >Refresh GeoServer Layers</a>
