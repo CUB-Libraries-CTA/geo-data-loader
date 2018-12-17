@@ -554,11 +554,10 @@ function cybercom_poll(url,html_result){
 $.getCYBERCOM_JSON_OBJECT = function(task_name){
     return {"function": task_name,"queue": "celery","args":[],"kwargs":{},"tags":[]};
 }
+function defaultFor(arg, val) { return typeof arg !== 'undefined' ? arg : val; }
 //postJSON is custom call for post to cybercommons api
 $.postJSON = function(url, data, callback,fail,type) {
-    if (variable == null){
-        type="POST"
-    }
+    type=defaultFor(type,'POST')
     return jQuery.ajax({
         'type': type,
         'url': url,
