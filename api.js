@@ -493,6 +493,12 @@ function general_status(data,html_result){
         //$.postJSON(taskurl,postdata,loadGeoServerMetadata)
       //})
     }
+    if (data.hasOwnProperty('task_name')){
+        if (data.task_name === "geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle"){
+            $('#modalBody').append('<h3>Geoserver Result</h3><pre id="myModalbody"></pre>')
+        }
+    }
+
     if (data.result.hasOwnProperty('children')){
       //console.log('childrenresult')
       children_poll(data.result.children,html_result)
