@@ -246,10 +246,10 @@ function loadGeoServerMetadata(data,textStatus,xhr){
 }
 function geoserverStyleCallback(data,textStatus,xhr){
     //$('#modals').empty()
-    $("#myModal").modal('toggle');
+    $("#myModal").modal('hide');
     alert("wait");
 
-    $("#myModal").empty()
+    
     alert("wait");
     url = data.result_url
     showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
