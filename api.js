@@ -249,7 +249,7 @@ function loadGeoServerMetadata(data,textStatus,xhr){
 }
 function geoserverStyleCallback(data,textStatus,xhr){
     //$('#modals').empty()
-    $("#myModal").modal('hide');
+    //$("#myModal").modal('hide');
     url = data.result_url
     cybercom_poll(url + ".json","myModalbody")
     //showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
