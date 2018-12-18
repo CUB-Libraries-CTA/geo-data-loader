@@ -380,12 +380,12 @@ function showChildResult(url,title,message){
     message=defaultFor(message,"Checking Workflow status")
   $('#modals').empty();
   task_template = Handlebars.templates['tmpl-modalAppTaskResult']
-  tmpdata = {"modal_name":"Task Result"}
+  tmpdata = {"modal_name":title}
   $('#modals').append(task_template(tmpdata))
   console.log("showChildResult");
   $('#myModalbody').empty();
   $("#myModal").modal('show');
-  $("#myModalbody").html(meassage);
+  $("#myModalbody").html(message);
   cybercom_poll(url + ".json","myModalbody");
 }
 //Cybercommons example submit add task.
