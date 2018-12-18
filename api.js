@@ -184,7 +184,7 @@ function saveProperties(catalog_id){
         postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
         postdata.args=[layer_name,style]
         $("#myModal").modal('hide');
-        $.postJSON(taskurl,postdata,reIndexCallback)
+        $.postJSON(taskurl,postdata,geoserverStyleCallback)
 
     });
 
@@ -245,6 +245,10 @@ function poll_layers(url){
 function loadGeoServerMetadata(data,textStatus,xhr){
     poll_layers(data.result_url);
 
+}
+function geoserverStyleCallback(data,textStatus,xhr){
+    url = data.result_url
+    showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
 }
 function reIndexCallback(data,textStatus,xhr){
     url = data.result_url
@@ -371,7 +375,9 @@ function showResult(url){
   });
 }
 //Cybercommons task result showResult()
-function showChildResult(url){
+function showChildResult(url,title,message){
+    title=defaultFor(title,"Task Result")
+    message=defaultFor(message,"Checking Workflow status")
   $('#modals').empty();
   task_template = Handlebars.templates['tmpl-modalAppTaskResult']
   tmpdata = {"modal_name":"Task Result"}
@@ -379,7 +385,7 @@ function showChildResult(url){
   console.log("showChildResult");
   $('#myModalbody').empty();
   $("#myModal").modal('show');
-  $("#myModalbody").html("Checking Workflow status");
+  $("#myModalbody").html(meassage);
   cybercom_poll(url + ".json","myModalbody");
 }
 //Cybercommons example submit add task.
