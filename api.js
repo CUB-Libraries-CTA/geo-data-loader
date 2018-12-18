@@ -175,18 +175,21 @@ function saveProperties(catalog_id){
     $.getJSON(url, function(data){
         data.style=$("#geoserver_style").val()
         data.status=$("#geoblacklight_status").val()
-        $.postJSON(url,data,null,null,'PUT');
-        //need to post to geoserver
-        layer_name=data.layer_id_s
-        style = $("#geoserver_style").val()
-        taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle/';
-        postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
-        postdata.args=[layer_name,style]
-        $.postJSON(taskurl,postdata,geoserverStyleCallback)
+        $.postJSON(url,data,function(data2){
+            //need to post to geoserver
+            layer_name=data.layer_id_s
+            style = $("#geoserver_style").val()
+            taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle/';
+            postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
+            postdata.args=[layer_name,style]
+            $.postJSON(taskurl,postdata,geoserverStyleCallback)
+        },null,'PUT');
+
 
     });
 
 }
+
 function saveMetadata(catalog_id,reindex){
     try {
         data= JSON.parse($("#myMetadataModalbody").val());
@@ -247,10 +250,6 @@ function loadGeoServerMetadata(data,textStatus,xhr){
 function geoserverStyleCallback(data,textStatus,xhr){
     //$('#modals').empty()
     $("#myModal").modal('hide');
-    alert("wait");
-
-    
-    alert("wait");
     url = data.result_url
     showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
 }
