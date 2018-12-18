@@ -178,7 +178,14 @@ function saveProperties(catalog_id){
         data.status=$("#geoblacklight_status").val()
         $.postJSON(url,data,null,null,'PUT');
         //need to post to geoserver
+        layer_name=data.layer_id_s
+        style = $("#geoserver_style").val()
+        taskurl=""
+        postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
+        postdata.args=[layer_name,style]
         $("#myModal").modal('hide');
+        $.postJSON(taskurl,postdata,reIndexCallback)
+
     });
 
 }
