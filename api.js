@@ -251,7 +251,8 @@ function geoserverStyleCallback(data,textStatus,xhr){
     //$('#modals').empty()
     $("#myModal").modal('hide');
     url = data.result_url
-    showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
+    cybercom_poll(url + ".json","myModalbody")
+    //showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
 }
 function reIndexCallback(data,textStatus,xhr){
     url = data.result_url
