@@ -182,7 +182,6 @@ function saveProperties(catalog_id){
         taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle/';
         postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
         postdata.args=[layer_name,style]
-        $('#modals').empty()
         $.postJSON(taskurl,postdata,geoserverStyleCallback)
 
     });
