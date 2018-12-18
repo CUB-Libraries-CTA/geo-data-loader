@@ -180,7 +180,7 @@ function saveProperties(catalog_id){
         //need to post to geoserver
         layer_name=data.layer_id_s
         style = $("#geoserver_style").val()
-        taskurl=""
+        taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle/';
         postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
         postdata.args=[layer_name,style]
         $("#myModal").modal('hide');
