@@ -140,7 +140,6 @@ function setStatusMetadata(catalog_id){
     url = base_url + '/catalog/data/catalog/geoportal/';
     $.getJSON(url + catalog_id + '/.json', function(data){
         $('#modals').empty()
-        modal_template()
         tmpdata = {"modal_data":{},"modal_name":"GeoLayer Properties: " + data.dc_title_s}
         $('#modals').append(modal_template(tmpdata))
         $("#myModal").modal('show');
