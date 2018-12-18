@@ -172,10 +172,23 @@ function setStatusMetadata(catalog_id){
 function saveProperties(catalog_id){
     url=base_url + '/catalog/data/catalog/geoportal/';
     url=url + catalog_id + '/.json';
+    dirty_index=false;
+    dirty_style=false;
     $.getJSON(url, function(data){
-        data.style=$("#geoserver_style").val()
-        data.status=$("#geoblacklight_status").val()
-        $.postJSON(url,data,function(data2){
+        if (data.status != $("#geoblacklight_status").val()){
+            data.status=$("#geoblacklight_status").val()
+            dirty_index=true;
+        }
+        if (data.style != $("#geoserver_style").val()){
+            data.style=$("#geoserver_style").val()
+            dirty_style=true;
+        }
+        if (dirty_index){
+            $.postJSON(url,data,run_search,null,'PUT');
+        }else{
+            $.postJSON(url,data,function(data2){},null,'PUT');
+        }
+        if (dirty_style){
             //need to post to geoserver
             layer_name=data.layer_id_s
             style = $("#geoserver_style").val()
@@ -183,7 +196,7 @@ function saveProperties(catalog_id){
             postdata=$.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.setLayerDefaultStyle");
             postdata.args=[layer_name,style]
             $.postJSON(taskurl,postdata,geoserverStyleCallback)
-        },null,'PUT');
+        }
 
 
     });
