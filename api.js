@@ -246,8 +246,11 @@ function loadGeoServerMetadata(data,textStatus,xhr){
 }
 function geoserverStyleCallback(data,textStatus,xhr){
     //$('#modals').empty()
-    alert("wait");
     $("#myModal").modal('toggle');
+    alert("wait");
+
+    $("#myModal").empty()
+    alert("wait");
     url = data.result_url
     showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
 }
