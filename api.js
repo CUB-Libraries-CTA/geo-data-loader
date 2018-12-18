@@ -226,7 +226,7 @@ function reIndexAll(){
     url = base_url + '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
     $.getJSON(url, function(data){
         index_data= $.map(data.results,function(n,i){
-            n.id=n._id;delete n._id;delete n.id; delete n.status; return n;
+            n.id=n._id;delete n._id;delete n.id; delete n.status;delete n.style; return n;
         });
         postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.workflow.resetSolrIndex");
         postdata.args=[index_data];
