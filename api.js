@@ -1,3 +1,19 @@
+/* eslint-disable jquery/no-text */
+/* eslint-disable jquery/no-class */
+/* eslint-disable jquery/no-attr */
+/* eslint-disable jquery/no-html */
+/* eslint-disable jquery/no-sizzle */
+/* eslint-disable jquery/no-toggle */
+/* eslint-disable jquery/no-map */
+/* eslint-disable jquery/no-hide */
+/* eslint-disable jquery/no-show */
+/* eslint-disable jquery/no-each */
+/* eslint-disable jquery/no-is */
+/* eslint-disable jquery/no-val */
+/* eslint-disable jquery/no-ajax */
+/* eslint-disable jquery/no-ready */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 $(function() {
   //Customize by setting base_url to cybercom/api docker application
   base_url = "https://geo.colorado.edu/api";
@@ -78,7 +94,7 @@ function poll_styles(url) {
     }
   });
 }
-function getStyles(data, textStatus, xhr) {
+function getStyles(data) {
   poll_styles(data.result_url);
 }
 function resetDropzone() {
@@ -108,6 +124,7 @@ function load_metadata() {
     '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
   $.getJSON(catalog_url, function(data) {
     tr_templates = Handlebars.templates["tmpl-main-tr"];
+    // eslint-disable-next-line jquery/no-each
     $.each(data.results, function(idx, item) {
       $("#tablebody").append(tr_templates(item));
     });
@@ -148,6 +165,7 @@ function run_search() {
     }
   });
 }
+
 function editMetadata(catalog_id) {
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppMetadata"];
@@ -164,8 +182,10 @@ function editMetadata(catalog_id) {
     $("#myModal").modal("show");
   });
 }
+
 function deleteMetadata(catalog_id, args, confirmation) {
   if (!confirmation) {
+    alert("this does something");
   }
   url = base_url + "/catalog/data/catalog/geoportal/" + catalog_id + "/.json";
   $.deleteJSON(url, run_search);
@@ -179,6 +199,7 @@ function deleteMetadata(catalog_id, args, confirmation) {
   //(url, data, callback,fail)
   $.postJSON(taskurl, postdata, alert("Geoserver Store Deleted"));
 }
+
 function setStatusMetadata(catalog_id) {
   modal_template = Handlebars.templates["tmpl-modalAppTaskResult"];
   task_template = Handlebars.templates["tmpl-geoserver-select"];
@@ -198,23 +219,6 @@ function setStatusMetadata(catalog_id) {
     $("#modalFooter").empty();
     footer_template = Handlebars.templates["tmpl-modal-footer-properties"];
     $("#modalFooter").append(footer_template(data));
-    /*
-        $("#modals").modal('show');
-
-        sty_url= base_url + '/queue/run/geoblacklightq.tasks.geoservertasks.getstyles'
-        $.postJSON(sty_url + '/.json',null,run_search);
-        if (typeof data.status === 'undefined'){
-            data.status="notindexed";
-        }else if (data.status === "notindexed"){
-            data.status="indexed";
-        } else if (data.status === "indexed") {
-            data.status="notindexed";
-        }
-
-        console.log(data.status);
-        $.postJSON(url + '/.json',data,run_search);
-        $.modalMesssage(data.dc_title_s,"Status changed to '" + data.status + "'.")
-        */
   });
 }
 function saveProperties(catalog_id) {
@@ -275,7 +279,7 @@ function reIndexAll() {
     base_url +
     '/catalog/data/catalog/geoportal/.json?query={"filter":{"status":{"$ne":"notindexed"}}}&page_size=0';
   $.getJSON(url, function(data) {
-    index_data = $.map(data.results, function(n, i) {
+    index_data = $.map(data.results, function(n) {
       n.id = n._id;
       delete n._id;
       delete n.id;
@@ -315,17 +319,14 @@ function poll_layers(url) {
     }
   });
 }
-function loadGeoServerMetadata(data, textStatus, xhr) {
+function loadGeoServerMetadata(data) {
   poll_layers(data.result_url);
 }
-function geoserverStyleCallback(data, textStatus, xhr) {
-  //$('#modals').empty()
-  //$("#myModal").modal('hide');
+function geoserverStyleCallback(data) {
   url = data.result_url;
   cybercom_poll(url + ".json", "myModalbody");
-  //showChildResult(url,"Geoserver Style Workflow","Assign Default Layer Style");
 }
-function reIndexCallback(data, textStatus, xhr) {
+function reIndexCallback(data) {
   url = data.result_url;
   showChildResult(url);
 }
@@ -359,12 +360,9 @@ function run_example_task() {
   );
 }
 function submit_user() {
-  console.log(user_url);
   $.post(user_url, $("#user_form").serializeObject(), function(data) {
     data.csrftoken = getCookie("csrftoken");
     $("#profile").empty();
-    //source = $('#user-template').html()
-    //user_template = Handlebars.compile(source);
     user_template = Handlebars.templates["tmpl-user"];
     $("#profile").append(user_template(data));
     $("#user_form").hide();
@@ -408,8 +406,6 @@ function set_auth(base_url, login_url) {
       )
     );
     data.csrftoken = getCookie("csrftoken");
-    //source = $('#user-template').html()
-    //user_template = Handlebars.compile(source);
     user_template = Handlebars.templates["tmpl-user"];
     $("#profile").append(user_template(data));
     $("#user_form").hide();
@@ -440,8 +436,6 @@ function load_task_history(url) {
       $("#li_nextlink").removeClass("disabled");
     }
     setTaskDisplay(data);
-    //source = $('#tr-template').html();
-    //tr_template = Handlebars.compile(source);
     tr_template = Handlebars.templates["tmpl-tr"];
     $("#result_tbody").html(""); //clear table
     $.each(data.results, function(i, item) {
@@ -487,7 +481,6 @@ function showChildResult(url, title, message) {
   task_template = Handlebars.templates["tmpl-modalAppTaskResult"];
   tmpdata = { modal_name: title };
   $("#modals").append(task_template(tmpdata));
-  console.log("showChildResult");
   $("#myModalbody").empty();
   $("#myModal").modal("show");
   $("#myModalbody").html(message);
@@ -514,7 +507,6 @@ function cybercom_submit_task(
 }
 
 function loadxmlLoad(url, textarea_id) {
-  console.log("here");
   $.ajax({
     type: "GET",
     url: url,
@@ -539,17 +531,11 @@ function serilize_formdata(formid) {
   delete data.dct_temporal_sm1;
   delete data.dc_subject_sm1;
   delete data.dc_creator_sm1;
-  //data.dc_identifier_s = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
-  //data.layer_slug_s = "cub:" + geoserver_layers.name.split(':')[1]
-  //data.solr_geom = geoserver_layers.boundbox
   data.dct_references_s =
     '{"http://schema.org/downloadUrl":"https://geo.colorado.edu/apps/geolibrary/datasets/' +
     zipurl +
     '","http://www.opengis.net/def/serviceType/ogc/wfs":"https://geo.colorado.edu/geoserver/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"https://geo.colorado.edu/geoserver/geocolorado/wms"}';
-  //data.uuid = "https://geo.colorado.edu/" + geoserver_layers.name.split(':')[1]
-  //data.layer_id_s = geoserver_layers.name.split(':')[1]
   data.dc_type_s = "Dataset";
-  //delete data.dct_type_s
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppMetadata"];
   json_data = JSON.stringify($.objectWithKeySorted(data), null, 4);
@@ -563,14 +549,11 @@ function reloadGeoserverMetadata() {
   );
   taskurl =
     "/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/";
-  //(url, data, callback,fail)
   $.postJSON(taskurl, postdata, loadGeoServerMetadata);
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data, html_result) {
-  //console.log(JSON.stringify(data.result,null, 4));
-
   if (data.result.hasOwnProperty("geoblacklightschema")) {
     urlxmlfgdc = "";
     if (data.result.xml.urls.length > 0) {
@@ -579,15 +562,11 @@ function general_status(data, html_result) {
     if (data.result.hasOwnProperty("zipurl")) {
       zipurl = data.result.zipurl;
     }
-    console.log(zipurl);
     jsonData = data.result.geoblacklightschema;
     $("#dropzone").hide();
     $("#helptxt").hide();
     url =
       "https://geo.colorado.edu/geoserver/rest/workspaces/geocolorado/datastores.json";
-    //$.getJSON(url,function(data){
-    //  alert(JSON.stringify(data,null,indent=4));
-    //geoserver/rest/workspaces/geocolorado/datastores/Boulder_Co_Tracts/featuretypes/Boulder_Co_Tracts.json
     geolibrary_tmpl = Handlebars.templates["tmpl-geolibrary-new"];
     geoschema = data.result.geoblacklightschema;
     geoschema = cleanDicts(geoschema);
@@ -598,17 +577,11 @@ function general_status(data, html_result) {
     $("#home").append(
       geolibrary_tmpl({ data: geoschema, urlxmlfgdc: urlxmlfgdc })
     );
-    console.log("xmlurl: ", urlxmlfgdc);
+
     loadxmlLoad(urlxmlfgdc, "xmlfilexml");
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
-    //get geoserver data
-    //postdata = $.getCYBERCOM_JSON_OBJECT("geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata");
-    //taskurl='/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/';
-    //(url, data, callback,fail)
-    //$.postJSON(taskurl,postdata,loadGeoServerMetadata)
-    //})
   }
   if (data.hasOwnProperty("task_name")) {
     if (
@@ -622,10 +595,8 @@ function general_status(data, html_result) {
   }
 
   if (data.result.hasOwnProperty("children")) {
-    //console.log('childrenresult')
     children_poll(data.result.children, html_result);
   } else if (data.hasOwnProperty("children")) {
-    //console.log('children');
     children_poll(data.children, html_result);
   }
   $("#" + html_result).append(JSON.stringify(data.result, null, 4));
@@ -647,9 +618,7 @@ function cleanDicts(geoschema) {
 }
 function children_poll(children, html_result) {
   if (children.length > 0) {
-    //console.log('children yes [[[]]]')
     url = base_url + "/queue/task/" + children[0][0][0] + "/.json";
-    //console.log(url);
     cybercom_poll(url, html_result);
   }
 }
@@ -665,9 +634,7 @@ function check_status(data) {
 }
 //Cybercommons polling task status
 function cybercom_poll(url, html_result) {
-  //console.log(url,html_result);
   $.getJSON(url, function(data) {
-    //console.log("Result: ",data);
     status = check_status(data);
     if (status == "PENDING") {
       general_wait(data, html_result);
@@ -690,9 +657,9 @@ function cybercom_poll(url, html_result) {
     }
   });
 }
-/*
- ************ Jquery functions ****************
- */
+
+// ************ Jquery functions ****************
+
 //Default JSON object to submit to cybercommons api task queue
 $.getCYBERCOM_JSON_OBJECT = function(task_name) {
   return {
@@ -706,6 +673,7 @@ $.getCYBERCOM_JSON_OBJECT = function(task_name) {
 $.defaultFor = function(arg, val) {
   return typeof arg !== "undefined" ? arg : val;
 };
+
 //postJSON is custom call for post to cybercommons api
 $.postJSON = function(url, data, callback, fail, type) {
   type = $.defaultFor(type, "POST");
@@ -722,6 +690,7 @@ $.postJSON = function(url, data, callback, fail, type) {
     }
   });
 };
+
 $.deleteJSON = function(url, callback, fail) {
   return jQuery.ajax({
     type: "DELETE",
@@ -734,6 +703,7 @@ $.deleteJSON = function(url, callback, fail) {
     }
   });
 };
+
 $.modalMesssage = function(title, message) {
   $("#modals").empty();
   template = Handlebars.templates["tmpl-modalMessage"];
@@ -741,6 +711,7 @@ $.modalMesssage = function(title, message) {
   $("#modals").append(template(tmpdata));
   $("#myModal").modal("show");
 };
+
 $.objectWithKeySorted = function(object) {
   var result = {};
   _.forEach(Object.keys(object).sort(), function(key) {
@@ -748,6 +719,7 @@ $.objectWithKeySorted = function(object) {
   });
   return result;
 };
+
 //Used to serialize form object to get form data
 $.fn.serializeObject = function() {
   var o = {};
@@ -764,6 +736,7 @@ $.fn.serializeObject = function() {
   });
   return o;
 };
+
 //add links to http and https items
 $.fn.urlize = function() {
   if (this.length > 0) {
@@ -793,6 +766,7 @@ $.fn.urlize = function() {
     });
   }
 };
+
 //get cybercommons cookie Value
 function getCookie(name) {
   var cookieValue = null;

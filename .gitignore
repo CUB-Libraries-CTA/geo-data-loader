@@ -26,3 +26,5 @@ pip-log.txt
 
 #PyCharm Data
 .idea/
+node_modules/*
+node_modules/.bin/acorn
