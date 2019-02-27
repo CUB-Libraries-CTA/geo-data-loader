@@ -25,6 +25,7 @@ $(function() {
   prevlink = null;
   nextlink = null;
   zipurl = "zipfile.zip";
+  workflowdata = null;
   geoschema = {};
   set_auth(base_url, login_url);
   $("#aprofile").click(function() {
@@ -532,7 +533,7 @@ function serilize_formdata(formid) {
   delete data.dc_subject_sm1;
   delete data.dc_creator_sm1;
   data.dct_references_s =
-    '{"http://schema.org/downloadUrl":"https://geo.colorado.edu/apps/geolibrary/datasets/' +
+    '{"http://schema.org/downloadUrl":"' +
     zipurl +
     '","http://www.opengis.net/def/serviceType/ogc/wfs":"https://geo.colorado.edu/geoserver/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"https://geo.colorado.edu/geoserver/geocolorado/wms"}';
   data.dc_type_s = "Dataset";
@@ -577,7 +578,9 @@ function general_status(data, html_result) {
     $("#home").append(
       geolibrary_tmpl({ data: geoschema, urlxmlfgdc: urlxmlfgdc })
     );
-
+    //set xml select
+    xml_select_tmpl = Handlebars.templates["tmpl-xml-select"];
+    $("#selectxml").append;
     loadxmlLoad(urlxmlfgdc, "xmlfilexml");
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
@@ -599,6 +602,7 @@ function general_status(data, html_result) {
   } else if (data.hasOwnProperty("children")) {
     children_poll(data.children, html_result);
   }
+  workflowdata = data;
   $("#" + html_result).append(JSON.stringify(data.result, null, 4));
 }
 function cleanDicts(geoschema) {
