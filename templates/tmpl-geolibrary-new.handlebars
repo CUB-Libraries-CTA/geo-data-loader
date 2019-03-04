@@ -15,6 +15,12 @@
       <h3>Geoblacklight Schema</h3>
       <form id="geoblacklightform" action="" class="">
         <div style="display:none">
+          <input type="hidden" name="status" value="{{ data.status }}" />
+        </div>
+        <div style="display:none">
+          <input type="hidden" name="style" value="{{ data.style }}" />
+        </div>
+        <div style="display:none">
           <input type="hidden" name="dct_references_s" value="{{ data.dct_references_s }}" />
         </div>
         <div style="display:none">
@@ -124,9 +130,9 @@
   $("#layer_geom_type_s").val("{{data.layer_geom_type_s}}");
   $("#dc_format_s").val("{{data.dc_format_s}}");
 /*
-          var container = document.getElementById("jsoneditor");
-          var options = {};
-          var editor = new JSONEditor(container, options);
-          editor.set(jsonData)
-        */
+            var container = document.getElementById("jsoneditor");
+            var options = {};
+            var editor = new JSONEditor(container, options);
+            editor.set(jsonData)
+          */
 </script>
