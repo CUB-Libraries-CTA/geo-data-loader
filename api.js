@@ -580,8 +580,10 @@ function general_status(data, html_result) {
     );
     //set xml select
     xml_select_tmpl = Handlebars.templates["tmpl-xml-select"];
-    $("#selectxml").append;
-    loadxmlLoad(urlxmlfgdc, "xmlfilexml");
+    //$("#selectxml").append;
+    //loadxmlLoad(urlxmlfgdc, "xmlfilexml");
+    jsond = data.result.xml.fgdc[0];
+    $("#xmlfilexml").append(JSON.stringify(jsond, null, 2));
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
