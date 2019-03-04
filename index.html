@@ -1,39 +1,68 @@
-
 <html>
-<head lang="en">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
+  <head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
     <title>GeoLibrary Data Loader</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Colorado GeoLibrary data loader applicaiton
-    for the GeoLibrary Geoblacklight application for discovery of GIS datasets.">
-    <meta name="Mark Stacy" content="CU LIT">
-    <link rel="stylesheet" href="bower_components/boostrap_style/flatly/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/jsoneditor/jsoneditor.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Colorado GeoLibrary data loader applicaiton
+    for the GeoLibrary Geoblacklight application for discovery of GIS datasets."
+    />
+    <meta name="Mark Stacy" content="CU LIT" />
+    <link
+      rel="stylesheet"
+      href="bower_components/boostrap_style/flatly/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="bower_components/jsoneditor/jsoneditor.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+  <body style="padding:5px;">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <img
+          class="navbar-brand"
+          src="bower_components/boostrap_style/flatly/logo.png"
+          alt="Colorado GeoLibrary"
+          style="padding: 8px 10px"
+        />
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-</head>
-<body style="padding:5px;">
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <img class="navbar-brand" src="bower_components/boostrap_style/flatly/logo.png" alt="Colorado GeoLibrary" style="padding: 8px 10px" />
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-      <a class="navbar-brand" href="#">Colorado GeoLibrary</a>
-    </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <a class="navbar-brand" href="#">Colorado GeoLibrary</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right" style="width:133px">
             <li class="dropdown">
-              <a id="user" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a
+                id="user"
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-expanded="false"
+                >Dropdown <span class="caret"></span
+              ></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a id="aprofile" href="#">User Profile</a></li>
                 <li><a id="alogout" href="#">Log out</a></li>
@@ -41,61 +70,111 @@
               </ul>
             </li>
           </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<div role="tabpanel" class="tabbable" >
-    <ul id='myTab' class="nav nav-tabs  " role="tablist">
-        <li role="presentation" class="active"><a href="#dataitems" aria-controls="dataitems" role="tab" data-toggle="tab">Index Metadata</a></li>
-        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Add Metadata </a></li>
-        <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">Task History</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">User Profile</a></li>
-    </ul>
-    <div id="myTabContent" class="tab-content" >
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <div role="tabpanel" class="tabbable">
+      <ul id="myTab" class="nav nav-tabs  " role="tablist">
+        <li role="presentation" class="active">
+          <a
+            href="#dataitems"
+            aria-controls="dataitems"
+            role="tab"
+            data-toggle="tab"
+            >Index Metadata</a
+          >
+        </li>
+        <li role="presentation">
+          <a href="#home" aria-controls="home" role="tab" data-toggle="tab"
+            >Add Metadata
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab"
+            >Task History</a
+          >
+        </li>
+        <li role="presentation">
+          <a
+            href="#profile"
+            aria-controls="profile"
+            role="tab"
+            data-toggle="tab"
+            >User Profile</a
+          >
+        </li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="dataitems">
-            <h2>Data Items</h2>
+          <h2>Data Items</h2>
         </div>
         <div role="tabpanel" class="tab-pane fade in" id="home">
-            <h2>Task Workflow</h2>
+          <h2>Task Workflow</h2>
         </div>
         <div role="tabpanel" class="tab-pane fade in" id="tasks">
-            <h2>Task History</h2>
-            <h4 id="task_count"></h4>
-            <table class="table table-bordered table-condensed table-hover" id='resulttable'>
-              <tr>
-                  <th>Task Name</th>
-                  <th>Timestamp</th>
-                  <th>Metadata Tags</th>
-                  <!--<th>Result</th>-->
-              </tr>
-            <tbody id='result_tbody'>
-              </tbody>
-            </table>
-            <nav>
+          <h2>Task History</h2>
+          <h4 id="task_count"></h4>
+          <table
+            class="table table-bordered table-condensed table-hover"
+            id="resulttable"
+          >
+            <tr>
+              <th>Task Name</th>
+              <th>Timestamp</th>
+              <th>Metadata Tags</th>
+              <!--<th>Result</th>-->
+            </tr>
+            <tbody id="result_tbody"></tbody>
+          </table>
+          <nav>
             <ul class="pager">
-                <li id="li_prevlink" class="disabled"><a id="prevlink" href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-                <li id="li_nextlink" ><a id="nextlink" href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+              <li id="li_prevlink" class="disabled">
+                <a id="prevlink" href="#"
+                  ><span aria-hidden="true">&larr;</span> Previous</a
+                >
+              </li>
+              <li id="li_nextlink">
+                <a id="nextlink" href="#"
+                  >Next <span aria-hidden="true">&rarr;</span></a
+                >
+              </li>
             </ul>
-            </nav>
+          </nav>
         </div>
-        <div role="tabpanel" class="tab-pane fade in" id="profile">
-
-        </div>
+        <div role="tabpanel" class="tab-pane fade in" id="profile"></div>
+      </div>
     </div>
-</div>
-<!-- Modal -->
-<div id="modals"></div>
-<!-- End Model -->
-<footer class="footer">
-    <p>&copy; Copyright</p>
-</footer>
-</body>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="bower_components/handlebars/handlebars.runtime.min.js"></script>
-<script type="text/javascript" src="bower_components/dropzone/dropzone.js"></script>
-<script type="text/javascript" src="bower_components/jsoneditor/jsoneditor.min.js"></script>
-<script type="text/javascript" src="bower_components/lodash/lodash.core.min.js"></script>
-<script src="api.js"></script>
-<script src="templates.js"></script>
+    <!-- Modal -->
+    <div id="modals"></div>
+    <!-- End Model -->
+    <footer class="footer">
+      <p>&copy; Copyright</p>
+    </footer>
+  </body>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script
+    type="text/javascript"
+    src="bower_components/bootstrap/dist/js/bootstrap.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="bower_components/handlebars/handlebars.runtime.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="bower_components/dropzone/dropzone.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="bower_components/jsoneditor/jsoneditor.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="bower_components/lodash/lodash.core.min.js"
+  ></script>
+  <script src="api.js"></script>
+  <script src="templates.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 </html>

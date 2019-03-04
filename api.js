@@ -185,7 +185,39 @@ function editMetadata(catalog_id) {
 }
 
 function deleteMetadata(catalog_id, args, confirmation) {
-  if (!confirmation) {
+  $.confirm({
+    title: "Please confirm deletion?",
+    content: "The data item will be deleted.",
+    type: "green",
+    buttons: {
+      ok: {
+        text: "Delete",
+        btnClass: "btn-primary",
+        keys: ["enter"],
+        action: function() {
+          url =
+            base_url +
+            "/catalog/data/catalog/geoportal/" +
+            catalog_id +
+            "/.json";
+          $.deleteJSON(url, run_search);
+          postdata = $.getCYBERCOM_JSON_OBJECT(
+            "geoblacklightq.tasks.geoservertasks.deleteGeoserverStore"
+          );
+          postdata.args = args;
+          taskurl =
+            "/api/queue/run/geoblacklightq.tasks.geoservertasks.deleteGeoserverStore/";
+          //(url, data, callback,fail)
+          $.postJSON(taskurl, postdata, $.alert("Geoserver Store Deleted"));
+          console.log("the user clicked confirm");
+        }
+      },
+      cancel: function() {
+        console.log("the user clicked cancel");
+      }
+    }
+  });
+  /*if (!confirmation) {
     alert("this does something");
   }
   url = base_url + "/catalog/data/catalog/geoportal/" + catalog_id + "/.json";
@@ -199,6 +231,7 @@ function deleteMetadata(catalog_id, args, confirmation) {
     "/api/queue/run/geoblacklightq.tasks.geoservertasks.deleteGeoserverStore/";
   //(url, data, callback,fail)
   $.postJSON(taskurl, postdata, alert("Geoserver Store Deleted"));
+  */
 }
 
 function setStatusMetadata(catalog_id) {
@@ -583,7 +616,7 @@ function general_status(data, html_result) {
     //$("#selectxml").append;
     //loadxmlLoad(urlxmlfgdc, "xmlfilexml");
     jsond = data.result.xml.fgdc[0];
-    $("#xmlfilexml").append(JSON.stringify(jsond, null, 2));
+    $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 2));
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
