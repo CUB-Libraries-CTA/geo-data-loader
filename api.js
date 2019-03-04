@@ -188,7 +188,7 @@ function deleteMetadata(catalog_id, args, confirmation) {
   $.confirm({
     title: "Please confirm deletion?",
     content: "The data item will be deleted.",
-    type: "green",
+    type: "red",
     buttons: {
       ok: {
         text: "Delete",
@@ -207,7 +207,6 @@ function deleteMetadata(catalog_id, args, confirmation) {
           postdata.args = args;
           taskurl =
             "/api/queue/run/geoblacklightq.tasks.geoservertasks.deleteGeoserverStore/";
-          //(url, data, callback,fail)
           $.postJSON(taskurl, postdata, $.alert("Geoserver Store Deleted"));
           console.log("the user clicked confirm");
         }
