@@ -286,6 +286,7 @@ function saveProperties(catalog_id) {
       $.postJSON(taskurl, postdata, geoserverStyleCallback);
     }
   });
+  $("#myModal").modal("hide");
 }
 
 function saveMetadata(catalog_id, reindex) {
@@ -306,6 +307,7 @@ function saveMetadata(catalog_id, reindex) {
   }
   $("#myModal").modal("hide");
   resetDropzone();
+  run_search();
 }
 
 function reIndexAll() {
