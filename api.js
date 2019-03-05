@@ -554,13 +554,17 @@ function loadxmlLoad(url, textarea_id) {
     }
   });
 }
-
+function cleanLists(datalist) {
+  return datalist.filter(function(el) {
+    return el != "";
+  });
+}
 function serilize_formdata(formid) {
   data = $("#geoblacklightform").serializeObject();
-  data.dc_creator_sm = data.dc_creator_sm1.split("|");
-  data.dc_subject_sm = data.dc_subject_sm1.split("|");
-  data.dct_temporal_sm = data.dct_temporal_sm1.split("|");
-  data.dct_spatial_sm = data.dct_spatial_sm1.split("|");
+  data.dc_creator_sm = cleanLists(data.dc_creator_sm1.split("|"));
+  data.dc_subject_sm = cleanLists(data.dc_subject_sm1.split("|"));
+  data.dct_temporal_sm = cleanLists(data.dct_temporal_sm1.split("|"));
+  data.dct_spatial_sm = cleanLists(data.dct_spatial_sm1.split("|"));
   //geoserver_layers = JSON.parse(data.geoserver_layers);
   //delete data.geoserver_layers
   delete data.dct_spatial_sm1;
