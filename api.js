@@ -305,6 +305,7 @@ function saveMetadata(catalog_id, reindex) {
     $.postJSON(url, data);
   }
   $("#myModal").modal("hide");
+  resetDropzone();
 }
 
 function reIndexAll() {
