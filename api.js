@@ -603,7 +603,7 @@ function getXMLdata(data) {
 function crosswalkResult(data) {
   $("#geoFormDiv").empty();
   geolibrary_tmpl = Handlebars.templates["tmpl-geolibrary-form"];
-  geoschema = data.result;
+  geoschema = data.result.result;
   geoschema = cleanDicts(geoschema);
   geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join("|");
   geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join("|");
