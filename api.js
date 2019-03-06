@@ -600,8 +600,12 @@ function getXMLdata(data) {
   }
   return temp;
 }
-function loadxmldata(selectedindex) {
-  jsond = workflowdata.result.xml.fgdc[selectedindex];
+function loadxmldata() {
+  myhref = $("#xml_file").val();
+  $("#xmllink").attr("href", myhref);
+  idx = $("#xml_file")[0].selectedIndex;
+  console.log(idx);
+  jsond = workflowdata.result.xml.fgdc[idx];
   $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
 }
 //Example general display status to console.log. Used in cybercom_poll!
@@ -640,18 +644,14 @@ function general_status(data, html_result) {
     //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
 
     $("#xml_file").change(function() {
-      console.log("runnnnnn");
-      myhref = $("#xml_file").val();
-      $("#xmllink").attr("href", myhref);
-      idx = $("#xml_file")[0].selectedIndex;
-      //$("#xml_file").prop("selectedIndex");
-      loadxmldata(idx);
+      loadxmldata();
     });
     $("#crosswalkxml").click(function() {
-      crosswalkXML($("#xml_file").val());
+      comnsole.log($("#xml_file").val());
+      //crosswalkXML($("#xml_file").val());
     });
     //Load initial xml data
-    loadxmldata(0);
+    loadxmldata();
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
