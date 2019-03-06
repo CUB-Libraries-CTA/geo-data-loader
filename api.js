@@ -288,7 +288,26 @@ function saveProperties(catalog_id) {
   });
   $("#myModal").modal("hide");
 }
-
+function resetDZexit() {
+  $.confirm({
+    title: "Geoblacklight Schema",
+    content:
+      "Geoblacklight Schema has not been saved. Please hit cancel to continue to work with schema. Exit to continue.",
+    type: "red",
+    buttons: {
+      ok: {
+        text: "Exit",
+        btnClass: "btn-primary",
+        keys: ["enter"],
+        action: function() {
+          resetDropzone();
+          activaTab("dataitems");
+        }
+      },
+      cancel: function() {}
+    }
+  });
+}
 function saveMetadata(catalog_id, reindex) {
   try {
     data = JSON.parse($("#myMetadataModalbody").val());
@@ -308,6 +327,7 @@ function saveMetadata(catalog_id, reindex) {
   $("#myModal").modal("hide");
   resetDropzone();
   run_search();
+  activaTab("dataitems");
 }
 
 function reIndexAll() {
@@ -610,6 +630,9 @@ function crosswalkResult(data) {
   geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join("|");
   geoschema.dct_spatial_sm1 = geoschema.dct_spatial_sm.join("|");
   $("#geoFormDiv").append(geolibrary_tmpl({ data: geoschema }));
+  $("#getblight").click(function() {
+    serilize_formdata("geoblacklightform");
+  });
 }
 function crosswalk_poll(url, callback) {
   $.getJSON(url, function(data) {
