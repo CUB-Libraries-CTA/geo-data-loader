@@ -606,13 +606,13 @@ function crosswalkCallback(data) {
 }
 function crosswalkObject() {
   $.confirm({
-    title: "Metadata Update?",
+    title: "Metadata Update",
     content:
-      "The current form data will be replace with the new crosswalk data. Any current form data changes will be lost.",
-    type: "yellow",
+      "The Geoblacklight Schema data will be replace with data from the new crosswalked xml data. Any changes made to schema will be lost.",
+    type: "red",
     buttons: {
       ok: {
-        text: "Crosswalk selected File",
+        text: "Crosswalk",
         btnClass: "btn-primary",
         keys: ["enter"],
         action: function() {
