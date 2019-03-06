@@ -650,9 +650,11 @@ function crosswalk_poll(url, callback) {
         }, 2000);
       } else {
         callback(data);
+        $("#geoFormDiv").show();
       }
     }
     if (status == "FAILURE") {
+      $("#geoFormDiv").show();
       console.log("FAILURE");
     }
   });
@@ -673,6 +675,7 @@ function crosswalkObject() {
         btnClass: "btn-primary",
         keys: ["enter"],
         action: function() {
+          $("#geoFormDiv").hide();
           postdata = $.getCYBERCOM_JSON_OBJECT(
             "geoblacklightq.tasks.geotransmeta.singleCrossWalkGeoBlacklight"
           );
