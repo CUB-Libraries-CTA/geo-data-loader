@@ -611,7 +611,7 @@ function crosswalkResult(data) {
   geoschema.dct_spatial_sm1 = geoschema.dct_spatial_sm.join("|");
   $("#geoFormDiv").append(geolibrary_tmpl({ data: geoschema }));
 }
-function crosswalk_poll(url, crosswalk_success) {
+function crosswalk_poll(url, callback) {
   $.getJSON(url, function(data) {
     status = check_status(data);
     if (status == "PENDING") {
@@ -626,7 +626,7 @@ function crosswalk_poll(url, crosswalk_success) {
           crosswalk_poll(url);
         }, 2000);
       } else {
-        crosswalk_success(data);
+        callback(data);
       }
     }
     if (status == "FAILURE") {
