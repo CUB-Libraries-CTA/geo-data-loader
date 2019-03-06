@@ -1,0 +1,23 @@
+<select id="xml_file" class="form-control">
+    {{#each xml_list}}
+    <option value="{{ this.url}}">{{ this.name }}</option>
+    {{/each}}
+</select>
+<a id="xmllink" href="" target="_blank">View XML</a>
+<button class="btn btn-primary" type="button" id="crosswalkxml">Crosswalk XML File >></button>
+<script>
+    function loadxmldata(selectedindex) {
+        jsond = workflowdata.result.xml.fgdc[selectedindex]
+        $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
+    }
+    $("#xml_file").change(function () {
+        myhref = $("#xml_file").val()
+        $("#xmllink").attr("href", myhref)
+        loadxmldata($("#xml_file").prop('selectedIndex'))
+    });
+    $("#crosswalkxml")click(function () {
+        crosswalkXML($("#xml_file").val())
+    });
+    //Load initial xml data
+    loadxmldata(0);
+</script>
