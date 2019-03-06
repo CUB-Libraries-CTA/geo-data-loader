@@ -617,13 +617,13 @@ function crosswalk_poll(url, callback) {
     if (status == "PENDING") {
       //Set timeout to 3 seconds
       setTimeout(function() {
-        crosswalk_poll(url);
+        crosswalk_poll(url, callback);
       }, 3000);
     }
     if (status == "SUCCESS") {
       if (!("result" in data)) {
         setTimeout(function() {
-          crosswalk_poll(url);
+          crosswalk_poll(url, callback);
         }, 2000);
       } else {
         callback(data);
