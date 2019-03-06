@@ -606,6 +606,7 @@ function loadxmldata() {
   idx = $("#xml_file")[0].selectedIndex;
   console.log(idx);
   jsond = workflowdata.result.xml.fgdc[idx];
+  $("#xmlfilexml").empty();
   $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
 }
 //Example general display status to console.log. Used in cybercom_poll!
