@@ -600,6 +600,52 @@ function getXMLdata(data) {
   }
   return temp;
 }
+function crosswalkCallback(data) {
+  url = data.result_url;
+  console.log(url);
+}
+function crosswalkObject() {
+  $.confirm({
+    title: "Metadata Update?",
+    content:
+      "The current form data will be replace with the new crosswalk data. Any current form data changes will be lost.",
+    type: "yellow",
+    buttons: {
+      ok: {
+        text: "Crosswalk selected File",
+        btnClass: "btn-primary",
+        keys: ["enter"],
+        action: function() {
+          postdata = $.getCYBERCOM_JSON_OBJECT(
+            "geoblacklightq.tasks.geotransmeta.singleCrossWalkGeoBlacklight"
+          );
+          idx = $("#xml_file")[0].selectedIndex;
+          jsond = workflowdata.result.xml.fgdc[idx];
+          filename = jsond.file;
+          layername = workflowdata.result.geoblacklightschema.layer_slug_s.split(
+            ":"
+          )[1];
+          geoserver_layername =
+            workflowdata.result.geoblacklightschema.layer_id_s;
+          resource_type = workflowdata.result.resource_type;
+          postdata.args = [
+            filename,
+            layername,
+            geoserver_layername,
+            resource_type
+          ];
+          taskurl =
+            "/api/queue/run/geoblacklightq.tasks.geotransmeta.singleCrossWalkGeoBlacklight/";
+          $.postJSON(taskurl, postdata, crosswalkCallback);
+        }
+      },
+      cancel: function() {
+        console.log("No crosswalk... the user clicked cancel");
+      }
+    }
+  });
+}
+
 function loadxmldata() {
   myhref = $("#xml_file").val();
   $("#xmllink").attr("href", myhref);
@@ -648,7 +694,7 @@ function general_status(data, html_result) {
       loadxmldata();
     });
     $("#crosswalkxml").click(function() {
-      comnsole.log($("#xml_file").val());
+      console.log($("#xml_file").val());
       //crosswalkXML($("#xml_file").val());
     });
     //Load initial xml data
