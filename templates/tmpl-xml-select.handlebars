@@ -1,7 +1,8 @@
-<select id="xml_file" class="form-control">
+<label for="xml_file">XML Alternatives</label>
+<select id="xml_file" class="form-control" style="width:40%;margin-right:10px;">
     {{#each xml_list}}
     <option value="{{ this.url}}">{{ this.name }}</option>
     {{/each}}
 </select>
-<a id="xmllink" href="" target="_blank">View XML</a>
-<button class="btn btn-primary" type="button" id="crosswalkxml">Crosswalk XML File >></button>
+<a id="xmllink" href="" target="_blank" style="margin-left:05px;">View XML</a>
+<button class="btn btn-primary" type="button" style="float:right" id="crosswalkxml">Crosswalk XML File >></button>
