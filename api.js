@@ -600,6 +600,10 @@ function getXMLdata(data) {
   }
   return temp;
 }
+function loadxmldata(selectedindex) {
+  jsond = workflowdata.result.xml.fgdc[selectedindex];
+  $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
+}
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data, html_result) {
@@ -629,10 +633,23 @@ function general_status(data, html_result) {
     );
     //set xml select
     xml_select_tmpl = Handlebars.templates["tmpl-xml-select"];
+    console.log(getXMLdata(data));
     $("#selectxml").append(xml_select_tmpl({ xml_list: getXMLdata(data) }));
     //loadxmlLoad(urlxmlfgdc, "xmlfilexml");
     //jsond = data.result.xml.fgdc[0];
     //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
+
+    $("#xml_file").change(function() {
+      myhref = $("#xml_file").val();
+      $("#xmllink").attr("href", myhref);
+      idx = $("#xml_file").prop("selectedIndex");
+      loadxmldata(idx);
+    });
+    $("#crosswalkxml").click(function() {
+      crosswalkXML($("#xml_file").val());
+    });
+    //Load initial xml data
+    loadxmldata(0);
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
