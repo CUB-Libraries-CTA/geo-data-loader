@@ -640,9 +640,11 @@ function general_status(data, html_result) {
     //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
 
     $("#xml_file").change(function() {
+      console.log("runnnnnn");
       myhref = $("#xml_file").val();
       $("#xmllink").attr("href", myhref);
-      idx = $("#xml_file").prop("selectedIndex");
+      idx = $("#xml_file")[0].selectedIndex;
+      //$("#xml_file").prop("selectedIndex");
       loadxmldata(idx);
     });
     $("#crosswalkxml").click(function() {
