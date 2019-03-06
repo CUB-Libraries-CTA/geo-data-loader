@@ -600,9 +600,43 @@ function getXMLdata(data) {
   }
   return temp;
 }
+function crosswalkResult(data) {
+  $("#geoFormDiv").empty();
+  geolibrary_tmpl = Handlebars.templates["tmpl-geolibrary-form"];
+  geoschema = data.result;
+  geoschema = cleanDicts(geoschema);
+  geoschema.dc_creator_sm1 = geoschema.dc_creator_sm.join("|");
+  geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join("|");
+  geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join("|");
+  geoschema.dct_spatial_sm1 = geoschema.dct_spatial_sm.join("|");
+  $("#geoFormDiv").append(geolibrary_tmpl({ data: geoschema }));
+}
+function crosswalk_poll(url, crosswalk_success) {
+  $.getJSON(url, function(data) {
+    status = check_status(data);
+    if (status == "PENDING") {
+      //Set timeout to 3 seconds
+      setTimeout(function() {
+        crosswalk_poll(url);
+      }, 3000);
+    }
+    if (status == "SUCCESS") {
+      if (!("result" in data)) {
+        setTimeout(function() {
+          crosswalk_poll(url);
+        }, 2000);
+      } else {
+        crosswalk_success(data);
+      }
+    }
+    if (status == "FAILURE") {
+      console.log("FAILURE");
+    }
+  });
+}
 function crosswalkCallback(data) {
   url = data.result_url;
-  console.log(url);
+  crosswalk_poll(url, crosswalkResult);
 }
 function crosswalkObject() {
   $.confirm({
@@ -650,7 +684,6 @@ function loadxmldata() {
   myhref = $("#xml_file").val();
   $("#xmllink").attr("href", myhref);
   idx = $("#xml_file")[0].selectedIndex;
-  console.log(idx);
   jsond = workflowdata.result.xml.fgdc[idx];
   $("#xmlfilexml").empty();
   $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
@@ -684,12 +717,7 @@ function general_status(data, html_result) {
     );
     //set xml select
     xml_select_tmpl = Handlebars.templates["tmpl-xml-select"];
-    console.log(getXMLdata(data));
     $("#selectxml").append(xml_select_tmpl({ xml_list: getXMLdata(data) }));
-    //loadxmlLoad(urlxmlfgdc, "xmlfilexml");
-    //jsond = data.result.xml.fgdc[0];
-    //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
-
     $("#xml_file").change(function() {
       loadxmldata();
     });
@@ -768,7 +796,7 @@ function cybercom_poll(url, html_result) {
       if (!("result" in data)) {
         setTimeout(function() {
           cybercom_poll(url, html_result);
-        }, 1000);
+        }, 2000);
       } else {
         general_status(data, html_result);
       }
