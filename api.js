@@ -591,9 +591,19 @@ function reloadGeoserverMetadata() {
     "/api/queue/run/geoblacklightq.tasks.geoservertasks.geoserverGetWorkspaceMetadata/";
   $.postJSON(taskurl, postdata, loadGeoServerMetadata);
 }
+function getXMLdata(data) {
+  temp = [];
+  xmllists = data.result.xml;
+  arrayLength = xmllists.files.length;
+  for (var i = 0; i < arrayLength; i++) {
+    temp.push({ name: xmllists.files[i], url: xmllists.urls[i] });
+  }
+  return temp;
+}
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
 function general_status(data, html_result) {
+  workflowdata = data;
   if (data.result.hasOwnProperty("geoblacklightschema")) {
     urlxmlfgdc = "";
     if (data.result.xml.urls.length > 0) {
@@ -619,10 +629,10 @@ function general_status(data, html_result) {
     );
     //set xml select
     xml_select_tmpl = Handlebars.templates["tmpl-xml-select"];
-    //$("#selectxml").append;
+    $("#selectxml").append(xml_select_tmpl({ xml_list: getXMLdata(data) }));
     //loadxmlLoad(urlxmlfgdc, "xmlfilexml");
-    jsond = data.result.xml.fgdc[0];
-    $("#xmlfilexml").append(JSON.stringify(jsond.data, null, 2));
+    //jsond = data.result.xml.fgdc[0];
+    //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
@@ -643,7 +653,7 @@ function general_status(data, html_result) {
   } else if (data.hasOwnProperty("children")) {
     children_poll(data.children, html_result);
   }
-  workflowdata = data;
+
   $("#" + html_result).append(JSON.stringify(data.result, null, 4));
 }
 function cleanDicts(geoschema) {
