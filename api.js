@@ -695,7 +695,7 @@ function general_status(data, html_result) {
     });
     $("#crosswalkxml").click(function() {
       console.log($("#xml_file").val());
-      //crosswalkXML($("#xml_file").val());
+      crosswalkObject();
     });
     //Load initial xml data
     loadxmldata();
