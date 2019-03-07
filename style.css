@@ -1,3 +1,9 @@
+#xmlfilexml {
+  width: 100%;
+  padding: 15px;
+  white-space: pre-wrap;
+}
+
 #myTabContent a {
     color: #0000EE ;
 }
