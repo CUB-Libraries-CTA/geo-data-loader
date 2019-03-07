@@ -703,7 +703,12 @@ function crosswalkObject() {
     }
   });
 }
-
+function collapseLink(textname) {
+  link = $("a").filter(function(index) {
+    return $(this).text() === textname;
+  });
+  link.click();
+}
 function loadxmldata() {
   myhref = $("#xml_file").val();
   $("#xmllink").attr("href", myhref);
@@ -713,6 +718,7 @@ function loadxmldata() {
   //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
   options = { collapsed: false, withQuotes: false };
   $("#xmlfilexml").jsonViewer(jsond.data, options);
+  collapseLink("Binary");
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
