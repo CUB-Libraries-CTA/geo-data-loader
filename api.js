@@ -621,7 +621,6 @@ function getXMLdata(data) {
   return temp;
 }
 function crosswalkResult(data) {
-  $("#geoFormDiv").empty();
   geolibrary_tmpl = Handlebars.templates["tmpl-geolibrary-form"];
   geoschema = data.result.result;
   geoschema = cleanDicts(geoschema);
@@ -629,6 +628,7 @@ function crosswalkResult(data) {
   geoschema.dc_subject_sm1 = geoschema.dc_subject_sm.join("|");
   geoschema.dct_temporal_sm1 = geoschema.dct_temporal_sm.join("|");
   geoschema.dct_spatial_sm1 = geoschema.dct_spatial_sm.join("|");
+  $("#geoFormDiv").empty();
   $("#geoFormDiv").append(geolibrary_tmpl({ data: geoschema }));
   $("#getblight").click(function() {
     serilize_formdata("geoblacklightform");
@@ -650,11 +650,9 @@ function crosswalk_poll(url, callback) {
         }, 2000);
       } else {
         callback(data);
-        $("#geoFormDiv").show();
       }
     }
     if (status == "FAILURE") {
-      $("#geoFormDiv").show();
       console.log("FAILURE");
     }
   });
@@ -675,7 +673,15 @@ function crosswalkObject() {
         btnClass: "btn-primary",
         keys: ["enter"],
         action: function() {
-          $("#geoFormDiv").hide();
+          wait_template = Handlebars.templates["tmpl-wait-finish"];
+          $("#geoFormDiv").empty();
+          wait_data = {
+            data: {
+              title: "Crosswalk Workflow",
+              message: "Please wait for workflow to finish."
+            }
+          };
+          $("#geoFormDiv").append(wait_template(wait_data));
           postdata = $.getCYBERCOM_JSON_OBJECT(
             "geoblacklightq.tasks.geotransmeta.singleCrossWalkGeoBlacklight"
           );
