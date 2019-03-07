@@ -657,7 +657,7 @@ function crosswalkObject() {
   $.confirm({
     title: "Metadata Update",
     content:
-      "The Geoblacklight Schema will be replace with data from the new crosswalked xml file. Any changes made to schema will be lost.",
+      "The Geoblacklight Schema will be replaced with data from the new crosswalked xml file. Any changes made to schema will be lost.",
     type: "red",
     buttons: {
       ok: {
