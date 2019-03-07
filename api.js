@@ -320,14 +320,21 @@ function saveMetadata(catalog_id, reindex) {
   }
   url = base_url + "/catalog/data/catalog/geoportal/.json";
   if (reindex) {
-    $.postJSON(url, data, reIndexAll);
+    $.postJSON(url, data, saveIndex);
   } else {
-    $.postJSON(url, data);
+    $.postJSON(url, data, saveCallback);
   }
   $("#myModal").modal("hide");
   resetDropzone();
+}
+function saveCallback() {
   run_search();
   activaTab("dataitems");
+}
+function saveIndex() {
+  run_search();
+  activaTab("dataitems");
+  reIndexAll();
 }
 
 function reIndexAll() {
