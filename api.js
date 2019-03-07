@@ -186,7 +186,7 @@ function editMetadata(catalog_id) {
 
 function deleteMetadata(catalog_id, args, confirmation) {
   $.confirm({
-    title: "Please confirm deletion?",
+    title: "Please confirm deletion",
     content: "The data item will be deleted.",
     type: "red",
     buttons: {
@@ -216,21 +216,6 @@ function deleteMetadata(catalog_id, args, confirmation) {
       }
     }
   });
-  /*if (!confirmation) {
-    alert("this does something");
-  }
-  url = base_url + "/catalog/data/catalog/geoportal/" + catalog_id + "/.json";
-  $.deleteJSON(url, run_search);
-  postdata = $.getCYBERCOM_JSON_OBJECT(
-    "geoblacklightq.tasks.geoservertasks.deleteGeoserverStore"
-  );
-
-  postdata.args = args;
-  taskurl =
-    "/api/queue/run/geoblacklightq.tasks.geoservertasks.deleteGeoserverStore/";
-  //(url, data, callback,fail)
-  $.postJSON(taskurl, postdata, alert("Geoserver Store Deleted"));
-  */
 }
 
 function setStatusMetadata(catalog_id) {
@@ -292,7 +277,7 @@ function resetDZexit() {
   $.confirm({
     title: "Geoblacklight Schema",
     content:
-      "Geoblacklight Schema has not been saved. Please hit cancel to continue to work with schema. Exit to continue.",
+      "Geoblacklight Schema has not been saved. Please hit cancel to continue to work on schema. Exit to proceed without saving.",
     type: "red",
     buttons: {
       ok: {
@@ -672,7 +657,7 @@ function crosswalkObject() {
   $.confirm({
     title: "Metadata Update",
     content:
-      "The Geoblacklight Schema data will be replace with data from the new crosswalked xml data. Any changes made to schema will be lost.",
+      "The Geoblacklight Schema will be replace with data from the new crosswalked xml file. Any changes made to schema will be lost.",
     type: "red",
     buttons: {
       ok: {
@@ -769,6 +754,7 @@ function general_status(data, html_result) {
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
+    $("#modalBody").hide();
   }
   if (data.hasOwnProperty("task_name")) {
     if (
