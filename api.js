@@ -754,7 +754,7 @@ function general_status(data, html_result) {
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
-    $("#myModal").hide();
+    $("#myModal").modal("hide");
   }
   if (data.hasOwnProperty("task_name")) {
     if (
