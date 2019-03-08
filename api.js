@@ -704,7 +704,8 @@ function crosswalkObject() {
   });
 }
 function collapseLink(textname) {
-  link = $("a").filter(function(index) {
+  links = $("a");
+  link = links.filter(function() {
     return $(this).text() === textname;
   });
   link.click();
