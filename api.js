@@ -376,7 +376,7 @@ function geoserverStyleCallback(data) {
 }
 function reIndexCallback(data) {
   url = data.result_url;
-  showChildResult(url);
+  showChildResult(url, "Solr Index Workflow", "PENDING");
 }
 function load_dropzone(task, tags) {
   dropzone_tmpl = Handlebars.templates["tmpl-dropzone"];
