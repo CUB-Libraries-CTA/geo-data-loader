@@ -784,19 +784,22 @@ function general_status(data, html_result) {
       );
     }
   }
-
   if (data.result.hasOwnProperty("children")) {
-    children_poll(data.result.children, html_result);
+    if (children_poll(data.result.children, html_result)) {
+      finish();
+    }
   } else if (data.hasOwnProperty("children")) {
-    children_poll(data.children, html_result);
-  } else {
-    $("#workstatus").empty();
-    $("#workstatus").html(
-      '<span><IMG SRC="check.png" width="20" height="20"/> SUCCESS</span>'
-    );
+    if (children_poll(data.children, html_result)) {
+      finish();
+    }
   }
-
   $("#" + html_result).append(JSON.stringify(data.result, null, 4));
+}
+function finish() {
+  $("#workstatus").empty();
+  $("#workstatus").html(
+    '<span><IMG SRC="check.png" width="20" height="20"/> SUCCESS</span>'
+  );
 }
 function cleanDicts(geoschema) {
   for (var key in geoschema) {
@@ -817,6 +820,9 @@ function children_poll(children, html_result) {
   if (children.length > 0) {
     url = base_url + "/queue/task/" + children[0][0][0] + "/.json";
     cybercom_poll(url, html_result);
+    return false;
+  } else {
+    return true;
   }
 }
 function general_wait(data, html_result) {
@@ -835,6 +841,7 @@ function cybercom_poll(url, html_result) {
     status = check_status(data);
     if (status == "PENDING") {
       //general_wait(data, html_result);
+      $("#" + html_result).append(JSON.stringify(data.result, null, 4));
       //Set timeout to 3 seconds
       setTimeout(function() {
         cybercom_poll(url, html_result);
