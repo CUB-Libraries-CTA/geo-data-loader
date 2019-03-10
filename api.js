@@ -768,6 +768,10 @@ function general_status(data, html_result) {
     $("#getblight").click(function() {
       serilize_formdata("geoblacklightform");
     });
+    $("#workstatus").empty();
+    $("#workstatus").html(
+      '<span><IMG SRC="check.png" width="20" height="20"/> SUCCESS</span>'
+    );
     $("#myModal").modal("hide");
   }
   if (data.hasOwnProperty("task_name")) {
@@ -785,6 +789,11 @@ function general_status(data, html_result) {
     children_poll(data.result.children, html_result);
   } else if (data.hasOwnProperty("children")) {
     children_poll(data.children, html_result);
+  } else {
+    $("#workstatus").empty();
+    $("#workstatus").html(
+      '<span><IMG SRC="check.png" width="20" height="20"/> SUCCESS</span>'
+    );
   }
 
   $("#" + html_result).append(JSON.stringify(data.result, null, 4));
@@ -841,9 +850,11 @@ function cybercom_poll(url, html_result) {
       }
     }
     if (status == "FAILURE") {
-      $("#" + html_result).append(
-        "Workflow ERROR:\n" + JSON.stringify(data.result, null, 4)
+      $("#workstatus").empty();
+      $("#workstatus").html(
+        '<span><IMG SRC="Icon_Error.png" width="20" height="20"/>ERROR: Please see workflow details.</span>'
       );
+      $("#" + html_result).append(JSON.stringify(data.result, null, 4));
       //general_wait(data, html_result);
     }
   });
