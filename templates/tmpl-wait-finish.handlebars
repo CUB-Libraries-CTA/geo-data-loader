@@ -1,3 +1,12 @@
 <h2 style="margin-top:40px;">{{ data.title }} </h2>
 <span><IMG SRC="spinner.gif" />{{ data.message }}</span>
+<a id="toggleshow">View Workflow Details</a>
 <pre id="myModalbody">{{ data.modal_data }}</pre>
+<script>
+    $("#toggleshow").click(function () {
+        $('#myModalbody').toggle('slow', function () {
+
+        });
+    });
+    $("#toggleshow").click();
+</script>

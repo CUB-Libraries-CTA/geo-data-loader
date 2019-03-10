@@ -527,7 +527,7 @@ function showChildResult(url, title, message) {
   message = $.defaultFor(message, "Checking Workflow status");
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppTaskResult"];
-  tmpdata = { modal_name: title };
+  tmpdata = { modal_name: "Workflow Status" };
   $("#modals").append(task_template(tmpdata));
   //$("#myModalbody").empty();
   $("#modalBody").empty();
