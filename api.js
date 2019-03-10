@@ -529,9 +529,14 @@ function showChildResult(url, title, message) {
   task_template = Handlebars.templates["tmpl-modalAppTaskResult"];
   tmpdata = { modal_name: title };
   $("#modals").append(task_template(tmpdata));
-  $("#myModalbody").empty();
+  //$("#myModalbody").empty();
+  $("#modalBody").empty();
   $("#myModal").modal("show");
-  $("#myModalbody").html(message);
+  //template
+  template = Handlebars.templates["tmpl-wait-finish"];
+  data = { title: title, message: message };
+  $("#modalBody").html(template({ data: data }));
+  //$("#myModalbody").html(message);
   cybercom_poll(url + ".json", "myModalbody");
 }
 //Cybercommons example submit add task.
@@ -755,7 +760,7 @@ function general_status(data, html_result) {
       loadxmldata();
     });
     $("#crosswalkxml").click(function() {
-      console.log($("#xml_file").val());
+      //console.log($("#xml_file").val());
       crosswalkObject();
     });
     //Load initial xml data
@@ -820,7 +825,7 @@ function cybercom_poll(url, html_result) {
   $.getJSON(url, function(data) {
     status = check_status(data);
     if (status == "PENDING") {
-      general_wait(data, html_result);
+      //general_wait(data, html_result);
       //Set timeout to 3 seconds
       setTimeout(function() {
         cybercom_poll(url, html_result);
@@ -836,7 +841,10 @@ function cybercom_poll(url, html_result) {
       }
     }
     if (status == "FAILURE") {
-      general_wait(data, html_result);
+      $("#" + html_result).append(
+        "Workflow ERROR:\n" + JSON.stringify(data.result, null, 4)
+      );
+      //general_wait(data, html_result);
     }
   });
 }
