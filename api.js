@@ -720,11 +720,13 @@ function loadxmldata() {
   $("#xmllink").attr("href", myhref);
   idx = $("#xml_file")[0].selectedIndex;
   jsond = workflowdata.result.xml.fgdc[idx];
-  $("#xmlfilexml").empty();
-  //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
-  options = { collapsed: false, withQuotes: false };
-  $("#xmlfilexml").jsonViewer(jsond.data, options);
-  collapseLink("Binary");
+  if (jsond != null) {
+    $("#xmlfilexml").empty();
+    //$("#xmlfilexml").append(JSON.stringify(jsond.data, null, 1));
+    options = { collapsed: false, withQuotes: false };
+    $("#xmlfilexml").jsonViewer(jsond.data, options);
+    collapseLink("Binary");
+  }
 }
 //Example general display status to console.log. Used in cybercom_poll!
 //Customize tomake success, fail, and pending functions. This is general status function!
