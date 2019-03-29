@@ -836,11 +836,17 @@ function check_status(data) {
   } else if (data.result.hasOwnProperty("status")) {
     return data.result.status;
   }
+  return false;
 }
 //Cybercommons polling task status
 function cybercom_poll(url, html_result) {
   $.getJSON(url, function(data) {
     status = check_status(data);
+    if (status == false) {
+      setTimeout(function() {
+        cybercom_poll(url, html_result);
+      }, 3000);
+    }
     if (status == "PENDING") {
       //general_wait(data, html_result);
       $("#" + html_result).append(JSON.stringify(data.result, null, 4));
