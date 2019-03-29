@@ -857,7 +857,7 @@ function cybercom_poll(url, html_result) {
     }
     if (status == "SUCCESS") {
       console.log(data);
-      if (!("result" in data)) {
+      if ("task_name" in data && !("result" in data.result)) {
         setTimeout(function() {
           cybercom_poll(url, html_result);
         }, 2000);
