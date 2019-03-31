@@ -298,6 +298,7 @@ function arkmint(arkid, data, reindex) {
   data.uuid = data.uuid + arkid;
   data.dc_identifier_s = data.dc_identifier_s + arkid;
   data.layer_slug_s = data.layer_slug_s + arkid;
+  data._id = arkid;
   console.log(data);
   finalizeSave(url, data, reindex);
 }
