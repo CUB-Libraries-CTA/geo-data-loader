@@ -293,17 +293,16 @@ function resetDZexit() {
     }
   });
 }
-function saveMetadata(catalog_id, reindex) {
-  try {
-    data = JSON.parse($("#myMetadataModalbody").val());
-  } catch (err) {
-    alert(err.message);
-    return;
-  }
-  if (catalog_id != "") {
-    data._id = catalog_id;
-  }
+function arkmint(arkid, data, reindex) {
   url = base_url + "/catalog/data/catalog/geoportal/.json";
+  data.uuid = data.uuid + arkid;
+  data.dc_identifier_s = data.dc_identifier_s + arkid;
+  data.layer_slug_s = data.layer_slug_s + arkid;
+  console.log(data);
+  finalizeSave(url, data, reindex);
+}
+
+function finalizeSave(url, data, reindex) {
   if (reindex) {
     $.postJSON(url, data, saveIndex);
   } else {
@@ -312,6 +311,27 @@ function saveMetadata(catalog_id, reindex) {
   $("#myModal").modal("hide");
   resetDropzone();
 }
+
+function saveMetadata(catalog_id, reindex) {
+  try {
+    data = JSON.parse($("#myMetadataModalbody").val());
+  } catch (err) {
+    alert(err.message);
+    return;
+  }
+  url = base_url + "/catalog/data/catalog/geoportal/.json";
+  if (catalog_id != "") {
+    data._id = catalog_id;
+    finalizeSave(url, data, reindex);
+  } else {
+    //set uuid dc-identifier and slug with new ark mint from mongoid
+    predata = { status: "notindexed" };
+    $.postJSON(url, predata, function(arkid) {
+      arkmint(arkid, data, reindex);
+    });
+  }
+}
+
 function saveCallback() {
   run_search();
   activaTab("dataitems");
