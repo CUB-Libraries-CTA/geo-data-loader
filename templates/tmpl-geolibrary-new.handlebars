@@ -92,7 +92,10 @@
           <label for="dc_publisher_s">Publisher</label>
           <input class="form-control" type="text" name="dc_publisher_s" value="{{ data.dc_publisher_s }}" />
         </div>
-
+        <div class="form-group">
+          <label for="dct_created_s">Date Created</label>
+          <input class="form-control" type="text" name="dct_created_s" value="{{ data.dct_created_s }}" />
+        </div>
         <div class="form-group">
           <label for="dct_issued_s">Date Issued</label>
           <input class="form-control" type="text" name="dct_issued_s" value="{{ data.dct_issued_s }}" />
@@ -128,9 +131,9 @@
   $("#layer_geom_type_s").val("{{data.layer_geom_type_s}}");
   $("#dc_format_s").val("{{data.dc_format_s}}");
 /*
-                            var container = document.getElementById("jsoneditor");
-                            var options = {};
-                            var editor = new JSONEditor(container, options);
-                            editor.set(jsonData)
-                          */
+                              var container = document.getElementById("jsoneditor");
+                              var options = {};
+                              var editor = new JSONEditor(container, options);
+                              editor.set(jsonData)
+                            */
 </script>
