@@ -58,10 +58,15 @@
         </div>
         <div class="form-group">
           <label for="dc_rights_s">Rights</label>
-          <select name="dc_rights_s" class="form-control" value={{ data.dc_rights_s }}>
+          <select id="select_rights" name="dc_rights_s" class="form-control" value={{ data.dc_rights_s }}>
             <option value="Public">Public</option>
             <option value="Restricted">Restricted</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label for="cub_rights_metadata_s">Use and reproduction</label>
+          <input id="rights_statement" class="form-control" type="text" name="cub_rights_metadata_s"
+            value="{{ data.cub_rights_metadata_s }}" />
         </div>
         <div class="form-group">
           <label for="layer_geom_type_s">Geometry Type</label>
@@ -130,10 +135,18 @@
 <script>
   $("#layer_geom_type_s").val("{{data.layer_geom_type_s}}");
   $("#dc_format_s").val("{{data.dc_format_s}}");
+  $('#select_rights').change(function () {
+    if ($('#select_rights').val() == "Public") {
+      statement = "The organization that has made the Item available believes that the Item is in the Public Domain under the laws of the United States."
+    } else {
+      statement = "These data are licensed by University of Colorado Boulder Libraries and are available to University of Colorado Boulder affiliates only. Affiliates are limited to current faculty, staff, and students. These data may not be reproduced or used for any purpose without permission. For more information please contact geolibrary@colorado.edu."
+    }
+    $('#rights_statement').val(statememt);
+  })
 /*
-                              var container = document.getElementById("jsoneditor");
-                              var options = {};
-                              var editor = new JSONEditor(container, options);
-                              editor.set(jsonData)
-                            */
+                                  var container = document.getElementById("jsoneditor");
+                                  var options = {};
+                                  var editor = new JSONEditor(container, options);
+                                  editor.set(jsonData)
+                                */
 </script>
