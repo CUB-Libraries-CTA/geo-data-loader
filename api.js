@@ -21,7 +21,7 @@ $(function () {
   //https://test-libapps.colorado.edu/api/api-saml/sso/saml
   login_url = base_url + "/api-saml/sso/saml/?next=";
   logout_url = base_url + "/api-auth/logout/?next=";
-  user_task_url = base_url + "/queue/usertasks/?format=json&page_size=10";
+  user_task_url = base_url + "/queue/usertasks.json?taskname=geoblacklightq.tasks.workflow.geoLibraryLoader&page_size=10";
   user_url = base_url + "/user/?format=json";
   prevlink = null;
   nextlink = null;
@@ -128,6 +128,7 @@ function load_metadata() {
     tr_templates = Handlebars.templates["tmpl-main-tr"];
     // eslint-disable-next-line jquery/no-each
     $.each(data.results, function (idx, item) {
+      if (item.status == "indexed") { item.status = "index" } else { item.status = "do not index" };
       $("#tablebody").append(tr_templates(item));
     });
   });
@@ -158,6 +159,7 @@ function run_search() {
   $.getJSON(catalog_url, function (data) {
     tr_templates = Handlebars.templates["tmpl-main-tr"];
     $.each(data.results, function (idx, item) {
+      if (item.status == "indexed") { item.status = "index" } else { item.status = "do not index" };
       $("#tablebody").append(tr_templates(item));
     });
     if ($("#filterIII").is(":checked")) {
@@ -559,7 +561,7 @@ function showChildResult(url, title, message) {
   data = { title: title, message: message };
   $("#modalBody").html(template({ data: data }));
   //$("#myModalbody").html(message);
-  cybercom_poll(url + ".json", "myModalbody");
+  cybercom_poll(url + "?format=json", "myModalbody");
 }
 //Cybercommons example submit add task.
 function cybercom_submit_task(
@@ -613,7 +615,7 @@ function serilize_formdata(formid) {
   data.dct_references_s =
     '{"http://schema.org/downloadUrl":"' +
     zipurl +
-    '","http://www.opengis.net/def/serviceType/ogc/wfs":"https://geo.colorado.edu/geoserver/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"https://geo.colorado.edu/geoserver/geocolorado/wms"}';
+    '","http://www.opengis.net/def/serviceType/ogc/wfs":"' + base_url.slice(0, -4) + '/geoserver/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"' + base_url.slice(0, -4) + '/geoserver/geocolorado/wms"}';
   data.dc_type_s = "Dataset";
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppMetadata"];
@@ -842,7 +844,7 @@ function cleanDicts(geoschema) {
 }
 function children_poll(children, html_result) {
   if (children.length > 0) {
-    url = base_url + "/queue/task/" + children[0][0][0] + ".json";
+    url = base_url + "/queue/task/" + children[0][0][0] + "?format=json";
     cybercom_poll(url, html_result);
     return false;
   } else {
@@ -855,7 +857,10 @@ function general_wait(data, html_result) {
 function check_status(data) {
   if (data.hasOwnProperty("status")) {
     return data.status;
-  } else if (data.result.hasOwnProperty("status")) {
+  } else if (!data.hasOwnProperty("result")) {
+    return false;
+  }
+  else if (data.result.hasOwnProperty("status")) {
     return data.result.status;
   }
   return false;

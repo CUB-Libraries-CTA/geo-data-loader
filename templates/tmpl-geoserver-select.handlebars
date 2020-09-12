@@ -1,7 +1,7 @@
 <label for="geoblacklight_status">GeoBlacklight Status</label>
 <select id="geoblacklight_status" name="geoblacklight_status" class="form-control">
-    <option value="indexed">Indexed</option>
-    <option value="notindexed">Not Indexed</option>
+    <option value="indexed">Index</option>
+    <option value="notindexed">Do Not Index</option>
 </select>
 <label for="geoserver_style">Geoserver Default Style</label>
 <select id="geoserver_style" name="geoserver_style" class="form-control">
@@ -9,7 +9,18 @@
     <option value="{{ this.name }}">{{ this.name }}</option>
     {{/each}}
 </select>
+<label for="mods_url">MODS URL</label>
+<div class="form-group">
+    <span id="mods_url">{{ data.mods_url }} </span>
+</div>
+<label for="mods_url">MODS Import URL</label>
+<div class="form-group">
+    <input type="text" class="form-control" name="mods_import_url" value="{{ mods_import_url }}" />
+</div>
 <script>
-$("#geoblacklight_status").val("{{status}}");
-$("#geoserver_style").val("{{style}}");
+    temp = jQuery.parseJSON("{{ dct_references_s }}".replace(/&quot;/g, '"'));
+    console.log(temp);
+    $('#mods_url').text(temp["http://www.loc.gov/mods/v3"]);
+    $("#geoblacklight_status").val("{{status}}");
+    $("#geoserver_style").val("{{style}}");
 </script>
