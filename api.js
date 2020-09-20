@@ -17,11 +17,12 @@
 $(function () {
   //Customize by setting base_url to cybercom/api docker application
   base_url = "https://test-libapps.colorado.edu/api";
+  base_ark_url = "https://test-libapps.colorado.edu/ark:";
+  geoserver_url = "https:/test-geo.colorado.edu/geoserver";
   //No other alterations is need to get the standard applicaiton running!
-  //https://test-libapps.colorado.edu/api/api-saml/sso/saml
   login_url = base_url + "/api-saml/sso/saml/?next=";
   logout_url = base_url + "/api-auth/logout/?next=";
-  user_task_url = base_url + "/queue/usertasks.json?taskname=geoblacklightq.tasks.workflow.geoLibraryLoader&page_size=10";
+  user_task_url = base_url + "/queue/usertasks.json?taskname=geoblacklightq.tasks.workflow.geoLibraryLoader,geoblacklightq.tasks.geotransmeta.setModsXML&page_size=10";
   user_url = base_url + "/user/?format=json";
   prevlink = null;
   nextlink = null;
@@ -203,6 +204,11 @@ function deleteMetadata(catalog_id, args, confirmation) {
             "/catalog/data/catalog/geoportal/" +
             catalog_id +
             ".json";
+          //Set ARK to removed
+          $.getJSON(url, function (data) {
+            ark = data.dc_identifier_s.split('/').slice(-2).join('/');
+            setARKstatusRemove('removed', ark);
+          });
           $.deleteJSON(url, run_search);
           postdata = $.getCYBERCOM_JSON_OBJECT(
             "geoblacklightq.tasks.geoservertasks.deleteGeoserverStore"
@@ -247,6 +253,7 @@ function saveProperties(catalog_id) {
   url = url + catalog_id + ".json";
   dirty_index = false;
   dirty_style = false;
+  dirty_mi_url = false
   $.getJSON(url, function (data) {
     if (data.status != $("#geoblacklight_status").val()) {
       data.status = $("#geoblacklight_status").val();
@@ -256,9 +263,14 @@ function saveProperties(catalog_id) {
       data.style = $("#geoserver_style").val();
       dirty_style = true;
     }
+    if (data.mod_import_url != $("#mods_import_url").val()) {
+      data.mod_import_url = $("#mods_import_url").val();
+      dirty_mi_url = true;
+    }
     if (dirty_index) {
       $.postJSON(url, data, run_search, null, "PUT");
     } else {
+      console.log(data);
       $.postJSON(url, data, function (data2) { }, null, "PUT");
     }
     if (dirty_style) {
@@ -273,14 +285,51 @@ function saveProperties(catalog_id) {
       postdata.args = [layer_name, style];
       $.postJSON(taskurl, postdata, geoserverStyleCallback);
     }
+    if (dirty_mi_url || $('#updateMods').prop("checked")) {
+      //need to post to celery queue to set new 
+      taskurl =
+        "/api/queue/run/geoblacklightq.tasks.geotransmeta.setModsXML/";
+      postdata = $.getCYBERCOM_JSON_OBJECT(
+        "geoblacklightq.tasks.geotransmeta.setModsXML"
+      );
+      postdata.args = [data.mod_import_url, data.layer_slug_s + ".xml"];
+      $.postJSON(taskurl, postdata, geoserverStyleCallback);
+    }
   });
   $("#myModal").modal("hide");
+}
+function deleteARK() {
+  try {
+    ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
+    url = base_ark_url + '/' + ark + '/detail';
+    $.deleteJSON(url, function (_data2) { });
+  }
+  catch (e) { }
+}
+function setARKstatusRemove(status, ark) {
+  url = base_ark_url + '/' + ark + '/detail.json'
+  $.getJSON(url, function (data) {
+    data.status = status;
+    data.generated_by = 'geoDataLoader'
+    console.log(data)
+    $.postJSON(url, data, function (_data2) { }, null, "PUT");
+  });
+}
+function setARKstatus(status) {
+  ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
+  url = base_ark_url + '/' + ark + '/detail.json'
+  $.getJSON(url, function (data) {
+    data.status = status;
+    data.generated_by = 'geoDataLoader'
+    console.log(data)
+    $.postJSON(url, data, function (_data2) { }, null, "PUT");
+  });
 }
 function resetDZexit() {
   $.confirm({
     title: "Geoblacklight Schema",
     content:
-      "Geoblacklight Schema has not been saved. Please hit cancel to continue to work on schema. Exit to proceed without saving.",
+      "Geoblacklight Schema has not been saved. Please hit cancel to continue to work on schema. Exit to proceed without saving. The newly generated ARK will be deleted.",
     type: "red",
     buttons: {
       ok: {
@@ -288,6 +337,8 @@ function resetDZexit() {
         btnClass: "btn-primary",
         keys: ["enter"],
         action: function () {
+          deleteARK();
+          //setARKstatus('removed');
           resetDropzone();
           activaTab("dataitems");
         }
@@ -296,15 +347,15 @@ function resetDZexit() {
     }
   });
 }
-function arkmint(arkid, data, reindex) {
-  url = base_url + "/catalog/data/catalog/geoportal.json";
-  data.uuid = data.uuid + arkid;
-  data.dc_identifier_s = data.dc_identifier_s + arkid;
-  data.layer_slug_s = data.layer_slug_s + arkid;
-  data._id = arkid;
-  console.log(data);
-  finalizeSave(url, data, reindex);
-}
+// function arkmint(arkid, data, reindex) {
+//   url = base_url + "/catalog/data/catalog/geoportal.json";
+//   data.uuid = data.uuid + arkid;
+//   data.dc_identifier_s = data.dc_identifier_s + arkid;
+//   data.layer_slug_s = data.layer_slug_s + arkid;
+//   data._id = arkid;
+//   console.log(data);
+//   finalizeSave(url, data, reindex);
+// }
 
 function finalizeSave(url, data, reindex) {
   if (reindex) {
@@ -312,6 +363,7 @@ function finalizeSave(url, data, reindex) {
   } else {
     $.postJSON(url, data, saveCallback);
   }
+  setARKstatus('active');
   $("#myModal").modal("hide");
   resetDropzone();
 }
@@ -326,14 +378,15 @@ function saveMetadata(catalog_id, reindex) {
   url = base_url + "/catalog/data/catalog/geoportal.json";
   if (catalog_id != "") {
     data._id = catalog_id;
-    finalizeSave(url, data, reindex);
-  } else {
-    //set uuid dc-identifier and slug with new ark mint from mongoid
-    predata = { status: "notindexed" };
-    $.postJSON(url, predata, function (arkid) {
-      arkmint(arkid, data, reindex);
-    });
   }
+  finalizeSave(url, data, reindex);
+  // } else {
+  //   //set uuid dc-identifier and slug with new ark mint from mongoid
+  //   predata = { status: "notindexed" };
+  //   $.postJSON(url, predata, function (arkid) {
+  //     arkmint(arkid, data, reindex);
+  //   });
+  // }
 }
 
 function saveCallback() {
@@ -357,6 +410,11 @@ function reIndexAll() {
       delete n.id;
       delete n.status;
       delete n.style;
+      try {
+        delete n.mod_import_url
+      } catch (error) {
+        console.log(error);
+      }
       return n;
     });
     postdata = $.getCYBERCOM_JSON_OBJECT(
@@ -396,7 +454,7 @@ function loadGeoServerMetadata(data) {
 }
 function geoserverStyleCallback(data) {
   url = data.result_url;
-  cybercom_poll(url + ".json", "myModalbody");
+  cybercom_poll(url + "?format=json", "myModalbody");
 }
 function reIndexCallback(data) {
   url = data.result_url;
@@ -612,10 +670,10 @@ function serilize_formdata(formid) {
   delete data.dct_temporal_sm1;
   delete data.dc_subject_sm1;
   delete data.dc_creator_sm1;
-  data.dct_references_s =
-    '{"http://schema.org/downloadUrl":"' +
-    zipurl +
-    '","http://www.opengis.net/def/serviceType/ogc/wfs":"' + base_url.slice(0, -4) + '/geoserver/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"' + base_url.slice(0, -4) + '/geoserver/geocolorado/wms"}';
+  // data.dct_references_s =
+  //   '{"http://schema.org/downloadUrl":"' +
+  //   zipurl +
+  //   '","http://www.opengis.net/def/serviceType/ogc/wfs":"' + geoserver_url + '/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"' + geoserver_url + '/geocolorado/wms"}';
   data.dc_type_s = "Dataset";
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppMetadata"];
@@ -715,11 +773,21 @@ function crosswalkObject() {
           geoserver_layername =
             workflowdata.result.geoblacklightschema.layer_id_s;
           resource_type = workflowdata.result.resource_type;
+          zipurl = workflowdata.result.zipurl;
+          ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
+          // Mod URL
+          temp = workflowdata.result.geoblacklightschema.dct_references_s
+          temp = jQuery.parseJSON(temp.replace(/&quot;/g, '"'));
+          console.log(temp);
+          mod_url = temp["http://www.loc.gov/mods/v3"];
           postdata.args = [
             filename,
             layername,
             geoserver_layername,
-            resource_type
+            resource_type,
+            zipurl,
+            mod_url,
+            ark
           ];
           taskurl =
             "/api/queue/run/geoblacklightq.tasks.geotransmeta.singleCrossWalkGeoBlacklight/";

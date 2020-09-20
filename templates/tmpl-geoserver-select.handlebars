@@ -15,12 +15,15 @@
 </div>
 <label for="mods_url">MODS Import URL</label>
 <div class="form-group">
-    <input type="text" class="form-control" name="mods_import_url" value="{{ mods_import_url }}" />
+    <input type="checkbox" id="updateMods" />
+    <label for="vehicle1">Check to update MODS xml</label><br>
+    <input type="text" class="form-control" id="mods_import_url" value="{{ mod_import_url }}" />
 </div>
 <script>
     temp = jQuery.parseJSON("{{ dct_references_s }}".replace(/&quot;/g, '"'));
     console.log(temp);
-    $('#mods_url').text(temp["http://www.loc.gov/mods/v3"]);
+    $('#mods_url').html('<a href="' + temp["http://www.loc.gov/mods/v3"] + '" target="_blank">' + temp["http://www.loc.gov/mods/v3"] + '</a>');
     $("#geoblacklight_status").val("{{status}}");
     $("#geoserver_style").val("{{style}}");
+    $("#mods_import_url").val("{{mod_import_url}}");
 </script>

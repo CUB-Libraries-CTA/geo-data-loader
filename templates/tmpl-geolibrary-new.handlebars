@@ -19,6 +19,9 @@
           <input type="hidden" name="style" value="{{ data.style }}" />
         </div>
         <div style="display:none">
+          <input type="hidden" name="mod_import_url" value="{{ data.mod_import_url }}" />
+        </div>
+        <div style="display:none">
           <input type="hidden" name="dct_references_s" value="{{ data.dct_references_s }}" />
         </div>
         <div style="display:none">
@@ -144,9 +147,9 @@
     $('#rights_statement').val(statement);
   })
 /*
-                                    var container = document.getElementById("jsoneditor");
-                                    var options = {};
-                                    var editor = new JSONEditor(container, options);
-                                    editor.set(jsonData)
-                                  */
+                                      var container = document.getElementById("jsoneditor");
+                                      var options = {};
+                                      var editor = new JSONEditor(container, options);
+                                      editor.set(jsonData)
+                                    */
 </script>
