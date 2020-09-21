@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: geo-data-loader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: geo-data-loader
+  template:
+    metadata:
+      labels:
+        app: geo-data-loader
+    spec:
+      containers:
+      - image: culibraries/geodataloader:1.0.1
+        imagePullPolicy: Always
+        name: geodataloader
+        resources: {}     
+status: {}
