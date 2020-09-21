@@ -18,7 +18,7 @@ $(function () {
   //Customize by setting base_url to cybercom/api docker application
   base_url = "https://test-libapps.colorado.edu/api";
   base_ark_url = "https://test-libapps.colorado.edu/ark:";
-  geoserver_url = "https:/test-geo.colorado.edu/geoserver";
+  geoserver_url = "https://test-geo.colorado.edu/geoserver";
   //No other alterations is need to get the standard applicaiton running!
   login_url = base_url + "/api-saml/sso/saml/?next=";
   logout_url = base_url + "/api-auth/logout/?next=";
@@ -301,7 +301,7 @@ function saveProperties(catalog_id) {
 function deleteARK() {
   try {
     ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
-    url = base_ark_url + '/' + ark + '/detail';
+    url = base_ark_url + '/' + ark + '/detail.json';
     $.deleteJSON(url, function (_data2) { });
   }
   catch (e) { }
@@ -957,7 +957,13 @@ function cybercom_poll(url, html_result) {
           cybercom_poll(url, html_result);
         }, 2000);
       } else {
-        general_status(data, html_result);
+        try {
+          general_status(data, html_result);
+        } catch (error) {
+          setTimeout(function () {
+            cybercom_poll(url, html_result);
+          }, 2000);
+        }
       }
     }
     if (status == "FAILURE") {
