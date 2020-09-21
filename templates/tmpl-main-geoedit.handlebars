@@ -1,23 +1,23 @@
 <div>
-<div class="form-inline" style="margin-bottom:5px">
-<label class="control-label" for="ssearch">Search</label>
-<input type="text" class="form-control" name="ssearch" id="search" style="min-width:50%;max-width:60%">
-<button class="btn btn-primary" id="submitSearch">Search</button>
-</div>
-<div id="paginate-div" class="col-md-2" style="text-align:center;margin-bottom:10px;">
-    Filter: <input id="filterIII" type="checkbox" > Inactive Status
-</div>
-<table class="table table-bordered" id='editmeta'>
-  <tr>
-      <th>GeoLibrary Indexed Metadata</th>
+  <div class="form-inline" style="margin-bottom:5px">
+    <label class="control-label" for="ssearch">Search</label>
+    <input type="text" class="form-control" name="ssearch" id="search" style="min-width:50%;max-width:60%">
+    <button class="btn btn-primary" id="submitSearch">Search</button>
+  </div>
+  <div id="paginate-div" class="col-md-2" style="text-align:center;margin-bottom:10px;">
+    Filter: <input id="filterIII" type="checkbox"> Inactive Status
+  </div>
+  <table class="table table-bordered" id='editmeta'>
+    <tr>
+      <th>GeoLibrary Metadata</th>
       <th class="tablebtn">
         <button class="btn btn-primary btn-table" onclick="reIndexAll()">Index All</button>
       </th>
-  </tr>
-  <tbody id='tablebody'>
-  </tbody>
-</table>
-<div id="paginate-div-bt" style="text-align:center"></div>
-<script>
-    $("#filterIII").click(function(){run_search();});
-</script>
+    </tr>
+    <tbody id='tablebody'>
+    </tbody>
+  </table>
+  <div id="paginate-div-bt" style="text-align:center"></div>
+  <script>
+    $("#filterIII").click(function () { run_search(); });
+  </script>
