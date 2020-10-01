@@ -73,7 +73,7 @@
         </div>
         <div class="form-group">
           <label for="layer_geom_type_s">Geometry Type</label>
-          <select id="layer_geom_type_s" class="form-control" name="layer_geom_type_s">
+          <select id="layer_geom_type_s" class="form-control" name="layer_geom_type_s" value={{data.layer_geom_type_s}}>
             <option value="Raster">Raster</option>
             <option value="Polygon">Polygon</option>
             <option value="Point">Point</option>
@@ -147,9 +147,9 @@
     $('#rights_statement').val(statement);
   })
 /*
-                                      var container = document.getElementById("jsoneditor");
-                                      var options = {};
-                                      var editor = new JSONEditor(container, options);
-                                      editor.set(jsonData)
-                                    */
+                                        var container = document.getElementById("jsoneditor");
+                                        var options = {};
+                                        var editor = new JSONEditor(container, options);
+                                        editor.set(jsonData)
+                                      */
 </script>

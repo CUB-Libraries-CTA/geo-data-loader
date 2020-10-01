@@ -40,6 +40,7 @@
       this.on("success", function (file, response) {
         console.log(response);
         load_task_history(user_task_url);
+        console.log("response[0].callback.response.result_url:", response[0].callback.response.result_url)
         showChildResult(response[0].callback.response.result_url, "Data Import", " PENDING");
       });
       this.on("error", function (file) {
