@@ -316,14 +316,17 @@ function setARKstatusRemove(status, ark) {
   });
 }
 function setARKstatus(status) {
-  ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
-  url = base_ark_url + '/' + ark + '/detail.json'
-  $.getJSON(url, function (data) {
-    data.status = status;
-    data.generated_by = 'geoDataLoader'
-    console.log(data)
-    $.postJSON(url, data, function (_data2) { }, null, "PUT");
-  });
+  try {
+    ark = workflowdata.result.geoblacklightschema.dc_identifier_s.split('/').slice(-2).join('/');
+    url = base_ark_url + '/' + ark + '/detail.json'
+    $.getJSON(url, function (data) {
+      data.status = status;
+      data.generated_by = 'geoDataLoader'
+      console.log(data)
+      $.postJSON(url, data, function (_data2) { }, null, "PUT");
+    });
+  } catch (err) {
+  }
 }
 function resetDZexit() {
   $.confirm({
@@ -410,6 +413,7 @@ function reIndexAll() {
       delete n.id;
       delete n.status;
       delete n.style;
+
       try {
         delete n.mod_import_url
       } catch (error) {
@@ -664,16 +668,14 @@ function serilize_formdata(formid) {
   data.dc_subject_sm = cleanLists(data.dc_subject_sm1.split("|"));
   data.dct_temporal_sm = cleanLists(data.dct_temporal_sm1.split("|"));
   data.dct_spatial_sm = cleanLists(data.dct_spatial_sm1.split("|"));
+  if (data.dct_created_s === "") { data.dct_created_s = null; }
+  if (data.dct_issued_s === "") { data.dct_issued_s = null; }
   //geoserver_layers = JSON.parse(data.geoserver_layers);
   //delete data.geoserver_layers
   delete data.dct_spatial_sm1;
   delete data.dct_temporal_sm1;
   delete data.dc_subject_sm1;
   delete data.dc_creator_sm1;
-  // data.dct_references_s =
-  //   '{"http://schema.org/downloadUrl":"' +
-  //   zipurl +
-  //   '","http://www.opengis.net/def/serviceType/ogc/wfs":"' + geoserver_url + '/geocolorado/wfs","http://www.opengis.net/def/serviceType/ogc/wms":"' + geoserver_url + '/geocolorado/wms"}';
   data.dc_type_s = "Dataset";
   $("#modals").empty();
   task_template = Handlebars.templates["tmpl-modalAppMetadata"];
@@ -835,8 +837,7 @@ function general_status(data, html_result) {
     jsonData = data.result.geoblacklightschema;
     $("#dropzone").hide();
     $("#helptxt").hide();
-    url =
-      "https://geo.colorado.edu/geoserver/rest/workspaces/geocolorado/datastores.json";
+    url = geoserver_url + "/rest/workspaces/geocolorado/datastores.json";
     geolibrary_tmpl = Handlebars.templates["tmpl-geolibrary-new"];
     geoschema = data.result.geoblacklightschema;
     geoschema = cleanDicts(geoschema);
@@ -912,7 +913,7 @@ function cleanDicts(geoschema) {
 }
 function children_poll(children, html_result) {
   if (children.length > 0) {
-    url = base_url + "/queue/task/" + children[0][0][0] + "?format=json";
+    url = base_url + "/queue/task/" + children[0][0][0] + "/?format=json";
     cybercom_poll(url, html_result);
     return false;
   } else {
@@ -935,9 +936,10 @@ function check_status(data) {
 }
 //Cybercommons polling task status
 function cybercom_poll(url, html_result) {
+  setTimeout(function () { }, 2000);
   $.getJSON(url, function (data) {
     status = check_status(data);
-    if (status == false) {
+    if (!status) {
       setTimeout(function () {
         cybercom_poll(url, html_result);
       }, 3000);
@@ -951,7 +953,6 @@ function cybercom_poll(url, html_result) {
       }, 3000);
     }
     if (status == "SUCCESS") {
-      console.log(data);
       if ("task_name" in data && !("result" in data.result)) {
         setTimeout(function () {
           cybercom_poll(url, html_result);
