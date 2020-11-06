@@ -27,8 +27,9 @@
         <div style="display:none">
           <input type="hidden" name="uuid" value="{{ data.uuid }}" />
         </div>
-        <div style="display:none">
-          <input type="hidden" name="dc_identifier_s" value="{{ data.dc_identifier_s }}" />
+        <div class="form-group">
+          <label for="dc_identifier_s">ARK Identifier (ARK URL will not resolve until saved and indexed)</label>
+          <input class="form-control" type="text" name="dc_identifier_s" value="{{ data.dc_identifier_s }}"  readonly/>
         </div>
         <div style="display:none">
           <input type="hidden" name="layer_id_s" value="{{ data.layer_id_s }}" />
