@@ -16,9 +16,9 @@
 /* eslint-disable no-undef */
 $(function () {
   //Customize by setting base_url to cybercom/api docker application
-  base_url = "https://test-libapps.colorado.edu/api";
-  base_ark_url = "https://test-libapps.colorado.edu/ark:";
-  geoserver_url = "https://test-geo.colorado.edu/geoserver";
+  base_url = "https://libapps.colorado.edu/api";
+  base_ark_url = "https://libapps.colorado.edu/ark:";
+  geoserver_url = "https://geo.colorado.edu/geoserver";
   //No other alterations is need to get the standard applicaiton running!
   login_url = base_url + "/api-saml/sso/saml/?next=";
   logout_url = base_url + "/api-auth/logout/?next=";
